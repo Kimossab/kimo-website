@@ -1,0 +1,30 @@
+// COLOR
+$color-dark: hsl(240, 1%, 15%);
+$color-light: hsl(240, 1%, 85%);
+
+$color-light-25: hsla(240, 1%, 85%, 0.25);
+$color-dark-25: hsla(240, 1%, 15%, 0.25);
+
+$opacity-85: rgba(0, 0, 0, 0.85);
+
+// SPPED
+$speed-faster: 0.2s;
+$speed-fast: 0.5s;
+$speed-medium: 1s;
+
+// FONT
+$font-big: 2rem;
+$font-bigger: 3rem;
+
+// LENGTHS
+$len-medium: 1rem;
+
+// SCALE
+$normal-scale: scale(1.05);
+
+// NAV
+$nav-btn-width: 15rem;
+$nav-btn-height: 30vw;
+$nav-btn-height-portrait: 18rem;
+$nav-small-height: 6rem;
+$nav-padding: 0.2rem;
