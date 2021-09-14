@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title>
-    <%= htmlWebpackPlugin.options.title %>
-  </title>
+  <meta property="og:title" content="Kimossab" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kimossab.com/" />
+  <meta property="og:image" content="https://kimossab.com/luna_og.jpg" />
+  <meta property="og:image:alt" content="Cool Luna" />
+  <meta property="og:description"
+    content="Kimossab's website with info about him, his bot and most importantly pictures of his dog, Luna." />
+  <link rel="icon" content="<%= BASE_URL %>favicon.ico">
+  <title>Kimossab</title>
 </head>
 
 <body class="dark">
   <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-        Please enable it to continue.</strong>
+    <strong>We're sorry but this website doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->

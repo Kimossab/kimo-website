@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Bot from "../views/Bot.vue";
 import Luna from "../views/Luna.vue";
+import Manga from "../views/Manga.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +25,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/luna",
     name: "luna",
     component: Luna
+  },
+  {
+    path: "/manga",
+    name: "manga",
+    component: Manga
   }
 ];
 

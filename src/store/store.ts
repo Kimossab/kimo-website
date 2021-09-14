@@ -6,13 +6,20 @@ import {
 } from "vuex";
 import { Mutations, mutations } from "./mutations";
 import { Actions, actions } from "./actions";
+import { KimoState } from "@/types";
 
 export const store = createStore<KimoState>({
   state: {
     darkMode: true,
     lunaPictures: [],
     lunaSelected: null,
-    lunaLoading: false
+    lunaLoading: false,
+    allManga: null,
+    selectedManga: null,
+    selectedChapter: null,
+    selectedPage: null,
+    selectedPageIndex: 0,
+    mangaLoading: false
   },
   mutations,
   actions

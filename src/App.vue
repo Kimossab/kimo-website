@@ -1,21 +1,28 @@
 <template>
-  <DarkToggle />
-  <LunaViewer />
-  <Header></Header>
-  <Nav></Nav>
-  <div :class="['content-container', $route.name]">
+  <template v-if="!exceptions.includes($route.name)">
+    <DarkToggle />
+    <LunaViewer />
+    <Header></Header>
+    <Nav></Nav>
+    <div :class="['content-container', $route.name]">
+      <router-view v-slot="{ Component }">
+        <transition
+          @before-enter="beforeEnter"
+          @enter="enter"
+          @leave="leave"
+          :css="false"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </div>
+    <Footer />
+  </template>
+  <template v-else>
     <router-view v-slot="{ Component }">
-      <transition
-        @before-enter="beforeEnter"
-        @enter="enter"
-        @leave="leave"
-        :css="false"
-      >
-        <component :is="Component" />
-      </transition>
+      <component :is="Component" />
     </router-view>
-  </div>
-  <Footer />
+  </template>
 </template>
 
 <script lang="ts">
@@ -44,6 +51,8 @@ import { fixBodyHeight } from "@/helpers/common";
   }
 })
 export default class App extends Vue {
+  exceptions = ["manga"];
+
   private get darkMode() {
     return this.$store.state.darkMode;
   }
