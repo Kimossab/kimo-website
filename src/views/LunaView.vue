@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LunaGallery from "@/components/luna/LunaGallery.vue";
+import LunaViewer from "@/components/luna/LunaViewer.vue";
 import { useLuna } from "@/stores/luna";
 
 const luna = useLuna();
@@ -20,4 +21,7 @@ luna.selectPicture(null);
     </div>
     <LunaGallery />
   </div>
+  <Teleport to="body">
+    <LunaViewer />
+  </Teleport>
 </template>

@@ -3,7 +3,6 @@ import DarkToggle from "@/components/DarkToggle.vue";
 import PageNav from "@/components/PageNav.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import PageFooter from "@/components/PageFooter.vue";
-import LunaViewer from "@/components/luna/LunaViewer.vue";
 import type { RouteRecordName } from "vue-router";
 import { useAppStore } from "./stores/app";
 import { watch } from "vue";
@@ -36,7 +35,6 @@ watch(
 <template>
   <template v-if="!$route.name || !routeExceptions.includes($route.name)">
     <DarkToggle />
-    <LunaViewer />
     <PageHeader />
     <PageNav />
     <div :class="['content-container', $route.name]">
