@@ -1,5 +1,6 @@
-**Sep. 2013 - Jul. 2016**  
-Informatics Engineering at [ESCOLA SUPERIOR DE TECNOLOGIA E GESTÃO DE VISEU - INSTITUTO POLITÉCNICO DE VISEU](http://www.estgv.ipv.pt/estgv)
+**2013-09 - 2016-07**  
+Informatics Engineering  
+#### [ESCOLA SUPERIOR DE TECNOLOGIA E GESTÃO DE VISEU - INSTITUTO POLITÉCNICO DE VISEU](http://www.estgv.ipv.pt/estgv)
 {{description}}
 3 year Bachelor's degree in Informatics Engineering with a final grade of 14 out of 20.  
 <br />
