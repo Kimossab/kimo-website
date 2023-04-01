@@ -5,8 +5,14 @@ Sofware Engineer
 Work as contractor for other companies as well as internal projects.  
 Projects I've been involved in:  
 
-[Tamanna](https://www.tamanna.com/) <sub> - 2021-03 - 2021-08</sub>
-- I worked as a frontend developer for the website. React project.  
+[Skill Management System](#) <sub> - 2021-03 - Present</sub>
+- This is an internal project where I worked as a front end developer. After being in the project since almost the beginning of it I've taken the leadership of the frontend team, focusing mainly on code reviewing and helping other developers with questions and other problems.  
+The project is built in React.  
+
+[WTX](https://wtx.com/) <sub> - 2023-01 - 2023-03</sub>
+- WTX is a company focused on the sale of used trucks between businesses.  
+Joined as part of the "Automation" team, which was responsible mostly for the backend and backoffice of the application. My main role was backend developer, but helped with the frontend when required.  
+The project is built in Nest with Typescript.  
 
 [Cazoo](https://www.cazoo.com) <sub>- 2021-08 - 2022-12</sub>
 - In cazoo I worked as part of the Car Care team, which was the team responsible for the extras in a purchase of car (extended warranty, insurance, service plans, etc.). Our team had a lot of different responsibilities, from the frontend to the backend. The last 4 months I switched to the Order Management team which was a team focused on backend to manage and store orders relevant data.  
@@ -14,14 +20,8 @@ Projects I've been involved in:
 - As part of these teams I was involved in all the processes of the teams, from infrastructure, whichincluded moving from CircleCI to Github Actions, to AWS management, OpsGenie alerts, Kibana/Datadogmonitoring dashboards and frontend/backend developments.  
 - As the project was divided in multiple teams, each with a very specific focus, and our initiativesalways impacted other teams, I've been involved alongside the rest of the team in plannings and interteam communications and contract negotiations.  
 
-[WTX](https://wtx.com/) <sub> - 2023-01 - 2023-03</sub>
-- WTX is a company focused on the sale of used trucks between businesses.  
-Joined as part of the "Automation" team, which was responsible mostly for the backend and backoffice of the application. My main role was backend developer, but helped with the frontend when required.  
-The project is built in Nest with Typescript.  
-
-[Skill Management System](#) <sub> - 2021-03 - Present</sub>
-- This is an internal project where I worked as a front end developer. After being in the project since almost the beginning of it I've taken the leadership of the frontend team, focusing mainly on code reviewing and helping other developers with questions and other problems.  
-The project is built in React.
+[Tamanna](https://www.tamanna.com/) <sub> - 2021-03 - 2021-08</sub>
+- I worked as a frontend developer for the website. React project.  
 
 {{new-entry}}
 **2016-06** - **2021-02**  
