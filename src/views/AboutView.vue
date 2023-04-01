@@ -69,4 +69,8 @@ const src = parseAbout(about);
 .date {
   font-weight: bold;
 }
+
+.about H4 {
+  margin: 0;
+}
 </style>
