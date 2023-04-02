@@ -31,7 +31,10 @@ const parseDetails = (source: string) => {
     .map((experience) => {
       const xp = experience.split("{{description}}");
 
-      return `<div class="details-content flex"><div class="period">${xp[0]}</div><div class="description">${xp[1]}</div></div>`;
+      return `<div class="details-content flex">
+        <div class="border-r-2 border-solid border-gray-600 mr-4 pr-4 flex-shrink-0 w-40">${xp[0]}</div>
+        <div class="flex flex-col gap-2">${xp[1]}</div>
+        </div>`;
     })
     .join("");
 };
@@ -39,7 +42,6 @@ const parseDetails = (source: string) => {
 setTimeout(() => {
   const details = document.querySelectorAll("details");
   for (const el of details) {
-    // eslint-disable-next-line no-new
     new DetailsAnimation(el);
   }
 });
@@ -48,29 +50,17 @@ const src = parseAbout(about);
 </script>
 
 <template>
-  <div class="content about">
-    <Markdown :source="src" :html="true" />
+  <div class="w-full px-content-padding mx-auto h-full about overflow-y-auto">
+    <Markdown class="my-4 flex flex-col gap-4" :source="src" :html="true" />
   </div>
 </template>
 
-<style lang="scss">
-.details-content.flex {
-  display: flex;
-}
 
-.period {
-  border-right: 1px solid grey;
-  margin-right: 1rem;
-  padding-right: 1rem;
-  flex-shrink: 0;
-  width: 10rem;
-}
-
-.date {
-  font-weight: bold;
-}
-
-.about H4 {
-  margin: 0;
-}
-</style>
+<!--   
+  // .date {
+  //   font-weight: bold;
+  // }
+  
+  // .about H4 {
+  //   margin: 0;
+  // } -->

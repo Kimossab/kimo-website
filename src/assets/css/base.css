@@ -1,145 +1,118 @@
 @import '@/assets/css/roboto.css';
 
-:root {
-  /* COLOR */
-  --color-dark: hsl(240, 1%, 15%);
-  --color-light: hsl(240, 1%, 85%);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  --color-light-25: hsla(240, 1%, 85%, 0.25);
-  --color-dark-25: hsla(240, 1%, 15%, 0.25);
+@layer utilities {
+  .details-content {
+    @apply mt-2 p-2;
+  }
 
-  --opacity-85: rgba(0, 0, 0, 0.85);
-
-  /* SPPED */
-  --speed-faster: 0.2s;
-  --speed-fast: 0.5s;
-  --speed-medium: 1s;
-  --speed-slow: 20s;
-
-  /* FONT */
-  --font-big: 2rem;
-  --font-bigger: 3rem;
-
-  /* LENGTHS */
-  --size-short: 0.5rem;
-  --size-medium: 1rem;
-  --size-large: 2rem;
-  --size-extra-large: 3rem;
-  --size-extra-extra-large: 4rem;
-
-  --header-size: 6rem;
-  --footer-size: 3rem;
-
-  --content-height: calc(100vh - var(--header-size) - var(--footer-size));
-  --nav-min-height: 6rem;
-  --nav-max-height: min(41rem, 65vw, var(--content-height));
-  --nav-max-width: 75rem;
-  --tan-75: 3.73205080757;
-  --tan-75-double: calc(var(--tan-75) * 2);
-  --nav-x-pad: calc(var(--nav-max-height) / var(--tan-75-double) );
-  
-  --content-max-width: 54rem;
-
-  --nav-skew: skewX(-15deg);
-
-  /* SCALE */
-  --normal-scale: scale(1.05);
+  .no-select {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  position: relative;
+  @apply box-border;
+  @apply relative;
   scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);
-  border-radius: 20px;
-  border: transparent;
+  scrollbar-color:  rgb(161 161 170 / 0.5) transparent;
 }
 
 :root {
-  font-size: 16px;
+  @apply text-xs md:text-base;
 }
 
-@media screen and (max-width: 640px) {
-  :root {
-    font-size: 12px;
-  }
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-opacity-50 bg-zinc-400;
+  @apply rounded-2xl;
+  @apply border-transparent;
 }
 
 body {
-  font-family: "roboto";
-  position: relative;
+  @apply font-sans;
+  @apply relative;
+  @apply transition-colors duration-100;
+  @apply overflow-x-hidden;
 
-  transition: 100ms, color var(--speed-fast), background-color var(--speed-fast);
-  overflow-x: hidden;
+  @apply min-h-full w-full;
+  @apply p-0 m-0;
 
-  min-height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-
-  background: url("@/assets/bg.png") var(--color-light);
-  color: var(--color-dark);
-}
-
-body.dark {
-  background: url("@/assets/bg.png") var(--color-dark);
-  color: var(--color-light);
+  @apply bg-noise-pattern bg-stone-300 dark:bg-neutral-800;
+  @apply text-neutral-800 dark:text-stone-300;
 }
 
 button {
-  padding: 0;
-  border: none;
-  outline: none;
-  font: inherit;
-  color: inherit;
-  background: none;
-}
-
-a {
-  color: inherit;
+  @apply p-0;
+  @apply border-none outline-none;
+  @apply text-inherit bg-none;
 }
 
 code {
-  background-color: var(--color-light-25);
-  padding: 0.1rem;
-}
-
-.dark code {
-  background-color: var(--color-light-25);
-  padding: 0.1rem;
-}
-
-details:not(:last-child) {
-  margin-bottom: 1rem;
+  @apply bg-opacity-25 bg-stone-300 dark:bg-neutral-800;
+  @apply p-0.5;
 }
 
 summary {
-  cursor: pointer;
+  @apply cursor-pointer;
 }
 
-details .details-content {
-  margin-top: var(--size-medium);
-  padding: var(--size-short);
+nav {
+  @apply h-24 w-full max-w-6xl;
+  @apply py-0 px-nav-p-x mx-auto my-0;
+  @apply grid grid-cols-4 grid-rows-1 gap-4 md:gap-8;
+  @apply content-center;
+
+  @apply transition-all duration-500;
 }
 
-.noselect {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+header {
+  @apply text-5xl;
+  @apply w-full h-24;
+  @apply text-center;
+  @apply leading-[6rem];
+}
+
+footer {
+  @apply w-full h-12;
+  @apply text-sm md:text-base;
+  @apply bg-black bg-opacity-10;
+  @apply flex justify-center items-center gap-4;
+}
+
+footer a {
+  @apply no-underline;
+}
+
+h1 {
+  @apply text-4xl font-bold;
+}
+
+a {
+  @apply underline decoration-solid;
+}
+
+ul {
+  @apply list-disc ml-6;
+}
+
+li {
+  @apply mt-2 first:mt-0;
 }

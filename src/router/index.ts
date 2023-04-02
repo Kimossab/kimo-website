@@ -3,17 +3,17 @@ import {
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import BotView from "../views/BotView.vue";
 import LunaView from "../views/LunaView.vue";
 import MangaView from "../views/MangaView.vue";
+import type { DefineComponent } from 'vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: null as unknown as DefineComponent
   },
   {
     path: "/about",

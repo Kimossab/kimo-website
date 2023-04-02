@@ -18,7 +18,7 @@ if (
   store.darkMode = true;
 }
 
-document.body.classList.toggle("dark", store.darkMode);
+document.documentElement.classList.toggle("dark", store.darkMode);
 
 window
   .matchMedia("(prefers-color-scheme: dark)")
@@ -28,8 +28,9 @@ window
 
 watch(
   () => store.darkMode,
-  () => document.body.classList.toggle("dark", store.darkMode)
+  () => document.documentElement.classList.toggle("dark", store.darkMode)
 );
+
 </script>
 
 <template>
@@ -37,13 +38,15 @@ watch(
     <DarkToggle />
     <PageHeader />
     <PageNav />
-    <div :class="['content-container', $route.name]">
-      <router-view v-slot="{ Component }">
-        <transition name="scroll">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </div>
+    <Transition name="curtain" :appear="false">
+      <div v-if="$route.name !== 'home'" class="w-screen relative h-content overflow-hidden mt-0.5">
+        <router-view v-slot="{ Component }">
+          <div class="h-content">
+            <component :is="Component" />
+          </div>
+        </router-view>
+      </div>
+    </Transition>
     <PageFooter />
   </template>
   <template v-else>
@@ -54,39 +57,15 @@ watch(
 </template>
 
 <style>
-@import "@/assets/css/base.css";
-@import "@/assets/css/transitions.css";
-
 #app {
-  width: 100vw;
-  min-height: 100vh;
+  @apply w-screen min-h-screen;
+  @apply flex flex-col justify-between
 }
 
-.content-container {
-  width: 100vw;
-  transition: var(--speed-fast);
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: calc(
-    100vh - var(--footer-size) - var(--header-size) - var(--header-size) -
-      var(--size-medium)
-  );
-  margin-top: var(--size-medium);
+.curtain-enter-active, .curtain-leave-active {
+  @apply duration-500 transition-all h-content;
 }
-
-.content-container.home {
-  height: 0;
-}
-
-.content {
-  width: 100vw;
-  position: absolute;
-  padding: 0 max(0px, calc((100vw - var(--content-max-width)) / 2));
-  transition: var(--speed-fast) ease;
-}
-
-.content > div {
-  padding: 0.5rem;
+.curtain-leave-to, .curtain-enter-from {
+  @apply !h-0;
 }
 </style>
