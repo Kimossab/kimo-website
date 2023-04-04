@@ -40,17 +40,15 @@ watch(
     <div class="h-content flex flex-col gap-2 justify-center">
       <PageNav />
       <router-view v-slot="{ Component }">
-        <Transition name="curtain" class="w-screen  mt-0.5 h-content-inner overflow-hidden" appears>
+        <transition name="curtain">
           <component :is="Component" />
-        </Transition>
+        </transition>
       </router-view>
     </div>
     <PageFooter />
   </template>
   <template v-else>
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+    <router-view />
   </template>
 </template>
 
