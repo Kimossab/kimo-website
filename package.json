@@ -8,10 +8,7 @@
     "preview": "vite preview --port 5050",
     "test:unit": "vitest --environment jsdom",
     "typecheck": "vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "story:dev": "histoire dev",
-    "story:build": "histoire build",
-    "story:preview": "histoire preview"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
@@ -39,7 +36,6 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.37.0",
     "eslint-plugin-vue": "^9.10.0",
-    "histoire": "^0.15.9",
     "jsdom": "^21.1.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
