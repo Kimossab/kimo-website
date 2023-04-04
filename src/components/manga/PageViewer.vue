@@ -2,7 +2,7 @@
 import LazyImage from "../LazyImage.vue";
 import MangaPagination from "./MangaPagination.vue";
 import { useManga } from "@/stores/manga";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const store = useManga();
@@ -53,70 +53,28 @@ const setPage = (page: number) => {
 };
 
 window.addEventListener("keyup", keyup);
+
+onUnmounted(() => {
+  window.removeEventListener('keyup', keyup);
+})
 </script>
 
 <template>
-  <div class="manga-page" ref="main">
-    <MangaPagination
-      :top="true"
-      :selectedPage="(store.page?.index || 0) + 1"
-      :pages="store.pageCount"
-      @previous="previous"
-      @next="next"
-      @setPage="setPage"
-    />
-    <div class="display">
-      <template
-        v-for="(p, index) in store.chapter?.pages"
-        :key="`btn-page-${top ? 'top' : 'bottom'}-${index}`"
-      >
-        <LazyImage
-          :src="p"
-          :alt="`page-${index}`"
-          v-show="store.page?.index === index"
-        />
+  <div class="max-w-full" ref="main">
+    <MangaPagination :top="true" :selectedPage="(store.page?.index || 0) + 1" :pages="store.pageCount"
+      @previous="previous" @next="next" @setPage="setPage" />
+    <div class="flex justify-center relative">
+      <template v-for="(p, index) in store.chapter?.pages" :key="`btn-page-${top ? 'top' : 'bottom'}-${index}`">
+        <LazyImage styling="max-w-full" :src="p" :alt="`page-${index}`" v-show="store.page?.index === index" />
       </template>
 
-      <div class="page-switcher">
+      <div class="absolute top-0 left-0 w-full h-full grid grid-cols-3">
         <div class="left" @click="previous"></div>
         <div class="center"></div>
         <div class="right" @click="next"></div>
       </div>
     </div>
-    <MangaPagination
-      :top="false"
-      :selectedPage="(store.page?.index || 0) + 1"
-      :pages="store.pageCount"
-      @previous="previous"
-      @next="next"
-      @setPage="setPage"
-    />
+    <MangaPagination :top="false" :selectedPage="(store.page?.index || 0) + 1" :pages="store.pageCount"
+      @previous="previous" @next="next" @setPage="setPage" />
   </div>
 </template>
-
-<style>
-.manga-page {
-  max-width: 100%;
-}
-.manga-page .display {
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-.manga-page .display img {
-  max-width: 100%;
-}
-
-.manga-page .display .page-switcher {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
-  opacity: 25%;
-}
-</style>

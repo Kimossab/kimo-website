@@ -11,16 +11,10 @@ const emit = defineEmits<Emits>();
 </script>
 
 <template>
-  <div class="manga-list">
+  <div>
     <template v-for="(manga, index) of store.list" :key="manga.name">
       <MangaListSingle @click="emit('select', index)" :data="manga" />
     </template>
   </div>
 </template>
 
-<style>
-.manga-list {
-  margin: 0;
-  padding: 0 !important;
-}
-</style>

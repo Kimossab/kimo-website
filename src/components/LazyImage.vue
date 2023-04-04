@@ -2,6 +2,7 @@
 interface Props {
   src: string;
   alt: string;
+  styling?: string;
 }
 
 defineProps<Props>();
@@ -9,6 +10,6 @@ defineProps<Props>();
 
 <template>
   <figure v-lazyimg>
-    <img class="w-full rounded-lg" :data-url="src" :alt="alt" />
+    <img :class="styling ?? 'w-full rounded-lg'" :data-url="src" :alt="alt" />
   </figure>
 </template>

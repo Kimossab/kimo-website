@@ -9,12 +9,13 @@ const toggle = () => {
 </script>
 
 <template>
-  <div class="dark__toggle" @click="toggle">
+  <div class="absolute right-0 top-0 z-10 cursor-pointer w-10 h-10 flex justify-center" @click="toggle">
     <transition name="scroll-dark-mode">
-      <div class="light" v-if="store.darkMode">
+      <div class="absolute text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-500"
+        v-if="store.darkMode">
         <font-awesome-icon icon="sun"></font-awesome-icon>
       </div>
-      <div class="dark" v-else>
+      <div class="absolute text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-500" v-else>
         <font-awesome-icon icon="moon"></font-awesome-icon>
       </div>
     </transition>
@@ -22,24 +23,13 @@ const toggle = () => {
 </template>
 
 <style>
-.dark__toggle {
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 2rem;
-  z-index: 10;
-  cursor: pointer;
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  justify-content: center;
+.scroll-dark-mode-enter-from {
+  @apply !-translate-x-1/2 !-translate-y-full;
+  @apply opacity-0;
 }
 
-.dark__toggle div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: 500ms;
+.scroll-dark-mode-leave-to {
+  @apply !-translate-x-1/2 !translate-y-1/2;
+  @apply opacity-0;
 }
 </style>

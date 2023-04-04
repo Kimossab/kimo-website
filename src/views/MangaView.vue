@@ -4,36 +4,10 @@ import ChapterList from "@/components/manga/ChapterList.vue";
 import PageViewer from "@/components/manga/PageViewer.vue";
 import { useManga } from "@/stores/manga";
 import { useRouter, useRoute } from "vue-router";
-// import { watch } from "vue";
 
 const router = useRouter();
 const route = useRoute();
 const store = useManga();
-
-// watch(
-//   () => route.params,
-//   async () => {
-//     const { mangaId, chapterId, pageId } = route.params;
-
-//     await store.selectManga(
-//       [undefined, ""].includes(mangaId as string | undefined)
-//         ? null
-//         : Number(mangaId)
-//     );
-
-//     store.selectChapter(
-//       [undefined, ""].includes(chapterId as string | undefined)
-//         ? null
-//         : Number(chapterId)
-//     );
-
-//     store.selectPage(
-//       [undefined, ""].includes(pageId as string | undefined)
-//         ? null
-//         : Number(pageId) - 1
-//     );
-//   }
-// );
 
 store.loadManga(
   route.params.mangaId as string,
@@ -72,16 +46,18 @@ const breadcrumbClick = async (data: {
 </script>
 
 <template>
-  <div class="content manga">
-    <h1>Manga</h1>
+  <div class="w-full p-8 mx-auto h-screen about overflow-y-auto">
+    <h1 class="mb-4 mt-2 flex">Manga</h1>
 
-    <div class="loader" v-if="store.loading">
+    <div class="w-full h-full flex justify-center items-center" v-if="store.loading">
       <FontAwesomeIcon icon="spinner" spin size="6x"></FontAwesomeIcon>
     </div>
     <template v-else>
-      <div class="breadcrumbs">
+      <div class="m-4 text-sm">
         <template v-for="crumb of store.breadcrumbs" :key="crumb.name">
-          <span @click="breadcrumbClick(crumb.data)">{{ crumb.name }}</span>
+          <button class="after:content-['>'] after:mx-1 last:after:content-['']" @click="breadcrumbClick(crumb.data)">{{
+            crumb.name
+          }}</button>
         </template>
       </div>
       <MangaList v-if="store.manga === null" @select="selectManga" />
@@ -90,28 +66,3 @@ const breadcrumbClick = async (data: {
     </template>
   </div>
 </template>
-
-<style>
-.manga {
-  padding: 1rem;
-
-  width: 100%;
-}
-.manga .loader {
-  display: flex;
-  justify-content: center;
-}
-.manga .breadcrumbs {
-  margin: 1rem;
-  padding: 0;
-  font-size: 0.9rem;
-}
-
-.manga .breadcrumbs span:hover {
-  cursor: pointer;
-}
-
-.manga .breadcrumbs span:not(:last-child)::after {
-  content: " > ";
-}
-</style>
