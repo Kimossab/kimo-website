@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "@/font-awesome-icons";
 import LazyImgLoadDirective from "@/directives/lazy-img-loading";
 import Vue3TouchEvents from "vue3-touch-events";
+import "@/assets/css/base.css";
 
 createApp(App)
   .directive("lazyimg", LazyImgLoadDirective)

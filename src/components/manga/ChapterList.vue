@@ -11,22 +11,9 @@ const emit = defineEmits<Emits>();
 </script>
 
 <template>
-  <div class="chapter-list">
-    <template
-      v-for="chapter of store.manga?.data.chapters"
-      :key="chapter.number"
-    >
-      <ChapterListSingle
-        @click="emit('select', chapter.number)"
-        :data="chapter"
-      />
+  <div class="flex flex-wrap gap-4">
+    <template v-for="chapter of store.manga?.data.chapters" :key="chapter.number">
+      <ChapterListSingle @click="emit('select', chapter.number)" :data="chapter" />
     </template>
   </div>
 </template>
-
-<style>
-.chapter-list {
-  display: flex;
-  flex-wrap: wrap;
-}
-</style>

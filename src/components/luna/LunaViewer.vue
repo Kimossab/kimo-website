@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLuna } from "@/stores/luna";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 
 const transition = ref<"scroll-luna-left" | "scroll-luna-right">(
   "scroll-luna-left"
@@ -9,10 +9,12 @@ const transition = ref<"scroll-luna-left" | "scroll-luna-right">(
 const luna = useLuna();
 
 const nextPicture = () => {
+  console.log('next picture')
   luna.nextPicture();
   transition.value = "scroll-luna-left";
 };
 const previousPicture = () => {
+  console.log('previousPicture')
   luna.previousPicture();
   transition.value = "scroll-luna-right";
 };
@@ -70,19 +72,19 @@ const scrollerClass = (index: number): string | null => {
   const rightest2 = luna.selectedIndex + 4;
 
   if (index === luna.selectedIndex) {
-    return "center";
+    return "w-24 col-start-4";
   }
   if (index === lefter) {
-    return "lefter";
+    return "h-auto w-12 col-start-2";
   }
   if (index === left) {
-    return "left";
+    return "w-20 col-start-3";
   }
   if (index === right) {
-    return "right";
+    return "w-20 col-start-5";
   }
   if (index === righter) {
-    return "righter";
+    return "w-12 col-start-6";
   }
   if (
     index === rightest ||
@@ -90,13 +92,17 @@ const scrollerClass = (index: number): string | null => {
     index === rightest2 ||
     index === leftest2
   ) {
-    return "hidden";
+    return "w-0";
   }
   return null;
 };
 
 window.addEventListener("keyup", keyup);
-// window.removeEventListener('keyup', keyup);
+
+onUnmounted(() => {
+  window.removeEventListener('keyup', keyup);
+})
+
 
 const swipeLeft = () => {
   nextPicture();
@@ -107,199 +113,79 @@ const swipeRight = () => {
 </script>
 
 <template>
-  <div class="luna_viewer" v-if="luna.selectedIndex !== null" @click="close">
-    <div class="closer" @click.self="close"></div>
-    <div class="luna_viewer_main">
-      <div class="luna_viewer_img_container">
-        <template
-          v-for="(img, index) of luna.pictures"
-          :key="`main-${img.name}`"
-        >
+  <div
+    class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-95 z-20 opacity-100 transition-opacity duration-500 text-stone-300 grid col-[1fr_7rem] gap-4 p-2"
+    v-if="luna.selectedIndex !== null" @click="close">
+    <div class="absolute top-0 left-0 w-screen h-screen -z-[1]" @click.self="close"></div>
+    <div class="row-start-1 flex justify-center w-full h-[calc(100vh_-_9rem)]">
+      <div class="w-full">
+        <template v-for="(img, index) of luna.pictures" :key="`main-${img.name}`">
           <transition :name="transition">
-            <img
-              :src="img.original"
-              :alt="img.name"
-              v-if="index === luna.selectedIndex"
-              @click.stop
-              v-touch:swipe.left="swipeLeft"
-              v-touch:swipe.right="swipeRight"
-            />
+            <img :src="img.original" :alt="img.name" v-if="index === luna.selectedIndex" @click.stop
+              v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight"
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full object-contain duration-200" />
           </transition>
         </template>
       </div>
-      <div class="expand_button">
-        <div class="button" @click.stop="expand">
-          <font-awesome-icon icon="expand" size="2x"></font-awesome-icon>
-          <div><span>Expand</span></div>
-        </div>
+      <div class="absolute left-0 w-14 mix-blend-difference">
+        <button class="w-full flex flex-col items-center mb-2 group" @click.stop="expand">
+          <font-awesome-icon class="w-8" icon="expand" size="2x"></font-awesome-icon>
+          <div class="w-0 overflow-hidden duration-200 grid justify-center group-hover:w-14">
+            <span class="w-14 text-center duration-200">Expand</span>
+          </div>
+        </button>
       </div>
-      <div class="close_button">
-        <div class="button" @click.stop="close">
-          <font-awesome-icon icon="window-close" size="2x"></font-awesome-icon>
-          <div><span>Close</span></div>
+      <div class="absolute right-0 w-14 mix-blend-difference">
+        <div class="w-full flex flex-col items-center mb-2 group" @click.stop="close">
+          <font-awesome-icon class="w-8" icon="window-close" size="2x"></font-awesome-icon>
+          <div class="w-0 overflow-hidden duration-200 grid justify-center group-hover:w-14">
+            <span class="w-14 text-center duration-200">Close</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="bottom">
-      <template
-        v-for="(img, index) of luna.pictures"
-        :key="`scroll-${img.name}`"
-      >
-        <img
-          v-if="scrollerClass(index) !== null"
-          :class="scrollerClass(index)"
-          :src="img.thumbnail"
-          :alt="img.name"
-          @click.stop="goTo(index)"
-        />
+    <div class="flex justify-center">
+      <template v-for="(img, index) of luna.pictures" :key="`scroll-${img.name}`">
+        <img v-if="scrollerClass(index) !== null"
+          :class="[scrollerClass(index), 'cursor-pointer my-0 mx-2 duration-500 object-contain']" :src="img.thumbnail"
+          :alt="img.name" @click.stop="goTo(index)" />
       </template>
     </div>
   </div>
 </template>
 
 <style>
-.luna_viewer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #000000f1;
-  z-index: 100;
-  opacity: 1;
-  transition: opacity var(--speed-fast);
-  color: var(--color-light);
-
-  display: grid;
-  grid-template-rows: 1fr 7rem;
-  grid-gap: 1rem;
-
-  padding: 0.5rem;
+.scroll-luna-left-enter-active,
+.scroll-luna-left-leave-active {
+  @apply h-full;
+  @apply overflow-auto;
 }
 
-.luna_viewer .closer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  z-index: -1;
+.scroll-luna-left-enter-from {
+  @apply !left-full;
+  @apply !translate-x-0 !-translate-y-1/2;
 }
 
-.luna_viewer .button {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 0.5rem;
-
-  cursor: pointer;
-}
-.luna_viewer .button svg {
-  width: 2rem;
+.scroll-luna-left-leave-to {
+  @apply !left-0;
+  @apply !-translate-x-full !-translate-y-1/2;
 }
 
-.luna_viewer .button div {
-  width: 0;
-  overflow: hidden;
-  transition: var(--speed-faster);
-  display: grid;
-  justify-content: center;
+/** scroll luna right */
+.scroll-luna-right-enter-active,
+.scroll-luna-right-leave-active {
+  @apply h-full;
+  @apply overflow-auto;
 }
 
-.luna_viewer .button div span {
-  width: 3.5rem;
-  text-align: center;
-  transition: var(--speed-faster);
+.scroll-luna-right-enter-from {
+  @apply !left-0;
+  @apply !-translate-x-full !-translate-y-1/2;
 }
 
-.luna_viewer .button:hover div {
-  width: 3.5rem;
-}
-
-.luna_viewer_main {
-  grid-row: 1;
-
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: calc(100vh - 9rem);
-}
-.expand_button {
-  position: absolute;
-  left: 0;
-  width: 3.5rem;
-
-  mix-blend-mode: difference;
-}
-
-.close_button {
-  position: absolute;
-  right: 0;
-  width: 3.5rem;
-
-  mix-blend-mode: difference;
-}
-
-.luna_viewer_img_container {
-  width: 100%;
-}
-
-.luna_viewer_img_container img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  max-width: 100%;
-  max-height: 100%;
-
-  object-fit: contain;
-
-  transition: var(--speed-faster);
-}
-
-.bottom {
-  display: flex;
-
-  justify-content: center;
-}
-.bottom > * {
-  cursor: pointer;
-  margin: 0 0.5rem;
-  transition: var(--speed-fast);
-  object-fit: contain;
-}
-
-.bottom .hidden {
-  width: 0;
-}
-
-.bottom .lefter {
-  height: auto;
-  width: 3rem;
-  grid-column: 2;
-}
-
-.bottom .left {
-  width: 5rem;
-  grid-column: 3;
-}
-
-.bottom .center {
-  width: 6rem;
-  grid-column: 4;
-}
-
-.bottom .right {
-  width: 5rem;
-  grid-column: 5;
-}
-
-.bottom .righter {
-  width: 3rem;
-  grid-column: 6;
+.scroll-luna-right-leave-to {
+  @apply !left-full;
+  @apply !translate-x-0 !-translate-y-1/2;
 }
 </style>

@@ -18,7 +18,7 @@ if (
   store.darkMode = true;
 }
 
-document.body.classList.toggle("dark", store.darkMode);
+document.documentElement.classList.toggle("dark", store.darkMode);
 
 window
   .matchMedia("(prefers-color-scheme: dark)")
@@ -28,20 +28,21 @@ window
 
 watch(
   () => store.darkMode,
-  () => document.body.classList.toggle("dark", store.darkMode)
+  () => document.documentElement.classList.toggle("dark", store.darkMode)
 );
+
 </script>
 
 <template>
   <template v-if="!$route.name || !routeExceptions.includes($route.name)">
     <DarkToggle />
     <PageHeader />
-    <PageNav />
-    <div :class="['content-container', $route.name]">
+    <div class="h-content flex flex-col gap-2 justify-center">
+      <PageNav />
       <router-view v-slot="{ Component }">
-        <transition name="scroll">
+        <Transition name="curtain" class="w-screen  mt-0.5 h-content-inner overflow-hidden" appears>
           <component :is="Component" />
-        </transition>
+        </Transition>
       </router-view>
     </div>
     <PageFooter />
@@ -54,39 +55,16 @@ watch(
 </template>
 
 <style>
-@import "@/assets/css/base.css";
-@import "@/assets/css/transitions.css";
-
 #app {
-  width: 100vw;
-  min-height: 100vh;
+  @apply w-screen min-h-screen;
+  @apply flex flex-col justify-between
 }
 
-.content-container {
-  width: 100vw;
-  transition: var(--speed-fast);
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: calc(
-    100vh - var(--footer-size) - var(--header-size) - var(--header-size) -
-      var(--size-medium)
-  );
-  margin-top: var(--size-medium);
+.curtain-enter-active, .curtain-leave-active {
+  @apply duration-500 transition-all h-content-inner;
 }
 
-.content-container.home {
-  height: 0;
-}
-
-.content {
-  width: 100vw;
-  position: absolute;
-  padding: 0 max(0px, calc((100vw - var(--content-max-width)) / 2));
-  transition: var(--speed-fast) ease;
-}
-
-.content > div {
-  padding: 0.5rem;
+.curtain-leave-to, .curtain-enter-from {
+  @apply !h-0;
 }
 </style>

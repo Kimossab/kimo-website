@@ -103,13 +103,13 @@ export const useManga = defineStore({
 
       if (this.list.length === 0) {
         const manga: AxiosResponse<APIReply<MangaData[]>> = await axios.get(
-          `${import.meta.env.VITE_API_URL}api-manga/`
+          `${import.meta.env.VITE_API_URL}manga/`
         );
 
         if (manga.status === 200 && manga.data.status === 1) {
           this.list = manga.data.data.map((m) => ({
             ...m,
-            thumbnail: `${import.meta.env.VITE_API_URL}api-manga/${
+            thumbnail: `${import.meta.env.VITE_API_URL}manga/${
               m.folder
             }/thumb`,
           }));
@@ -142,7 +142,7 @@ export const useManga = defineStore({
           const folder = this.list[payload].folder;
           const manga: AxiosResponse<APIReply<MangaData & MangaChapterInfo>> =
             await axios.get(
-              `${import.meta.env.VITE_API_URL}api-manga/${folder}/`
+              `${import.meta.env.VITE_API_URL}manga/${folder}/`
             );
 
           if (manga.status === 200 && manga.data.status === 1) {
@@ -154,7 +154,7 @@ export const useManga = defineStore({
                   ...c,
                   pages: c.pages.map(
                     (p) =>
-                      `${import.meta.env.VITE_API_URL}api-manga/${folder}/${
+                      `${import.meta.env.VITE_API_URL}manga/${folder}/${
                         c.number
                       }/${p}`
                   ),

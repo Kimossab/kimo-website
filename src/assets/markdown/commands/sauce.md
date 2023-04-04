@@ -1,4 +1,4 @@
-We can search for the source of images, both artwork or anime screenshots through this command.  
-The bot will by default use the last image uploaded in the channel where the command is called.
+We can search for the source of images, both artwork or anime screenshots.  
+This is split into 2, one for art and the other for anime, they make use of the context menu of messages to make it easier to search for a specific image.  
 
-- **/sauce [image?] [type?]** - Command to search for the source of an image. The `image` parameter is the image to search for, and the `type` parameter is the type of image to search for. The `type` parameter can be either `art` or `anime`. If it's not specified, it will search for art.
+As such, there's no chat commands, they all go through going into the context menu of an image (right click on desktop or press and hold on mobile).
