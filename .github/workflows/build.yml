@@ -7,6 +7,7 @@ on:
 
 env:
   GH_TOKEN: ${{ github.token }}
+  VITE_API_URL: ${{ vars.VITE_API_URL }}
 
 jobs:
   build:
@@ -24,6 +25,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+
+      - run: echo VITE_API_URL="$VITE_API_URL" >> .env"
 
       - run: |
           npm ci
