@@ -51,7 +51,7 @@ const src = parseAbout(about);
 
 <template>
   <div class="w-full px-content-padding mx-auto h-full about overflow-y-auto">
-    <Markdown class="my-4 flex flex-col gap-4" :source="src" :html="true" />
+    <Markdown class="mb-4 mt-2 flex flex-col gap-4" :source="src" :html="true" />
   </div>
 </template>
 

@@ -8,7 +8,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <figure v-lazyimg class="image__wrapper">
-    <img class="image__item" :data-url="src" :alt="alt" />
+  <figure v-lazyimg>
+    <img class="w-full rounded-lg" :data-url="src" :alt="alt" />
   </figure>
 </template>

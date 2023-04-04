@@ -1,38 +1,42 @@
 All commands make use of the Discord feature of Slash Commands.  
 
-<details class="commands-anilist">
+<details>
   <summary>Anilist</summary>
   {{anilist}}
 </details>
-<details class="commands-birthday">
-  <summary>Birthday</summary>
-  {{birthday}}
-</details>
-<details class="commands-wiki">
-  <summary>Wiki</summary>
-  {{wiki}}
-</details>
-<details class="commands-sauce">
+<details>
   <summary>Sauce</summary>
   {{sauce}}
 </details>
-<details class="commands-settings">
+<details>
+  <summary>Voting</summary>
+  {{voting}}
+</details>
+<details>
   <summary>Settings</summary>
   {{settings}}
 </details>
-<details class="commands-achievements">
+<details>
+  <summary>Birthday</summary>
+  {{birthday}}
+</details>
+<details>
   <summary>Achievements</summary>
   {{achievements}}
 </details>
-<details class="commands-vn">
-  <summary>VN</summary>
-  {{vn}}
+<details>
+  <summary>Badges</summary>
+  {{badges}}
 </details>
-<details class="commands-misc">
+<details>
+  <summary>Fandom</summary>
+  {{fandom}}
+</details>
+<details>
   <summary>Misc</summary>
   {{misc}}
 </details>
-<details class="commands-badges">
-  <summary>Badges</summary>
-  {{badges}}
+<details>
+  <summary>VNDB</summary>
+  {{vndb}}
 </details>

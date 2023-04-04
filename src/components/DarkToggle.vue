@@ -27,7 +27,7 @@ const toggle = () => {
   right: 0;
   top: 0;
   font-size: 2rem;
-  z-index: 88;
+  z-index: 10;
   cursor: pointer;
   width: 2.5rem;
   height: 2.5rem;

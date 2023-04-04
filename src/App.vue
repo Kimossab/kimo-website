@@ -37,16 +37,14 @@ watch(
   <template v-if="!$route.name || !routeExceptions.includes($route.name)">
     <DarkToggle />
     <PageHeader />
-    <PageNav />
-    <Transition name="curtain" :appear="false">
-      <div v-if="$route.name !== 'home'" class="w-screen relative h-content overflow-hidden mt-0.5">
-        <router-view v-slot="{ Component }">
-          <div class="h-content">
-            <component :is="Component" />
-          </div>
-        </router-view>
-      </div>
-    </Transition>
+    <div class="h-content flex flex-col gap-2 justify-center">
+      <PageNav />
+      <router-view v-slot="{ Component }">
+        <Transition name="curtain" class="w-screen  mt-0.5 h-content-inner overflow-hidden" appears>
+          <component :is="Component" />
+        </Transition>
+      </router-view>
+    </div>
     <PageFooter />
   </template>
   <template v-else>
@@ -63,8 +61,9 @@ watch(
 }
 
 .curtain-enter-active, .curtain-leave-active {
-  @apply duration-500 transition-all h-content;
+  @apply duration-500 transition-all h-content-inner;
 }
+
 .curtain-leave-to, .curtain-enter-from {
   @apply !h-0;
 }

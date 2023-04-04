@@ -1,3 +1,3 @@
 <template>
-  <header>Kimossab</header>
+  <header class="no-select">Kimossab</header>
 </template>

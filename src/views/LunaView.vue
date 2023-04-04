@@ -10,8 +10,8 @@ luna.selectPicture(null);
 </script>
 
 <template>
-  <div class="content luna">
-    <div>
+  <div class="w-full px-content-padding mx-auto h-full about overflow-y-auto">
+    <div class="mb-4 mt-2 flex flex-col gap-4">
       <h1>Luna</h1>
       <p>
         Luna is the name of my dog, it's a Labrador.
@@ -20,8 +20,8 @@ luna.selectPicture(null);
       </p>
     </div>
     <LunaGallery />
+    <Teleport to="body">
+      <LunaViewer />
+    </Teleport>
   </div>
-  <Teleport to="body">
-    <LunaViewer />
-  </Teleport>
 </template>

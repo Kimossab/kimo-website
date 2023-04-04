@@ -14,7 +14,8 @@ module.exports = {
         'noise-pattern': "url('@/assets/bg.png')",
       },
       spacing: {
-        content: "calc(99vh - theme('spacing.24') - theme('spacing.12') - theme('spacing.24'))",
+        content: "calc(99vh - theme('spacing.24') - theme('spacing.12'))",
+        "content-inner": "calc(99vh - theme('spacing.24') - theme('spacing.12') - theme('spacing.24'))",
         "content-width": "calc(100% - 60rem)",
         "content-padding": "max(0px, calc((100% - 60rem) / 2));",
         'home-nav': "min(41rem, 50vw)",
