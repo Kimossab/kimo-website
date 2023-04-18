@@ -13,7 +13,7 @@ const emit = defineEmits<Emits>();
 <template>
   <div>
     <template v-for="(manga, index) of store.list" :key="manga.name">
-      <MangaListSingle @click="emit('select', index)" :data="manga" />
+      <MangaListSingle :data="manga" @click="emit('select', index)" />
     </template>
   </div>
 </template>

@@ -18,9 +18,11 @@ const store = useAppStore();
       <button
         class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select">
         <div class="absolute top-0 left-0 w-full h-full opacity-50">
-          <img v-if="store.darkMode" src="@/assets/about.png" alt="About me"
+          <img
+v-if="store.darkMode" src="@/assets/about.png" alt="About me"
             class="w-full h-home-nav object-cover object-left-top no-select" />
-          <img v-else src="@/assets/about-light.png" alt="About me"
+          <img
+v-else src="@/assets/about-light.png" alt="About me"
             class="w-full h-home-nav object-cover object-left-top no-select" />
         </div>
         <div class="text-3xl skew-x-12 dark:mix-blend-plus-lighter">About</div>
@@ -30,9 +32,11 @@ const store = useAppStore();
       <button
         class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select">
         <div class="absolute top-0 left-0 w-full h-full opacity-50">
-          <img v-if="store.darkMode" src="@/assets/bot.png" alt="Bot"
+          <img
+v-if="store.darkMode" src="@/assets/bot.png" alt="Bot"
             class="w-full h-home-nav object-cover object-left-top no-select" />
-          <img v-else src="@/assets/bot-light.png" alt="Bot"
+          <img
+v-else src="@/assets/bot-light.png" alt="Bot"
             class="w-full h-home-nav object-cover object-left-top no-select" />
         </div>
         <div class="text-3xl skew-x-12 dark:mix-blend-plus-lighter">Bot</div>

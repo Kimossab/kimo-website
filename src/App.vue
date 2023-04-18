@@ -9,7 +9,7 @@ import { watch } from "vue";
 
 const store = useAppStore();
 
-const routeExceptions: RouteRecordName[] = ["manga"];
+const routeExceptions: RouteRecordName[] = ["manga", "amq"];
 
 if (
   window.matchMedia &&
@@ -30,7 +30,6 @@ watch(
   () => store.darkMode,
   () => document.documentElement.classList.toggle("dark", store.darkMode)
 );
-
 </script>
 
 <template>
@@ -48,21 +47,25 @@ watch(
     <PageFooter />
   </template>
   <template v-else>
-    <router-view />
+    <Suspense>
+      <router-view />
+    </Suspense>
   </template>
 </template>
 
 <style>
 #app {
   @apply w-screen min-h-screen;
-  @apply flex flex-col justify-between
+  @apply flex flex-col justify-between;
 }
 
-.curtain-enter-active, .curtain-leave-active {
+.curtain-enter-active,
+.curtain-leave-active {
   @apply duration-500 transition-all h-content-inner;
 }
 
-.curtain-leave-to, .curtain-enter-from {
+.curtain-leave-to,
+.curtain-enter-from {
   @apply !h-0;
 }
 </style>

@@ -5,12 +5,19 @@ class DetailsAnimation {
   private animation: Animation | null = null;
   private isClosing = false;
   private isExpanding = false;
+  private onClickHandler = (e: Event) => this.onClick(e);
+  private duration: number;
 
-  constructor(el: HTMLDetailsElement) {
+  constructor(el: HTMLDetailsElement, duration = 200) {
     this.element = el;
     this.summary = el.querySelector("summary");
     this.content = el.querySelector(".details-content");
-    this.summary?.addEventListener("click", (e) => this.onClick(e));
+    this.summary?.addEventListener("click", this.onClickHandler);
+    this.duration = duration;
+  }
+
+  destructor() {
+    this.summary?.removeEventListener("click", this.onClickHandler);
   }
 
   onClick(e: Event) {
@@ -40,7 +47,7 @@ class DetailsAnimation {
         height: [startHeight, endHeight],
       },
       {
-        duration: 100,
+        duration: this.duration,
       }
     );
 
@@ -71,7 +78,7 @@ class DetailsAnimation {
           height: [startHeight, endHeight],
         },
         {
-          duration: 100,
+          duration: this.duration,
         }
       );
       this.animation.onfinish = () => this.onAnimationFinish(true);

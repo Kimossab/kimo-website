@@ -8,6 +8,7 @@ import BotView from "../views/BotView.vue";
 import LunaView from "../views/LunaView.vue";
 import MangaView from "../views/MangaView.vue";
 import HomeView from "../views/HomeView.vue";
+import AMQView from "../views/AMQView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/manga/:mangaId?/:chapterId?/:pageId?",
     name: "manga",
     component: MangaView,
+  },
+  {
+    path: "/amq/",
+    name: "amq",
+    component: AMQView,
   },
 ];
 

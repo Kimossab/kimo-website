@@ -55,17 +55,31 @@ const setPage = (page: number) => {
 window.addEventListener("keyup", keyup);
 
 onUnmounted(() => {
-  window.removeEventListener('keyup', keyup);
-})
+  window.removeEventListener("keyup", keyup);
+});
 </script>
 
 <template>
-  <div class="max-w-full" ref="main">
-    <MangaPagination :top="true" :selectedPage="(store.page?.index || 0) + 1" :pages="store.pageCount"
-      @previous="previous" @next="next" @setPage="setPage" />
+  <div ref="main" class="max-w-full">
+    <MangaPagination
+      :top="true"
+      :selected-page="(store.page?.index || 0) + 1"
+      :pages="store.pageCount"
+      @previous="previous"
+      @next="next"
+      @set-page="setPage"
+    />
     <div class="flex justify-center relative">
-      <template v-for="(p, index) in store.chapter?.pages" :key="`btn-page-${top ? 'top' : 'bottom'}-${index}`">
-        <LazyImage styling="max-w-full" :src="p" :alt="`page-${index}`" v-show="store.page?.index === index" />
+      <template
+        v-for="(p, index) in store.chapter?.pages"
+        :key="`btn-page-${top ? 'top' : 'bottom'}-${index}`"
+      >
+        <LazyImage
+          v-show="store.page?.index === index"
+          styling="max-w-full"
+          :src="p"
+          :alt="`page-${index}`"
+        />
       </template>
 
       <div class="absolute top-0 left-0 w-full h-full grid grid-cols-3">
@@ -74,7 +88,13 @@ onUnmounted(() => {
         <div class="right" @click="next"></div>
       </div>
     </div>
-    <MangaPagination :top="false" :selectedPage="(store.page?.index || 0) + 1" :pages="store.pageCount"
-      @previous="previous" @next="next" @setPage="setPage" />
+    <MangaPagination
+      :top="false"
+      :selected-page="(store.page?.index || 0) + 1"
+      :pages="store.pageCount"
+      @previous="previous"
+      @next="next"
+      @set-page="setPage"
+    />
   </div>
 </template>
