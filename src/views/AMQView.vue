@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import GeneralInfo from "@/components/amq/GeneralInfo.vue";
-import SinglePlaylist from "@/components/amq/SinglePlaylist.vue";
-import GroupDetails from "@/components/amq/GroupDetails.vue";
-import { AmqTournament } from "@/helpers/AmqTournament";
+import axios from "axios";
+import type { ITournament } from "@/helpers/AMQ";
+import AmqPlaylists from "@/components/amq/AmqPlaylists.vue";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
+import GroupDetails from "@/components/amq/GroupDetails.vue";
+import GeneralInfo from "@/components/amq/GeneralInfo.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 
-const tournament = await AmqTournament.getInstance();
+const tournament: ITournament = (
+  await axios.get(
+    `${import.meta.env.VITE_API_URL}amq/tournament/643eeccf2d2885378cc510db`
+  )
+)?.data;
 
 const detailsPlayers = ref(null);
 const detailsGroups = ref(null);
@@ -40,14 +45,8 @@ onUnmounted(() => {
       <details ref="detailsPlayers">
         <summary class="font-bold text-lg">Players & Playlists</summary>
         <div class="details-content">
-          <div class="flex flex-col">
-            <SinglePlaylist
-              v-for="[name, playlist] of tournament.playlists"
-              :key="name"
-              :name="name"
-              :playlist="playlist"
-            />
-          </div>
+          <AmqPlaylists :tournament="tournament" />
+          <div class="flex flex-col"></div>
         </div>
       </details>
     </div>
@@ -57,7 +56,7 @@ onUnmounted(() => {
       <details ref="detailsGroups">
         <summary class="font-bold text-lg">Groups</summary>
         <div class="details-content">
-          <GroupDetails></GroupDetails>
+          <GroupDetails :tournament="tournament" />
         </div>
       </details>
     </div>
@@ -65,7 +64,7 @@ onUnmounted(() => {
     <hr />
     <div class="mt-2 mb-4 flex flex-col gap-4">
       <h2 class="font-bold text-lg">Overall Stats & Info</h2>
-      <GeneralInfo />
+      <GeneralInfo :tournament="tournament" />
     </div>
   </div>
 </template>

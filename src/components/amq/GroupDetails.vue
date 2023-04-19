@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { AmqTournament } from "@/helpers/AmqTournament";
+import type { ITournament } from "@/helpers/AMQ";
 
-const tournament = await AmqTournament.getInstance();
+interface Props {
+  tournament: ITournament;
+}
+
+defineProps<Props>();
 </script>
 
 <template>
   <div class="flex flex-col gap-2 my-2">
     <div
-      v-for="(group, index) in tournament.groups"
+      v-for="(group, index) in tournament.phases[0].groups"
       :key="JSON.stringify(group)"
       class="border rounded"
     >
@@ -24,21 +28,43 @@ const tournament = await AmqTournament.getInstance();
           {{ header }}
         </div>
         <hr class="col-span-5" />
-        <template v-for="player in group" :key="player.player">
+        <template v-for="player in group.players" :key="player">
           <div class="text-center">
-            {{ player.player }}
+            {{ player }}
           </div>
           <div class="text-center">
-            {{ player.matches.length }}
+            {{
+              group.matches.filter(
+                (m) => m.player1 === player || m.player2 === player
+              ).length
+            }}
           </div>
           <div class="text-center">
-            {{ player.wins }}
+            {{
+              group.matches.filter(
+                (m) =>
+                  (m.player1 === player && m.p1Points > m.p2Points) ||
+                  (m.player2 === player && m.p1Points < m.p2Points)
+              ).length
+            }}
           </div>
           <div class="text-center">
-            {{ player.draws }}
+            {{
+              group.matches.filter(
+                (m) =>
+                  (m.player1 === player || m.player2 === player) &&
+                  m.p1Points === m.p2Points
+              ).length
+            }}
           </div>
           <div class="text-center">
-            {{ player.losses }}
+            {{
+              group.matches.filter(
+                (m) =>
+                  (m.player1 === player && m.p1Points < m.p2Points) ||
+                  (m.player2 === player && m.p1Points > m.p2Points)
+              ).length
+            }}
           </div>
         </template>
       </div>

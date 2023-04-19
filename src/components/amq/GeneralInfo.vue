@@ -10,13 +10,15 @@ import {
   Colors,
 } from "chart.js";
 import SingleDetails from "./SingleDetails.vue";
-import { AmqTournament } from "@/helpers/AmqTournament";
+import { getStatsAndInfo, type ITournament } from "@/helpers/AMQ";
 
-const tournament = await AmqTournament.getInstance();
+interface Props {
+  tournament: ITournament;
+}
 
-const { animes, artists, songs, tags, genres, seasons } = tournament.details;
-const graphs = tournament.graphData;
-const meta = tournament.meta;
+const props = defineProps<Props>();
+
+const { data, graphs, meta } = getStatsAndInfo(props.tournament);
 
 ChartJS.register(
   CategoryScale,
@@ -31,59 +33,40 @@ ChartJS.register(
 
 <template>
   <SingleDetails
-    :name="`${animes.length} Animes`"
-    :data="
-      animes.map(([anime, count]) => [
-        { key: anime.romaji, title: anime.romaji },
-        count,
-      ])
-    "
-    :graph="graphs.animes"
+    :name="`${data.anime.length} Animes`"
+    :data="data.anime"
+    :graph="graphs.anime"
   />
   <SingleDetails
-    :name="`${artists.length} Artists`"
-    :data="
-      artists.map(([artist, count]) => [{ key: artist, title: artist }, count])
-    "
-    :graph="graphs.artists"
+    :name="`${data.artist.length} Artists`"
+    :data="data.artist"
+    :graph="graphs.artist"
+  />
+  <SingleDetails :name="`${data.song.length} Songs`" :data="data.song" />
+  <SingleDetails
+    :name="`${data.tag.length} Tags`"
+    :data="data.tag"
+    :graph="graphs.tag"
   />
   <SingleDetails
-    :name="`${songs.length} Songs`"
-    :data="
-      songs.map(([song, count]) => [
-        { key: song.name, title: song.name, subtitle: song.artist },
-        count,
-      ])
-    "
+    :name="`${data.genre.length} Genres`"
+    :data="data.genre"
+    :graph="graphs.genre"
   />
   <SingleDetails
-    :name="`${tags.length} Tags`"
-    :data="tags.map(([tag, count]) => [{ key: tag, title: tag }, count])"
-    :graph="graphs.tags"
-  />
-  <SingleDetails
-    :name="`${genres.length} Genres`"
-    :data="
-      genres.map(([genre, count]) => [{ key: genre, title: genre }, count])
-    "
-    :graph="graphs.genres"
-  />
-  <SingleDetails
-    name="Seasons"
-    :data="
-      seasons.map(([season, count]) => [{ key: season, title: season }, count])
-    "
-    :graph="graphs.seasons"
+    :name="`${data.season.length} Seasons`"
+    :data="data.season"
+    :graph="graphs.season"
   />
   <div class="flex flex-wrap gap-4">
     <div class="rounded border p-2">
       Average difficulty: {{ meta.averageDifficulty }}
     </div>
     <div class="rounded border p-2">
-      Average anime score: {{ meta.averageAnimeScore }}
+      Average anime score: {{ meta.averageScore }}
     </div>
     <div class="rounded border p-2">
-      Songs shared between players: {{ meta.repeatedSongs }}
+      Songs shared between players: {{ meta.shared }}
     </div>
   </div>
 </template>
