@@ -14,14 +14,22 @@ import { html as vndb } from "@/assets/markdown/commands/vndb.md";
 import { html as misc } from "@/assets/markdown/commands/misc.md";
 import { html as badges } from "@/assets/markdown/commands/badges.md";
 import { html as voting } from "@/assets/markdown/commands/voting.md";
+import { onUnmounted } from "vue";
 
+let detailsList: DetailsAnimation[] = [];
 setTimeout(() => {
   const details = document.querySelectorAll("details");
 
   for (const el of details) {
-    // eslint-disable-next-line no-new
-    new DetailsAnimation(el);
+    detailsList.push(new DetailsAnimation(el));
   }
+});
+onUnmounted(() => {
+  for (const details of detailsList) {
+    details.destructor();
+  }
+
+  detailsList = [];
 });
 
 const parseBot = (source: string) => {
@@ -46,7 +54,10 @@ const parseBot = (source: string) => {
 const parseDetails = (source: string) => {
   const experiences = source.split("{{new-entry}}");
   return experiences
-    .map((experience) => `<div class="details-content flex flex-col gap-2">${experience}</div>`)
+    .map(
+      (experience) =>
+        `<div class="details-content flex flex-col gap-2">${experience}</div>`
+    )
     .join("");
 };
 
@@ -55,6 +66,10 @@ const src = parseBot(bot);
 
 <template>
   <div class="w-full px-content-padding mx-auto h-full about overflow-y-auto">
-    <Markdown class="mb-4 mt-2 flex flex-col gap-4" :source="src" :html="true" />
+    <Markdown
+      class="mb-4 mt-2 flex flex-col gap-4"
+      :source="src"
+      :html="true"
+    />
   </div>
 </template>

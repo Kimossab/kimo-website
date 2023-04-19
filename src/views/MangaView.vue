@@ -49,7 +49,7 @@ const breadcrumbClick = async (data: {
   <div class="w-full p-8 mx-auto h-screen about overflow-y-auto">
     <h1 class="mb-4 mt-2 flex">Manga</h1>
 
-    <div class="w-full h-full flex justify-center items-center" v-if="store.loading">
+    <div v-if="store.loading" class="w-full h-full flex justify-center items-center">
       <FontAwesomeIcon icon="spinner" spin size="6x"></FontAwesomeIcon>
     </div>
     <template v-else>

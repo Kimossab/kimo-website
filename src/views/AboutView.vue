@@ -4,6 +4,7 @@ import { html as about } from "@/assets/markdown/about.md";
 import { html as education } from "@/assets/markdown/education.md";
 import { html as workExperience } from "@/assets/markdown/work_experience.md";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
+import { onUnmounted } from "vue";
 
 const getAge = () => {
   const bDay = +new Date(1995, 11, 30);
@@ -39,11 +40,21 @@ const parseDetails = (source: string) => {
     .join("");
 };
 
+let detailsList: DetailsAnimation[] = [];
+
 setTimeout(() => {
   const details = document.querySelectorAll("details");
   for (const el of details) {
-    new DetailsAnimation(el);
+    detailsList.push(new DetailsAnimation(el));
   }
+});
+
+onUnmounted(() => {
+  for (const details of detailsList) {
+    details.destructor();
+  }
+
+  detailsList = [];
 });
 
 const src = parseAbout(about);
@@ -51,10 +62,13 @@ const src = parseAbout(about);
 
 <template>
   <div class="w-full px-content-padding mx-auto h-full about overflow-y-auto">
-    <Markdown class="mb-4 mt-2 flex flex-col gap-4" :source="src" :html="true" />
+    <Markdown
+      class="mb-4 mt-2 flex flex-col gap-4"
+      :source="src"
+      :html="true"
+    />
   </div>
 </template>
-
 
 <!--   
   // .date {

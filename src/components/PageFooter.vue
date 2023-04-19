@@ -12,12 +12,14 @@ import MalIcon from "@/components/icons/MalIcon.vue";
       <font-awesome-icon icon="envelope"></font-awesome-icon>
       <span>Email</span>
     </a>
-    <a href="https://www.linkedin.com/in/luis-mc-pereira/" class="flex items-center gap-0.5 whitespace-nowrap"
+    <a
+href="https://www.linkedin.com/in/luis-mc-pereira/" class="flex items-center gap-0.5 whitespace-nowrap"
       target="_blank">
       <font-awesome-icon :icon="['fab', 'linkedin']"></font-awesome-icon>
       <span>LinkedIn</span>
     </a>
-    <a href="https://myanimelist.net/profile/Kimossab" class="flex items-center gap-0.5 whitespace-nowrap"
+    <a
+href="https://myanimelist.net/profile/Kimossab" class="flex items-center gap-0.5 whitespace-nowrap"
       target="_blank">
       <MalIcon style="width: 1em" />
       <span>MyAnimeList</span>
