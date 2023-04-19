@@ -9,7 +9,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <figure v-lazyimg>
-    <img :class="styling ?? 'w-full rounded-lg'" :data-url="src" :alt="alt" />
+  <figure v-lazyimg="src">
+    <img :class="styling ?? 'w-full rounded-lg'" :alt="alt" />
   </figure>
 </template>
