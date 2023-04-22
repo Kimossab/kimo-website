@@ -26,7 +26,7 @@ export interface Anime {
   type: AnimeType;
 }
 
-interface Song {
+export interface Song {
   name: string;
   artist: string;
   anime: string;
@@ -34,17 +34,29 @@ interface Song {
   players: string[];
 }
 
-interface GroupMatch {
+export interface MatchSong {
+  song: string;
+  artist: string;
+  videoLength: number;
+  startPoint: number;
+  correctAnswers: string[];
+  videoUrl?: string;
+  _id: string;
+}
+
+export interface GroupMatch {
   player1: string;
   player2: string;
   p1Points: number;
   p2Points: number;
-  songList: Song[];
+  songList: MatchSong[];
+  _id: string;
 }
 
-interface Group {
+export interface Group {
   players: string[];
   matches: GroupMatch[];
+  _id: string;
 }
 
 interface Phase {

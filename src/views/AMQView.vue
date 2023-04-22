@@ -56,7 +56,15 @@ onUnmounted(() => {
       <details ref="detailsGroups">
         <summary class="font-bold text-lg">Groups</summary>
         <div class="details-content">
-          <GroupDetails :tournament="tournament" />
+          <div class="flex flex-col gap-2 my-2">
+            <div
+              v-for="(group, index) in tournament.phases[0].groups"
+              :key="group._id"
+              class="border rounded"
+            >
+              <GroupDetails :group="group" :index="index" />
+            </div>
+          </div>
         </div>
       </details>
     </div>

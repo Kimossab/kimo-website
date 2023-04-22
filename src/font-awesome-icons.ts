@@ -9,6 +9,8 @@ import {
   faMoon,
   faAngleRight,
   faAngleLeft,
+  faSquareCheck,
+  faSquareXmark
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -28,5 +30,7 @@ library.add(
   faDiscord,
   faLinkedin,
   faAngleRight,
-  faAngleLeft
+  faAngleLeft,
+  faSquareCheck,
+  faSquareXmark
 );
