@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from "@/helpers/AMQ";
+import type { Group, ITournament } from "@/helpers/AMQ";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import { ref, onMounted, onUnmounted } from "vue";
 import MatchDetails from "./MatchDetails.vue";
@@ -7,6 +7,7 @@ import MatchDetails from "./MatchDetails.vue";
 interface Props {
   group: Group;
   index: number;
+  tournament: ITournament;
 }
 
 const props = defineProps<Props>();
@@ -101,6 +102,7 @@ const players = props.group.players
         v-for="match of group.matches"
         :key="match._id"
         :match="match"
+        :tournament="tournament"
       />
     </div>
   </details>

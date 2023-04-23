@@ -11,7 +11,7 @@ defineProps<Props>();
     class="border w-full h-6 bg-gradient-to-r relative from-green-500 via-amber-600 to-red-500 group"
   >
     <div
-      class="absolute right-0 h-full bg-stone-900"
+      class="absolute right-0 h-full dark:bg-neutral-700 bg-stone-300"
       :style="`width:${difficulty}%`"
     ></div>
     <div

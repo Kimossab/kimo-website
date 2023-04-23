@@ -33,8 +33,8 @@ watch(
 </script>
 
 <template>
+  <DarkToggle />
   <template v-if="!$route.name || !routeExceptions.includes($route.name)">
-    <DarkToggle />
     <PageHeader />
     <div class="h-content flex flex-col gap-2 justify-center">
       <PageNav />

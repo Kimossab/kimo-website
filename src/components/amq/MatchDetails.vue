@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { GroupMatch } from "@/helpers/AMQ";
+import type { GroupMatch, ITournament } from "@/helpers/AMQ";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import { ref, onMounted, onUnmounted } from "vue";
 import MatchSongDetails from "./MatchSongDetails.vue";
 
 interface Props {
   match: GroupMatch;
+  tournament: ITournament;
 }
 
 defineProps<Props>();
@@ -31,14 +32,15 @@ onUnmounted(() => {
       {{ match.player2 }}
     </summary>
     <div
-      class="max-w-full grid grid-cols-6 !my-0 gap-4 items-center details-content"
+      class="max-w-full grid grid-cols-7 !my-0 gap-4 items-center details-content"
     >
       <div
         v-for="header of [
+          'Anime',
           'Song',
           'Artist',
-          `${match.player1}'s guess`,
-          `${match.player2}'s guess`,
+          `Player's guesses`,
+          `From player's playlist`,
           'Song Sample',
           'Song Url',
         ]"
@@ -47,13 +49,14 @@ onUnmounted(() => {
       >
         {{ header }}
       </div>
-      <hr class="col-span-6" />
+      <hr class="col-span-7" />
       <MatchSongDetails
         v-for="song of match.songList"
         :key="song._id"
         :song="song"
         :player1="match.player1"
         :player2="match.player2"
+        :tournament="tournament"
       />
     </div>
   </details>

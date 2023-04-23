@@ -62,7 +62,11 @@ onUnmounted(() => {
               :key="group._id"
               class="border rounded"
             >
-              <GroupDetails :group="group" :index="index" />
+              <GroupDetails
+                :group="group"
+                :index="index"
+                :tournament="tournament"
+              />
             </div>
           </div>
         </div>

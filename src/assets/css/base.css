@@ -16,6 +16,25 @@
     -o-user-select: none;
     user-select: none;
   }
+  
+  .sample-section {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 0, 0, 0.5) 10px,
+      rgba(0, 0, 0, 0.5) 20px
+    );
+  }
+  .sample-section-dark {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.5) 10px,
+      rgba(255, 255, 255, 0.5) 20px
+    );
+  }
 }
 
 *,
@@ -25,6 +44,10 @@
   @apply relative;
   scrollbar-width: thin;
   scrollbar-color:  rgb(161 161 170 / 0.5) transparent;
+}
+
+* {
+  @apply  border-neutral-700 dark:border-stone-300;
 }
 
 :root {
@@ -115,4 +138,8 @@ ul {
 
 li {
   @apply mt-1 first:mt-0;
+}
+
+hr {
+  @apply border-neutral-700 dark:border-stone-300;
 }
