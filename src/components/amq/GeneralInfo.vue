@@ -58,6 +58,15 @@ ChartJS.register(
     :data="data.season"
     :graph="graphs.season"
   />
+  <SingleDetails
+    :name="`${data.playedSongs.length} Played Songs`"
+    :data="data.playedSongs"
+    :graph="graphs.playedSongs"
+  />
+  <SingleDetails
+    :name="`${data.unplayedSongs.length} Unplayed Songs`"
+    :data="data.unplayedSongs"
+  />
   <div class="flex flex-wrap gap-4">
     <div class="rounded border p-2">
       Average difficulty: {{ meta.averageDifficulty }}

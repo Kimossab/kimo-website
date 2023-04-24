@@ -10,7 +10,8 @@ import {
   faAngleRight,
   faAngleLeft,
   faSquareCheck,
-  faSquareXmark
+  faSquareXmark,
+  faCirclePlay
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -32,5 +33,6 @@ library.add(
   faAngleRight,
   faAngleLeft,
   faSquareCheck,
-  faSquareXmark
+  faSquareXmark,
+  faCirclePlay
 );

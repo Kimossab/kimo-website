@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group, ITournament } from "@/helpers/AMQ";
+import { getGroupPlayers, type Group, type ITournament } from "@/helpers/AMQ";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import { ref, onMounted, onUnmounted } from "vue";
 import MatchDetails from "./MatchDetails.vue";
@@ -25,57 +25,32 @@ onUnmounted(() => {
   matchesGroupAnimation = null;
 });
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const players = props.group.players
-  .map((player) => ({
-    name: player,
-    matches: props.group.matches.filter(
-      (m) => m.player1 === player || m.player2 === player
-    ).length,
-    wins: props.group.matches.filter(
-      (m) =>
-        (m.player1 === player && m.p1Points > m.p2Points) ||
-        (m.player2 === player && m.p1Points < m.p2Points)
-    ).length,
-    draws: props.group.matches.filter(
-      (m) =>
-        (m.player1 === player || m.player2 === player) &&
-        m.p1Points === m.p2Points
-    ).length,
-    losses: props.group.matches.filter(
-      (m) =>
-        (m.player1 === player && m.p1Points < m.p2Points) ||
-        (m.player2 === player && m.p1Points > m.p2Points)
-    ).length,
-  }))
-  .sort((a, b) => {
-    if (a.matches !== b.matches) {
-      return b.matches - a.matches;
-    }
-    if (a.wins !== b.wins) {
-      return b.wins - a.wins;
-    }
-    if (a.draws !== b.draws) {
-      return b.draws - a.draws;
-    }
-    return b.losses - a.losses;
-  });
+const players = getGroupPlayers(props.group);
 </script>
 
 <template>
   <h3 class="my-2 p-2">Group {{ index + 1 }}</h3>
   <hr />
   <div
-    class="max-w-full grid gap-4 items-center details-content grid-cols-5 p-4"
+    class="max-w-full grid gap-4 items-center details-content grid-cols-8 p-4"
   >
     <div
-      v-for="header of ['Player', 'Matches', 'Wins', 'Draws', 'Losses']"
+      v-for="header of [
+        'Player',
+        'Matches',
+        'Wins',
+        'Draws',
+        'Losses',
+        'Correct Guesses',
+        'Correct Guess Diff.',
+        'Correct Guess Avg.',
+      ]"
       :key="`${index}-${header}`"
       class="text-center"
     >
       {{ header }}
     </div>
-    <hr class="col-span-5" />
+    <hr class="col-span-8" />
     <template v-for="player in players" :key="player">
       <div class="text-center">
         {{ player.name }}
@@ -91,6 +66,15 @@ const players = props.group.players
       </div>
       <div class="text-center">
         {{ player.losses }}
+      </div>
+      <div class="text-center">
+        {{ player.correctGuesses }}
+      </div>
+      <div class="text-center">
+        {{ player.guessDifference }}
+      </div>
+      <div class="text-center">
+        {{ player.correctGuesses / player.matches || 0 }}
       </div>
     </template>
   </div>

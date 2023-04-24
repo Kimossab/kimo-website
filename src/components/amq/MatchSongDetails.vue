@@ -8,6 +8,11 @@ interface Props {
   player2: string;
 }
 
+interface Emits {
+  (e: "select", src: string): void;
+}
+
+defineEmits<Emits>();
 const props = defineProps<Props>();
 const tournamentSong = props.tournament.songs.find(
   (s) => s.name === props.song.song && s.artist === props.song.artist
@@ -94,7 +99,14 @@ const anime = props.tournament.animes.find(
     </div>
   </div>
   <div class="flex flex-col text-center">
-    <a v-if="song.videoUrl" :href="song.videoUrl" target="_blank">Song Video</a>
+    <button
+      v-if="song.videoUrl"
+      class="cursor-pointer"
+      @click="$emit('select', song.videoUrl!)"
+    >
+      <font-awesome-icon icon="fa-solid fa-circle-play" />
+      Play Video
+    </button>
     <span v-else>No video</span>
   </div>
 </template>
