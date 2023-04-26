@@ -80,10 +80,11 @@ enum Seasons {
   Fall = "Fall",
 }
 
-interface StatsDataFormat {
+export interface StatsDataFormat {
   key: string;
   title: string;
   subtitle?: string;
+  tooltip?: string;
 }
 
 const seasonDistribution = [
@@ -121,7 +122,7 @@ const sortUniqueCount = (
 const getSongData = (tournament: ITournament) => {
   const anime = new Map<string, number>();
   const artist = new Map<string, number>();
-  const songs = new Map<{ title: string; artist: string }, number>();
+  const songs = new Map<Song, number>();
   const tags = new Map<string, number>();
   const genres = new Map<string, number>();
   const season = new Map<string, number>();
@@ -135,7 +136,7 @@ const getSongData = (tournament: ITournament) => {
     const artistC = (artist.get(song.artist) || 0) + 1;
     artist.set(song.artist, artistC);
 
-    songs.set({ title: song.name, artist: song.artist }, song.players.length);
+    songs.set(song, song.players.length);
 
     for (const tag of songAnime?.tags || []) {
       tags.set(tag, (tags.get(tag) || 0) + 1);
@@ -218,8 +219,8 @@ export const getStatsAndInfo = (tournament: ITournament) => {
   sortUniqueCount(artistData);
 
   const songData: UniqueCount<StatsDataFormat> = Array.from(songs).map(
-    ([{ title, artist }, count]) => [
-      { key: `${title}-${artist}`, title, subtitle: artist },
+    ([{ name, artist, anime }, count]) => [
+      { key: `${name}-${artist}`, title: name, subtitle: artist, tooltip: anime },
       count,
     ]
   );
@@ -241,7 +242,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
     ([season, count]) => [{ key: season, title: season }, count]
   );
 
-  const playedSongs: UniqueCount<{song:string, artist: string}> = [];
+  const playedSongs: UniqueCount<MatchSong> = [];
 
   for (const phase of tournament.phases) {
     for (const group of phase.groups) {
@@ -251,25 +252,28 @@ export const getStatsAndInfo = (tournament: ITournament) => {
           if(songIdx > -1) {
             playedSongs[songIdx][1]++;
           } else {
-            playedSongs.push([{song: song.song, artist: song.artist}, 1])
+            playedSongs.push([song, 1])
           }
         }
       }
     }
   }
   const playedSongsData: UniqueCount<StatsDataFormat> = playedSongs.map(
-    ([{song, artist}, count]) => [{ key: `${song}-${artist}`, title: song, subtitle: artist }, count]
+    ([{song, artist}, count]) => {
+      const anime = Array.from(songs.keys()).find(s => s.name === song)?.anime;
+      return [{ key: `${song}-${artist}`, title: song, subtitle: artist, tooltip: anime }, count]
+    }
   );
   sortUniqueCount(playedSongsData);
 
   const unplayedSongs: UniqueCount<StatsDataFormat> = [];
 
   for (const song of songs) {
-    if(playedSongs.find(([s]) => s.song === song[0].title && s.artist === song[0].artist)) {
+    if(playedSongs.find(([s]) => s.song === song[0].name && s.artist === song[0].artist)) {
       continue;
     }
 
-    unplayedSongs.push([{ key: `${song[0].title}-${song[0].artist}`, title: song[0].title, subtitle: song[0].artist }, 0])
+    unplayedSongs.push([{ key: `${song[0].name}-${song[0].artist}`, title: song[0].name, subtitle: song[0].artist, tooltip: song[0].anime }, 0])
   }
 
   const animeGraph = getGraphData(animeData, (anime) => anime.key);

@@ -2,11 +2,11 @@
 import { Bar } from "vue-chartjs";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import { ref, onMounted, onUnmounted } from "vue";
-import type { GraphData } from "@/helpers/AMQ.js";
+import type { GraphData, StatsDataFormat } from "@/helpers/AMQ.js";
 
 interface Props {
   name: string;
-  data: [{ key: string; title: string; subtitle?: string }, number][];
+  data: [StatsDataFormat, number][];
   graph?: GraphData;
 }
 
@@ -35,6 +35,7 @@ onUnmounted(() => {
           v-for="[single, count] of data"
           :key="`${single.key}`"
           class="rounded border border-stone-100 p-1 relative"
+          :title="single.tooltip"
         >
           <span>{{ single.title }}</span>
           <span
