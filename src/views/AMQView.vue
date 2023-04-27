@@ -147,9 +147,8 @@ const sortedPlayerStats = computed(() => {
             @sort="onPlayerStatsSort"
           >
             <template
-              v-for="(player, idx) in sortedPlayerStats"
+              v-for="player in sortedPlayerStats"
               :key="`player-stats-${player.name}`"
-              #[`row-${idx}`]
             >
               <div class="text-center">{{ player.name }}</div>
               <div class="text-center">{{ player.matches }}</div>

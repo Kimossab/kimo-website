@@ -64,10 +64,6 @@ const getIcon = (header: string) => {
       ></font-awesome-icon>
     </div>
     <hr :style="colSpan" />
-    <slot
-      v-for="idx in dataLength"
-      :key="`table-${id}-${idx}`"
-      :name="`row-${idx - 1}`"
-    ></slot>
+    <slot></slot>
   </div>
 </template>
