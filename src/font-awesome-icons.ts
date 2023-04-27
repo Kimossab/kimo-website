@@ -11,7 +11,10 @@ import {
   faAngleLeft,
   faSquareCheck,
   faSquareXmark,
-  faCirclePlay
+  faCirclePlay,
+  faSort,
+  faSortUp,
+  faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -34,5 +37,8 @@ library.add(
   faAngleLeft,
   faSquareCheck,
   faSquareXmark,
-  faCirclePlay
+  faCirclePlay,
+  faSort,
+  faSortDown,
+  faSortUp
 );

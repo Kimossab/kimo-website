@@ -32,7 +32,7 @@ const players = getGroupPlayers(props.group);
   <h3 class="my-2 p-2">Group {{ index + 1 }}</h3>
   <hr />
   <div
-    class="max-w-full grid gap-4 items-center details-content grid-cols-8 p-4"
+    class="overflow-x-auto grid gap-4 items-center details-content grid-cols-[5rem_repeat(7,_1fr)] p-4"
   >
     <div
       v-for="header of [
@@ -41,9 +41,9 @@ const players = getGroupPlayers(props.group);
         'Wins',
         'Draws',
         'Losses',
-        'Correct Guesses',
-        'Correct Guess Diff.',
-        'Correct Guess Avg.',
+        'Correct',
+        'Correct Diff.',
+        'Correct Avg.',
       ]"
       :key="`${index}-${header}`"
       class="text-center"
@@ -74,7 +74,9 @@ const players = getGroupPlayers(props.group);
         {{ player.guessDifference }}
       </div>
       <div class="text-center">
-        {{ player.correctGuesses / player.matches || 0 }}
+        {{
+          Math.round((player.correctGuesses / player.matches || 0) * 100) / 100
+        }}
       </div>
     </template>
   </div>

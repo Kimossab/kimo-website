@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import axios from "axios";
-import type { ITournament } from "@/helpers/AMQ";
+import {
+  getPlayerStats,
+  type ITournament,
+  type PlayerStats as TypePlayerStats,
+} from "@/helpers/AMQ";
 import AmqPlaylists from "@/components/amq/AmqPlaylists.vue";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
-import GroupDetails from "@/components/amq/GroupDetails.vue";
 import GeneralInfo from "@/components/amq/GeneralInfo.vue";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import GroupPhase from "@/components/amq/GroupPhase.vue";
+import SimpleTable from "@/components/SimpleTable.vue";
+import AmqDifficulty from "@/components/amq/AmqDifficulty.vue";
 
 const tournament: ITournament = (
   await axios.get(
@@ -13,24 +19,70 @@ const tournament: ITournament = (
   )
 )?.data;
 
+const playerStats = getPlayerStats(tournament);
+
 const detailsPlayers = ref(null);
-const detailsGroups = ref(null);
 let detailsPlayersAnimation: DetailsAnimation | null = null;
-let detailsGroupsAnimation: DetailsAnimation | null = null;
+const detailsPlayersStats = ref(null);
+let detailsPlayersStatsAnimation: DetailsAnimation | null = null;
 
 onMounted(() => {
   if (detailsPlayers.value) {
     detailsPlayersAnimation = new DetailsAnimation(detailsPlayers.value, 500);
   }
-  if (detailsGroups.value) {
-    detailsGroupsAnimation = new DetailsAnimation(detailsGroups.value, 500);
+  if (detailsPlayersStats.value) {
+    detailsPlayersStatsAnimation = new DetailsAnimation(
+      detailsPlayersStats.value,
+      500
+    );
   }
 });
 onUnmounted(() => {
   detailsPlayersAnimation?.destructor();
   detailsPlayersAnimation = null;
-  detailsGroupsAnimation?.destructor();
-  detailsGroupsAnimation = null;
+  detailsPlayersStatsAnimation?.destructor();
+  detailsPlayersStatsAnimation = null;
+});
+
+const playerStatsSort = ref<{
+  header: keyof TypePlayerStats;
+  direction: "ASC" | "DESC";
+}>({ header: "name", direction: "ASC" });
+
+const onPlayerStatsSort = (key: string) => {
+  const value = playerStatsSort.value;
+  if (value.header !== key) {
+    playerStatsSort.value = {
+      header: key as keyof TypePlayerStats,
+      direction: "DESC",
+    };
+  } else {
+    value.direction = value.direction === "ASC" ? "DESC" : "ASC";
+  }
+};
+
+const sortedPlayerStats = computed(() => {
+  const value = playerStatsSort.value;
+
+  return [...playerStats].sort((a, b) => {
+    if (value.direction === "ASC") {
+      if (typeof a[value.header] === "string") {
+        return a[value.header]
+          .toString()
+          .localeCompare(b[value.header].toString());
+      } else {
+        return Number(a[value.header]) - Number(b[value.header]);
+      }
+    } else {
+      if (typeof a[value.header] === "string") {
+        return b[value.header]
+          .toString()
+          .localeCompare(a[value.header].toString());
+      } else {
+        return Number(b[value.header]) - Number(a[value.header]);
+      }
+    }
+  });
 });
 </script>
 
@@ -41,7 +93,7 @@ onUnmounted(() => {
     </h1>
     <hr />
     <hr />
-    <div class="mt-2 mb-4">
+    <div class="my-4">
       <details ref="detailsPlayers">
         <summary class="font-bold text-lg">Players & Playlists</summary>
         <div class="details-content">
@@ -52,29 +104,77 @@ onUnmounted(() => {
     </div>
     <hr />
     <hr />
-    <div class="mt-2 mb-4">
-      <details ref="detailsGroups">
-        <summary class="font-bold text-lg">Groups</summary>
+    <GroupPhase
+      v-for="phase in tournament.phases"
+      :key="`phase-${phase.order}`"
+      :tournament="tournament"
+      class="my-4"
+      :phase="phase"
+    />
+
+    <hr />
+    <hr />
+    <div class="my-4 flex flex-col">
+      <details ref="detailsPlayersStats">
+        <summary class="font-bold text-lg">Player Stats</summary>
         <div class="details-content">
-          <div class="flex flex-col gap-2 my-2">
-            <div
-              v-for="(group, index) in tournament.phases[0].groups"
-              :key="group._id"
-              class="border rounded"
+          <SimpleTable
+            id="playerStats"
+            :headers="[
+              { title: 'Player', key: 'name', size: '5rem', sortable: true },
+              { title: 'Matches', key: 'matches', sortable: true },
+              { title: 'Total Musics', key: 'totalMusics', sortable: true },
+              { title: 'Wins', key: 'wins', sortable: true },
+              { title: 'Total Points', key: 'totalPoints', sortable: true },
+              {
+                title: 'From Playlist',
+                key: 'musicsFromPlaylist',
+                sortable: true,
+              },
+              {
+                title: 'Avg. Difficulty',
+                key: 'averageMusicDifficulty',
+                sortable: true,
+              },
+              {
+                title: 'Correct From Other Playlist',
+                key: 'guessesFromOtherPlaylists',
+                sortable: true,
+              },
+            ]"
+            :data-length="sortedPlayerStats.length"
+            :sort="playerStatsSort"
+            @sort="onPlayerStatsSort"
+          >
+            <template
+              v-for="(player, idx) in sortedPlayerStats"
+              :key="`player-stats-${player.name}`"
+              #[`row-${idx}`]
             >
-              <GroupDetails
-                :group="group"
-                :index="index"
-                :tournament="tournament"
-              />
-            </div>
-          </div>
+              <div class="text-center">{{ player.name }}</div>
+              <div class="text-center">{{ player.matches }}</div>
+              <div class="text-center">{{ player.totalMusics }}</div>
+              <div class="text-center">{{ player.wins }}</div>
+              <div class="text-center">{{ player.totalPoints }}</div>
+              <div class="text-center">{{ player.musicsFromPlaylist }}</div>
+              <div class="text-center">
+                <AmqDifficulty
+                  class="grow-0"
+                  :difficulty="player.averageMusicDifficulty"
+                />
+              </div>
+              <div class="text-center">
+                {{ player.guessesFromOtherPlaylists }}
+              </div>
+            </template>
+          </SimpleTable>
         </div>
       </details>
     </div>
+
     <hr />
     <hr />
-    <div class="mt-2 mb-4 flex flex-col gap-4">
+    <div class="mt-4 flex flex-col gap-4">
       <h2 class="font-bold text-lg">Overall Stats & Info</h2>
       <GeneralInfo :tournament="tournament" />
     </div>

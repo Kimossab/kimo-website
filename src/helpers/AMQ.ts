@@ -59,7 +59,7 @@ export interface Group {
   _id: string;
 }
 
-interface Phase {
+export interface Phase {
   order: number;
   groups: Group[];
 }
@@ -93,6 +93,17 @@ const seasonDistribution = [
   Seasons.Summer,
   Seasons.Fall,
 ];
+
+export interface PlayerStats {
+  name: string;
+  matches: number;
+  totalMusics: number;
+  wins: number;
+  totalPoints: number;
+  musicsFromPlaylist: number;
+  averageMusicDifficulty: number;
+  guessesFromOtherPlaylists: number;
+}
 
 const getGraphData = <T>(
   data: UniqueCount<T>,
@@ -220,7 +231,12 @@ export const getStatsAndInfo = (tournament: ITournament) => {
 
   const songData: UniqueCount<StatsDataFormat> = Array.from(songs).map(
     ([{ name, artist, anime }, count]) => [
-      { key: `${name}-${artist}`, title: name, subtitle: artist, tooltip: anime },
+      {
+        key: `${name}-${artist}`,
+        title: name,
+        subtitle: artist,
+        tooltip: anime,
+      },
       count,
     ]
   );
@@ -248,20 +264,33 @@ export const getStatsAndInfo = (tournament: ITournament) => {
     for (const group of phase.groups) {
       for (const match of group.matches) {
         for (const song of match.songList) {
-          const songIdx = playedSongs.findIndex(([pSong]) => song.song === pSong.song && song.artist === pSong.artist);
-          if(songIdx > -1) {
+          const songIdx = playedSongs.findIndex(
+            ([pSong]) =>
+              song.song === pSong.song && song.artist === pSong.artist
+          );
+          if (songIdx > -1) {
             playedSongs[songIdx][1]++;
           } else {
-            playedSongs.push([song, 1])
+            playedSongs.push([song, 1]);
           }
         }
       }
     }
   }
   const playedSongsData: UniqueCount<StatsDataFormat> = playedSongs.map(
-    ([{song, artist}, count]) => {
-      const anime = Array.from(songs.keys()).find(s => s.name === song)?.anime;
-      return [{ key: `${song}-${artist}`, title: song, subtitle: artist, tooltip: anime }, count]
+    ([{ song, artist }, count]) => {
+      const anime = Array.from(songs.keys()).find(
+        (s) => s.name === song
+      )?.anime;
+      return [
+        {
+          key: `${song}-${artist}`,
+          title: song,
+          subtitle: artist,
+          tooltip: anime,
+        },
+        count,
+      ];
     }
   );
   sortUniqueCount(playedSongsData);
@@ -269,11 +298,23 @@ export const getStatsAndInfo = (tournament: ITournament) => {
   const unplayedSongs: UniqueCount<StatsDataFormat> = [];
 
   for (const song of songs) {
-    if(playedSongs.find(([s]) => s.song === song[0].name && s.artist === song[0].artist)) {
+    if (
+      playedSongs.find(
+        ([s]) => s.song === song[0].name && s.artist === song[0].artist
+      )
+    ) {
       continue;
     }
 
-    unplayedSongs.push([{ key: `${song[0].name}-${song[0].artist}`, title: song[0].name, subtitle: song[0].artist, tooltip: song[0].anime }, 0])
+    unplayedSongs.push([
+      {
+        key: `${song[0].name}-${song[0].artist}`,
+        title: song[0].name,
+        subtitle: song[0].artist,
+        tooltip: song[0].anime,
+      },
+      0,
+    ]);
   }
 
   const animeGraph = getGraphData(animeData, (anime) => anime.key);
@@ -315,7 +356,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
       genre: genreData,
       season: seasonData,
       playedSongs: playedSongsData,
-      unplayedSongs: unplayedSongs
+      unplayedSongs: unplayedSongs,
     },
     graphs: {
       anime: animeGraph,
@@ -323,7 +364,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
       tag: tagGraph,
       genre: genreGraph,
       season: seasonGraph,
-      playedSongs: playedSongsGraph
+      playedSongs: playedSongsGraph,
     },
     meta: {
       averageDifficulty,
@@ -343,7 +384,7 @@ export const getGroupPlayers = (group: Group) => {
     correctGuesses: number;
     guessDifference: number;
   }
-  
+
   const playerData = group.players.reduce<Record<string, GroupPlayerData>>(
     (acc, player) => {
       acc[player] = {
@@ -359,18 +400,18 @@ export const getGroupPlayers = (group: Group) => {
     },
     {}
   );
-  
+
   for (const match of group.matches) {
     const p1 = playerData[match.player1];
     const p2 = playerData[match.player2];
-  
+
     if (!p1 || !p2) {
       throw new Error("Unexpected no player");
     }
-  
+
     p1.matches++;
     p2.matches++;
-  
+
     if (match.p1Points > match.p2Points) {
       p1.wins++;
       p2.losses++;
@@ -381,17 +422,17 @@ export const getGroupPlayers = (group: Group) => {
       p1.draws++;
       p2.draws++;
     }
-  
+
     p1.correctGuesses += match.p1Points;
     p2.correctGuesses += match.p2Points;
-  
+
     p1.guessDifference += match.p1Points - match.p2Points;
     p2.guessDifference += match.p2Points - match.p1Points;
-  
+
     playerData[match.player1] = p1;
     playerData[match.player2] = p2;
   }
-  
+
   return Object.values(playerData).sort((a, b) => {
     if (a.matches !== b.matches) {
       return b.matches - a.matches;
@@ -410,5 +451,90 @@ export const getGroupPlayers = (group: Group) => {
     }
     return b.guessDifference - a.guessDifference;
   });
+};
 
-}
+export const getPlayerStats = (tournament: ITournament): PlayerStats[] => {
+  const winsByPlayer = tournament.phases.reduce<
+    Record<string, Omit<PlayerStats, "name">>
+  >((acc, phase) => {
+    phase.groups.forEach((group) =>
+      group.matches.forEach((match) => {
+        const songsByPlaylist = match.songList.reduce<Record<string, number>>(
+          (acc, song) => {
+            const tSong = tournament.songs.find(
+              (s) => s.artist === song.artist && s.name === song.song
+            );
+
+            if (tSong?.players.includes(match.player1)) {
+              acc[match.player1]++;
+            } else if (song.correctAnswers.includes(match.player1)) {
+              acc.notP1PlaylistCorrect++;
+            }
+            if (tSong?.players.includes(match.player2)) {
+              acc[match.player2]++;
+            } else if (song.correctAnswers.includes(match.player2)) {
+              acc.notP2PlaylistCorrect++;
+            }
+
+            acc.totalDifficulty += tSong?.difficulty || 0;
+
+            return acc;
+          },
+          {
+            [match.player1]: 0,
+            [match.player2]: 0,
+            totalDifficulty: 0,
+            notP1PlaylistCorrect: 0,
+            notP2PlaylistCorrect: 0,
+          }
+        );
+
+        acc[match.player1] = {
+          matches: (acc[match.player1]?.matches || 0) + 1,
+          wins:
+            (acc[match.player1]?.wins || 0) +
+            (match.p1Points > match.p2Points ? 1 : 0),
+          totalMusics: (acc[match.player1]?.totalMusics || 0) + 20,
+          totalPoints: (acc[match.player1]?.totalPoints || 0) + match.p1Points,
+          musicsFromPlaylist:
+            (acc[match.player1]?.musicsFromPlaylist || 0) +
+            songsByPlaylist[match.player1],
+          averageMusicDifficulty: Math.round(
+            ((acc[match.player1]?.averageMusicDifficulty || 0) +
+              songsByPlaylist.totalDifficulty / 20) /
+              2
+          ),
+          guessesFromOtherPlaylists:
+            (acc[match.player1]?.guessesFromOtherPlaylists || 0) +
+            songsByPlaylist.notP1PlaylistCorrect,
+        };
+
+        acc[match.player2] = {
+          matches: (acc[match.player2]?.matches || 0) + 1,
+          wins:
+            (acc[match.player2]?.wins || 0) +
+            (match.p2Points > match.p1Points ? 1 : 0),
+          totalMusics: (acc[match.player2]?.totalMusics || 0) + 20,
+          totalPoints: (acc[match.player2]?.totalPoints || 0) + match.p2Points,
+          musicsFromPlaylist:
+            (acc[match.player2]?.musicsFromPlaylist || 0) +
+            songsByPlaylist[match.player2],
+          averageMusicDifficulty: Math.round(
+            ((acc[match.player2]?.averageMusicDifficulty || 0) +
+              songsByPlaylist.totalDifficulty / 20) /
+              2
+          ),
+          guessesFromOtherPlaylists:
+            (acc[match.player2]?.guessesFromOtherPlaylists || 0) +
+            songsByPlaylist.notP2PlaylistCorrect,
+        };
+      })
+    );
+    return acc;
+  }, {});
+
+  return Object.keys(winsByPlayer).map((k) => ({
+    name: k,
+    ...winsByPlayer[k],
+  }));
+};
