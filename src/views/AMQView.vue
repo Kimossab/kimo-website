@@ -27,7 +27,7 @@ const selectTournament = (id: string) => {
       <div class="flex flex-wrap gap-4">
         <div
           v-for="tournament in tournamentList"
-          :key="tournament"
+          :key="tournament.id"
           class="border rounded-lg p-6 text-lg cursor-pointer"
           @click="selectTournament(tournament.id)"
         >
