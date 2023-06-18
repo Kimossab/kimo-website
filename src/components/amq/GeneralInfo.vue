@@ -67,6 +67,11 @@ ChartJS.register(
     :name="`${data.unplayedSongs.length} Unplayed Songs`"
     :data="data.unplayedSongs"
   />
+  <SingleDetails
+    :name="`Song Types`"
+    :data="data.songTypes"
+    :graph="graphs.songTypes"
+  />
   <div class="flex flex-wrap gap-4">
     <div class="rounded border p-2">
       Average difficulty: {{ meta.averageDifficulty }}

@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     component: MangaView,
   },
   {
-    path: "/amq/",
+    path: "/amq/:tournamentId?",
     name: "amq",
     component: AMQView,
   },

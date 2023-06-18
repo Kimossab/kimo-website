@@ -26,6 +26,10 @@ defineProps<Props>();
       {{ song.artist }}
     </div>
     <div class="text-center">
+      {{ song.type === 2 ? "ED" : "OP" }}
+      <span v-if="song.typeNumber">({{ song.typeNumber }})</span>
+    </div>
+    <div class="text-center">
       <AmqTags :tags="song.anime.tags" name="Tags" />
     </div>
     <div class="text-center">

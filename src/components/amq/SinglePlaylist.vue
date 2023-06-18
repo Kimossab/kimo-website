@@ -45,11 +45,11 @@ const diffAverage = Math.round(
         </div>
       </summary>
       <div
-        class="max-w-full grid grid-cols-[repeat(4,_1fr)_12rem_8rem_repeat(3,_5rem)] mt-2 gap-4 items-center details-content"
+        class="max-w-full grid grid-cols-[repeat(3,_1fr)_5rem_1fr_12rem_8rem_repeat(3,_5rem)] mt-2 gap-4 items-center details-content"
       >
         <PlaylistHeader />
 
-        <hr class="col-span-9" />
+        <hr class="col-span-10" />
 
         <PlaylistBody :playlist="playlist" :name="name" />
       </div>

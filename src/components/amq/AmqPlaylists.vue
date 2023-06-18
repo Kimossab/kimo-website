@@ -17,6 +17,8 @@ const playlists: { name: string; playlist: TournamentSong[] }[] =
         artist: song.artist,
         anime: props.tournament.animes.find((a) => a.romaji === song.anime)!,
         difficulty: song.difficulty,
+        type: song.type,
+        typeNumber: song.typeNumber,
       })),
   }));
 </script>

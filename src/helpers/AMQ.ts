@@ -9,6 +9,8 @@ export interface TournamentSong {
   artist: string;
   anime: Anime;
   difficulty: number;
+  type: SongType;
+  typeNumber: number;
 }
 
 export interface GraphData {
@@ -26,12 +28,19 @@ export interface Anime {
   type: AnimeType;
 }
 
+export enum SongType {
+  OPENING = 1,
+  ENDING = 2
+}
+
 export interface Song {
   name: string;
   artist: string;
   anime: string;
   difficulty: number;
   players: string[];
+  type: SongType;
+  typeNumber: number;
 }
 
 export interface MatchSong {
@@ -137,6 +146,7 @@ const getSongData = (tournament: ITournament) => {
   const tags = new Map<string, number>();
   const genres = new Map<string, number>();
   const season = new Map<string, number>();
+  const types = new Map<string, number>();
 
   for (const song of tournament.songs) {
     const songAnime = tournament.animes.find((a) => a.romaji === song.anime);
@@ -159,9 +169,12 @@ const getSongData = (tournament: ITournament) => {
     const key = songAnime?.season || "Fall 1979";
 
     season.set(key, (season.get(key) || 0) + 1);
+
+    const sType = song.type === SongType.ENDING ? 'ED' : 'OP'
+    types.set(sType, (types.get(sType) || 0) + 1);
   }
 
-  return { anime, artist, songs, tags, genres, season };
+  return { anime, artist, songs, tags, genres, season, types };
 };
 
 const sortSeasons = (uniques: UniqueCount<string>) => {
@@ -216,7 +229,7 @@ const fillSeasonList = (
 };
 
 export const getStatsAndInfo = (tournament: ITournament) => {
-  const { anime, artist, songs, tags, genres, season } =
+  const { anime, artist, songs, tags, genres, season, types } =
     getSongData(tournament);
 
   const animeData: UniqueCount<StatsDataFormat> = Array.from(anime).map(
@@ -229,13 +242,19 @@ export const getStatsAndInfo = (tournament: ITournament) => {
   );
   sortUniqueCount(artistData);
 
+  const songTypeData: UniqueCount<StatsDataFormat> = Array.from(types).map(
+    ([songType, count]) => [{ key: songType, title: songType }, count]
+  );
+  sortUniqueCount(songTypeData);
+
   const songData: UniqueCount<StatsDataFormat> = Array.from(songs).map(
-    ([{ name, artist, anime }, count]) => [
+    ([{ name, artist, anime, type }, count]) => [
       {
         key: `${name}-${artist}`,
         title: name,
         subtitle: artist,
         tooltip: anime,
+        type
       },
       count,
     ]
@@ -321,6 +340,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
   const artistGraph = getGraphData(artistData, (artist) => artist.key);
   const tagGraph = getGraphData(tagData, (tag) => tag.key);
   const genreGraph = getGraphData(genreData, (genre) => genre.key);
+  const songTypeGraph = getGraphData(songTypeData, (type) => type.key);
 
   const filledSeasonList = fillSeasonList(seasonData);
   const seasonGraph = getGraphData(filledSeasonList, (season) => season);
@@ -330,7 +350,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
     Math.round(
       (tournament.songs.reduce((acc, song) => acc + song.difficulty, 0) /
         tournament.songs.length) *
-        100
+      100
     ) / 100;
   const averageScore =
     Math.round(
@@ -342,7 +362,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
         return acc + (songAnime?.score || 0);
       }, 0) /
         tournament.songs.length) *
-        100
+      100
     ) / 100;
 
   const shared = tournament.songs.filter((s) => s.players.length > 1).length;
@@ -357,6 +377,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
       season: seasonData,
       playedSongs: playedSongsData,
       unplayedSongs: unplayedSongs,
+      songTypes: songTypeData
     },
     graphs: {
       anime: animeGraph,
@@ -365,6 +386,7 @@ export const getStatsAndInfo = (tournament: ITournament) => {
       genre: genreGraph,
       season: seasonGraph,
       playedSongs: playedSongsGraph,
+      songTypes: songTypeGraph
     },
     meta: {
       averageDifficulty,
@@ -502,7 +524,7 @@ export const getPlayerStats = (tournament: ITournament): PlayerStats[] => {
           averageMusicDifficulty: Math.round(
             ((acc[match.player1]?.averageMusicDifficulty || 0) +
               songsByPlaylist.totalDifficulty / 20) /
-              2
+            2
           ),
           guessesFromOtherPlaylists:
             (acc[match.player1]?.guessesFromOtherPlaylists || 0) +
@@ -522,7 +544,7 @@ export const getPlayerStats = (tournament: ITournament): PlayerStats[] => {
           averageMusicDifficulty: Math.round(
             ((acc[match.player2]?.averageMusicDifficulty || 0) +
               songsByPlaylist.totalDifficulty / 20) /
-              2
+            2
           ),
           guessesFromOtherPlaylists:
             (acc[match.player2]?.guessesFromOtherPlaylists || 0) +
