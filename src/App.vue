@@ -3,6 +3,7 @@ import DarkToggle from "@/components/DarkToggle.vue";
 import PageNav from "@/components/PageNav.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import PageFooter from "@/components/PageFooter.vue";
+import LoadSpinner from "@/components/LoadSpinner.vue";
 import type { RouteRecordName } from "vue-router";
 import { useAppStore } from "./stores/app";
 import { watch } from "vue";
@@ -44,7 +45,7 @@ watch(
             <component :is="Component" />
           </transition>
         </router-view>
-        <template #fallback><div>Loading...</div></template>
+        <template #fallback><LoadSpinner></LoadSpinner></template>
       </Suspense>
     </div>
     <PageFooter />
@@ -52,7 +53,7 @@ watch(
   <template v-else>
     <Suspense>
       <router-view />
-      <template #fallback><div>Loading...</div></template>
+      <template #fallback><LoadSpinner></LoadSpinner></template>
     </Suspense>
   </template>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TournamentContainer from "@/components/amq/TournamentContainer.vue";
 import TournamentList from "@/components/amq/TournamentList.vue";
+import LoadSpinner from "@/components/LoadSpinner.vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -20,7 +21,7 @@ const deselectTournament = () => {
     <template v-if="!route.params.tournamentId">
       <Suspense>
         <TournamentList></TournamentList>
-        <template #fallback><div>Loading...</div></template>
+        <template #fallback><LoadSpinner></LoadSpinner></template>
       </Suspense>
     </template>
 
@@ -29,7 +30,7 @@ const deselectTournament = () => {
         <TournamentContainer
           :tournament-id="(route.params.tournamentId as string)"
         />
-        <template #fallback><div>Loading...</div></template>
+        <template #fallback><LoadSpinner></LoadSpinner></template>
       </Suspense>
     </template>
   </div>
