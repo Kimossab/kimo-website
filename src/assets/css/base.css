@@ -1,4 +1,4 @@
-@import '@/assets/css/roboto.css';
+@import "@/assets/css/roboto.css";
 
 @tailwind base;
 @tailwind components;
@@ -16,7 +16,7 @@
     -o-user-select: none;
     user-select: none;
   }
-  
+
   .sample-section {
     background: repeating-linear-gradient(
       45deg,
@@ -43,17 +43,16 @@
   @apply box-border;
   @apply relative;
   scrollbar-width: thin;
-  scrollbar-color:  rgb(161 161 170 / 0.5) transparent;
+  scrollbar-color: rgb(161 161 170 / 0.5) transparent;
 }
 
 * {
-  @apply  border-neutral-700 dark:border-stone-300;
+  @apply border-neutral-700 dark:border-stone-300;
 }
 
 :root {
   @apply text-xs md:text-base;
 }
-
 
 ::-webkit-scrollbar {
   @apply w-2;
@@ -126,6 +125,15 @@ footer a {
 
 h1 {
   @apply text-4xl font-bold;
+}
+h2 {
+  @apply text-3xl font-bold;
+}
+h3 {
+  @apply text-2xl font-bold;
+}
+h4 {
+  @apply text-xl;
 }
 
 a {

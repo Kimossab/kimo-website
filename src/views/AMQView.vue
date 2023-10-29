@@ -1,44 +1,37 @@
 <script setup lang="ts">
 import TournamentContainer from "@/components/amq/TournamentContainer.vue";
-import axios from "axios";
-import { useRouter, useRoute } from "vue-router";
+import TournamentList from "@/components/amq/TournamentList.vue";
+import LoadSpinner from "@/components/LoadSpinner.vue";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
 
 const router = useRouter();
-const route = useRoute();
-const tournamentList: { id: string; name: string }[] = (
-  await axios.get(`${import.meta.env.VITE_API_URL}amq/tournament/`)
-)?.data;
-
-const selectTournament = (id: string) => {
-  router.push({ name: "amq", params: { tournamentId: id } });
+const deselectTournament = () => {
+  router.push({ name: "amq", params: { tournamentId: null } });
 };
 </script>
 
 <template>
-  <div class="m-6">
-    <h1 class="mx-auto w-full mb-8 text-center text-lg font-bold">
-      SPECIAL AMQ OVERVIEW
-    </h1>
-    <hr />
-    <hr />
+  <div class="w-full h-full p-4 amq overflow-y-auto">
+    <button class="underline w-auto mb-4" @click="deselectTournament()">
+      <h1>AMQ Tournaments</h1>
+    </button>
 
     <template v-if="!route.params.tournamentId">
-      <div class="mt-4">Select a tournament:</div>
-      <div class="flex flex-wrap gap-4">
-        <div
-          v-for="tournament in tournamentList"
-          :key="tournament.id"
-          class="border rounded-lg p-6 text-lg cursor-pointer"
-          @click="selectTournament(tournament.id)"
-        >
-          {{ tournament.name }}
-        </div>
-      </div>
+      <Suspense>
+        <TournamentList></TournamentList>
+        <template #fallback><LoadSpinner></LoadSpinner></template>
+      </Suspense>
     </template>
 
-    <TournamentContainer
-      v-else
-      :tournament-id="route.params.tournamentId as string"
-    />
+    <template v-else>
+      <Suspense>
+        <TournamentContainer
+          :tournament-id="(route.params.tournamentId as string)"
+        />
+        <template #fallback><LoadSpinner></LoadSpinner></template>
+      </Suspense>
+    </template>
   </div>
 </template>

@@ -15,6 +15,7 @@ import {
   faSort,
   faSortUp,
   faSortDown,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -24,6 +25,7 @@ import {
 
 library.add(
   faHome,
+  faPlus,
   faSpinner,
   faExpand,
   faWindowClose,

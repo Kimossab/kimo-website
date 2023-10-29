@@ -3,13 +3,14 @@ import DarkToggle from "@/components/DarkToggle.vue";
 import PageNav from "@/components/PageNav.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import PageFooter from "@/components/PageFooter.vue";
+import LoadSpinner from "@/components/LoadSpinner.vue";
 import type { RouteRecordName } from "vue-router";
 import { useAppStore } from "./stores/app";
 import { watch } from "vue";
 
 const store = useAppStore();
 
-const routeExceptions: RouteRecordName[] = ["manga", "amq"];
+const routeExceptions: RouteRecordName[] = ["manga"];
 
 if (
   window.matchMedia &&
@@ -38,17 +39,21 @@ watch(
     <PageHeader />
     <div class="h-content flex flex-col gap-2 justify-center">
       <PageNav />
-      <router-view v-slot="{ Component }">
-        <transition name="curtain">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <Suspense>
+        <router-view v-slot="{ Component }">
+          <transition name="curtain">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+        <template #fallback><LoadSpinner></LoadSpinner></template>
+      </Suspense>
     </div>
     <PageFooter />
   </template>
   <template v-else>
     <Suspense>
       <router-view />
+      <template #fallback><LoadSpinner></LoadSpinner></template>
     </Suspense>
   </template>
 </template>

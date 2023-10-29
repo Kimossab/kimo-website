@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Markdown from "vue3-markdown-it";
 import { html as about } from "@/assets/markdown/about.md";
-import { html as education } from "@/assets/markdown/education.md";
-import { html as workExperience } from "@/assets/markdown/work_experience.md";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import { onUnmounted } from "vue";
 
@@ -14,13 +12,20 @@ const getAge = () => {
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 };
 
-const parseAbout = (source: string) => {
+const parseAbout = async (source: string) => {
   const age = getAge();
   let src = source;
 
-  src = src.replace(/{{age}}/g, age.toString());
-  src = src.replace(/{{work_experience}}/g, parseDetails(workExperience));
-  src = src.replace(/{{education}}/g, parseDetails(education));
+  src = src.replace(/{{var:age}}/g, age.toString());
+  const regex = /{{(?!var:)[^}]*}}/gm;
+
+  for (const match of src.match(regex) ?? []) {
+    const file = match.substring(2, match.length - 2);
+
+    const { html } = await import(`@/assets/markdown/${file}.md`);
+
+    src = src.replace(match, parseDetails(html));
+  }
 
   return src;
 };
@@ -32,22 +37,19 @@ const parseDetails = (source: string) => {
     .map((experience) => {
       const xp = experience.split("{{description}}");
 
-      return `<div class="details-content flex">
+      if (xp.length === 2) {
+        return `<div class="details-content flex">
         <div class="border-r-2 border-solid border-gray-600 mr-4 pr-4 flex-shrink-0 w-40">${xp[0]}</div>
         <div class="flex flex-col gap-2">${xp[1]}</div>
         </div>`;
+      }
+
+      return `<div class="details-content flex">${xp}</div>`;
     })
     .join("");
 };
 
 let detailsList: DetailsAnimation[] = [];
-
-setTimeout(() => {
-  const details = document.querySelectorAll("details");
-  for (const el of details) {
-    detailsList.push(new DetailsAnimation(el));
-  }
-});
 
 onUnmounted(() => {
   for (const details of detailsList) {
@@ -57,7 +59,14 @@ onUnmounted(() => {
   detailsList = [];
 });
 
-const src = parseAbout(about);
+const src = await parseAbout(about);
+
+setTimeout(() => {
+  const details = document.querySelectorAll("details");
+  for (const el of details) {
+    detailsList.push(new DetailsAnimation(el));
+  }
+});
 </script>
 
 <template>
@@ -69,12 +78,3 @@ const src = parseAbout(about);
     />
   </div>
 </template>
-
-<!--   
-  // .date {
-  //   font-weight: bold;
-  // }
-  
-  // .about H4 {
-  //   margin: 0;
-  // } -->
