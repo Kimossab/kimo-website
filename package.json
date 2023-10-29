@@ -24,7 +24,7 @@
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.5",
     "vue3-markdown-it": "^1.0.10",
-    "vue3-touch-events": "^4.1.4"
+    "vue3-touch-events": "^4.1.8"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.4.0",
