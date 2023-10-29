@@ -93,6 +93,7 @@ const sortedPlayerStats = computed(() => {
 </script>
 
 <template>
+  <h2>{{ tournament.name }}</h2>
   <div class="my-4">
     <details ref="detailsPlayers">
       <summary class="font-bold text-lg">Players & Playlists</summary>

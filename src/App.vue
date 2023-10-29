@@ -9,7 +9,7 @@ import { watch } from "vue";
 
 const store = useAppStore();
 
-const routeExceptions: RouteRecordName[] = ["manga", "amq"];
+const routeExceptions: RouteRecordName[] = ["manga"];
 
 if (
   window.matchMedia &&
@@ -38,17 +38,21 @@ watch(
     <PageHeader />
     <div class="h-content flex flex-col gap-2 justify-center">
       <PageNav />
-      <router-view v-slot="{ Component }">
-        <transition name="curtain">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <Suspense>
+        <router-view v-slot="{ Component }">
+          <transition name="curtain">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+        <template #fallback><div>Loading...</div></template>
+      </Suspense>
     </div>
     <PageFooter />
   </template>
   <template v-else>
     <Suspense>
       <router-view />
+      <template #fallback><div>Loading...</div></template>
     </Suspense>
   </template>
 </template>

@@ -6,6 +6,7 @@ import {
 import AboutView from "../views/AboutView.vue";
 import BotView from "../views/BotView.vue";
 import LunaView from "../views/LunaView.vue";
+import OtherStuffView from "../views/OtherStuffView.vue";
 import MangaView from "../views/MangaView.vue";
 import HomeView from "../views/HomeView.vue";
 import AMQView from "../views/AMQView.vue";
@@ -30,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/luna",
     name: "luna",
     component: LunaView,
+  },
+  {
+    path: "/misc",
+    name: "misc",
+    component: OtherStuffView,
   },
   {
     path: "/manga/:mangaId?/:chapterId?/:pageId?",
