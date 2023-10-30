@@ -13,7 +13,7 @@ const deselectTournament = () => {
 </script>
 
 <template>
-  <div class="w-full h-full p-4 amq overflow-y-auto">
+  <div class="w-full h-full p-6 amq overflow-y-auto">
     <button class="underline w-auto mb-4" @click="deselectTournament()">
       <h1>AMQ Tournaments</h1>
     </button>

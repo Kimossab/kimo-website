@@ -13,11 +13,11 @@ const selectTournament = (id: string) => {
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-4">
+  <div class="grid grid-cols-3 gap-6">
     <button
       v-for="tournament in tournamentList"
       :key="tournament.id"
-      class="h-20 w-1/3 bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 drop-shadow-lg rounded-2xl cursor-pointer overflow-hidden no-select"
+      class="h-20 bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 drop-shadow-lg rounded-2xl cursor-pointer overflow-hidden no-select"
       @click="selectTournament(tournament.id)"
     >
       <div class="text-xl dark:mix-blend-plus-lighter mix-blend-darken">
