@@ -20,7 +20,7 @@ const selectTournament = (id: string) => {
       class="h-20 bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 drop-shadow-lg rounded-2xl cursor-pointer overflow-hidden no-select"
       @click="selectTournament(tournament.id)"
     >
-      <div class="text-xl dark:mix-blend-plus-lighter mix-blend-darken">
+      <div class="text-xl dark:mix-blend-plus-lighter mix-blend-darken p-2">
         {{ tournament.name }}
       </div>
     </button>
