@@ -26,7 +26,22 @@ onUnmounted(() => {
   detailsAnimation = null;
 });
 
-const songs = Array.from(props.playlist.values());
+const seasonMap = {
+  Winter: 0,
+  Spring: 1,
+  Summer: 2,
+  Fall: 3,
+};
+const songs = Array.from(props.playlist.values()).sort((a, b) => {
+  const seasonSplitA = a.anime.season.split(" ");
+  const seasonSplitB = b.anime.season.split(" ");
+  return (
+    Number(seasonSplitA[1]) - Number(seasonSplitB[1]) ||
+    (seasonMap[seasonSplitA[1] as keyof typeof seasonMap] ?? 0) -
+      (seasonMap[seasonSplitB[1] as keyof typeof seasonMap] ?? 0) ||
+    a.anime.english.localeCompare(b.anime.english)
+  );
+});
 const diffAverage = Math.round(
   songs.reduce<number>((acc, song) => acc + song.difficulty, 0) / songs.length
 );
@@ -51,7 +66,7 @@ const diffAverage = Math.round(
 
         <hr class="col-span-10" />
 
-        <PlaylistBody :playlist="playlist" :name="name" />
+        <PlaylistBody :playlist="songs" :name="name" />
       </div>
     </details>
   </div>
