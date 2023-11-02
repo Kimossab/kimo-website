@@ -4,6 +4,12 @@ enum AnimeType {
   Tv = "TV",
 }
 
+export enum TournamentStatus {
+  Open = "open",
+  OnGoing = "on-going",
+  Finished = "finished",
+}
+
 export interface TournamentSong {
   name: string;
   artist: string;
@@ -74,11 +80,17 @@ export interface Phase {
 }
 
 export interface ITournament {
-  name: string;
+  _id: string;
   players: string[];
   animes: Anime[];
   songs: Song[];
   phases: Phase[];
+  name: string;
+  hasBegun: boolean;
+  creator: string;
+  status: TournamentStatus;
+  serverId: string | null;
+  public: boolean;
 }
 
 type UniqueCount<T> = [T, number][];

@@ -43,6 +43,12 @@ export interface DiscordState {
   } | null;
   savedPlayerData: string | null;
 }
+export interface TournamentCreateInput {
+  name: string;
+  creator: string;
+  serverId: string | null;
+  public: boolean;
+}
 
 export interface APIReply<S> {
   status: number;

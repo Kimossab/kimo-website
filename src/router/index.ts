@@ -11,6 +11,8 @@ import MangaView from "../views/MangaView.vue";
 import HomeView from "../views/HomeView.vue";
 import AMQDashboardView from "../views/AMQDashboardView.vue";
 import AMQView from "../views/AMQView.vue";
+import TournamentView from "../views/TournamentView.vue";
+import TournamentManagementView from "../views/TournamentManagementView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -44,14 +46,29 @@ const routes: Array<RouteRecordRaw> = [
     component: MangaView,
   },
   {
+    path: "/amq",
+    name: "amq",
+    component: AMQView,
+  },
+  {
+    path: "/amq/tournament/create",
+    name: "tournament-create",
+    component: TournamentManagementView,
+  },
+  {
+    path: "/amq/tournament/edit/:tournament",
+    name: "tournament-edit",
+    component: TournamentManagementView,
+  },
+  {
+    path: "/amq/tournament/:tournamentId?",
+    name: "tournament",
+    component: TournamentView,
+  },
+  {
     path: "/amq/dashboard",
     name: "amqDashboard",
     component: AMQDashboardView,
-  },
-  {
-    path: "/amq/:tournamentId?",
-    name: "amq",
-    component: AMQView,
   },
 ];
 

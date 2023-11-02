@@ -1,5 +1,6 @@
+import type { ITournament } from "@/helpers/AMQ";
 import { makeHmacGETRequest, makeHmacPOSTRequest } from "@/helpers/HmacRequest";
-import type { DiscordState } from "@/types";
+import type { DiscordState, TournamentCreateInput } from "@/types";
 import {
   OAuth2Client,
   generateCodeVerifier,
@@ -139,6 +140,32 @@ export const useDiscord = defineStore({
         this.playerData
       );
       this.savedPlayerData = JSON.stringify(this.playerData);
+    },
+
+    async createTournament(name: string, isPrivate: boolean): Promise<string> {
+      const tournamentData = await makeHmacPOSTRequest<
+        ITournament,
+        TournamentCreateInput
+      >(
+        `${import.meta.env.VITE_API_URL}amq/tournament/`,
+        import.meta.env.VITE_API_SECRET,
+        {
+          name,
+          creator: this.user!.id,
+          serverId: null,
+          public: !isPrivate,
+        }
+      );
+      await this.getPlayerData();
+      return tournamentData._id;
+    },
+
+    async getTournament(id: string): Promise<ITournament> {
+      const tournamentData = await makeHmacGETRequest<ITournament>(
+        `${import.meta.env.VITE_API_URL}amq/tournament/${id}`,
+        import.meta.env.VITE_API_SECRET
+      );
+      return tournamentData;
     },
   },
 });
