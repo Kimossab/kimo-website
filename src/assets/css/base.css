@@ -151,3 +151,8 @@ li {
 hr {
   @apply border-neutral-700 dark:border-stone-300;
 }
+
+input {
+  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply px-2 bg-transparent;
+}
