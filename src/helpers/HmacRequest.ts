@@ -24,25 +24,36 @@ const createHmac = async <B>(secret: string, body: B): Promise<string> => {
 export const makeHmacPOSTRequest = async <R, B>(
   url: string,
   secret: string,
-  body: B
+  body: B,
+  discordId?: string
 ): Promise<R> => {
+  const headers: Record<string, string> = {
+    Authorization: await createHmac(secret, body ?? "EMPTY"),
+  };
+  if (discordId) {
+    headers.Identity = discordId;
+  }
   return (
     await axios.post<R>(url, body, {
-      headers: {
-        Authorization: await createHmac(secret, body),
-      },
+      headers,
     })
   ).data;
 };
+
 export const makeHmacGETRequest = async <R>(
   url: string,
-  secret: string
+  secret: string,
+  discordId?: string
 ): Promise<R> => {
+  const headers: Record<string, string> = {
+    Authorization: await createHmac(secret, "EMPTY"),
+  };
+  if (discordId) {
+    headers.Identity = discordId;
+  }
   return (
     await axios.get<R>(url, {
-      headers: {
-        Authorization: await createHmac(secret, "EMPTY"),
-      },
+      headers,
     })
   ).data;
 };

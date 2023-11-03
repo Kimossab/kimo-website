@@ -4,7 +4,7 @@ import SimpleButton from "@/components/SimpleButton.vue";
 import { searchByQuery } from "@/helpers/Anilist";
 import { ButtonVariants, type PlaylistAnime } from "@/types";
 import { ref } from "vue";
-import SingleAnime from "./SingleAnime.vue";
+import SingleAnime from "@/components/amq/SingleAnime.vue";
 
 interface Emits {
   (e: "selected", anime: PlaylistAnime): void;
@@ -64,6 +64,7 @@ const accept = () => {
           v-for="result in searchResults"
           :key="JSON.stringify(result)"
           :class="{
+            'cursor-pointer': true,
             'border-4 !border-blue-600': selected === result.anilistId,
           }"
           :anime="result"

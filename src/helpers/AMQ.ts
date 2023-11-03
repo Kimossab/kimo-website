@@ -81,7 +81,7 @@ export interface Phase {
 
 export interface ITournament {
   _id: string;
-  players: string[];
+  players: TournamentPlayer[];
   animes: Anime[];
   songs: Song[];
   phases: Phase[];
@@ -164,7 +164,7 @@ const getSongData = (tournament: ITournament) => {
   for (const song of tournament.songs) {
     const songAnime = tournament.animes.find((a) => a.romaji === song.anime);
 
-    const animeC = (anime.get(song.anime) || 0) + 1;
+    const animeC = (anime.get(song.anime) ?? 0) + 1;
     anime.set(song.anime, animeC);
 
     const artistC = (artist.get(song.artist) || 0) + 1;
@@ -212,6 +212,9 @@ const sortSeasons = (uniques: UniqueCount<string>) => {
 const fillSeasonList = (
   data: UniqueCount<StatsDataFormat>
 ): UniqueCount<string> => {
+  if (!data.length) {
+    return [];
+  }
   const [season, year] = data[0][0].key.split(" ") as [Seasons, string];
   const [lSeason, lYear] = data[data.length - 1][0].key.split(" ") as [
     Seasons,

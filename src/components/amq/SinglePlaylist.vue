@@ -4,7 +4,7 @@ import PlaylistBody from "@/components/amq/PlaylistBody.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import type { TournamentSong } from "@/helpers/AMQ.js";
-import AmqDifficulty from "./AmqDifficulty.vue";
+import AmqDifficulty from "@/components/amq/tournament/AmqDifficulty.vue";
 
 interface Props {
   name: string;

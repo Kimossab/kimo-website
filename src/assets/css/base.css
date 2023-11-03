@@ -175,3 +175,7 @@ input[type="checkbox"] + span::before {
 input[type="checkbox"]:checked + span::before {
   @apply content-['✓'];
 }
+textarea {
+  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply px-2 bg-transparent;
+}

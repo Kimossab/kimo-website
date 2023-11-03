@@ -1,6 +1,11 @@
 import type { ITournament } from "@/helpers/AMQ";
 import { makeHmacGETRequest, makeHmacPOSTRequest } from "@/helpers/HmacRequest";
-import type { DiscordState, TournamentCreateInput } from "@/types";
+import type {
+  DiscordState,
+  TournamentCreateInput,
+  JoinTournamentInput,
+  Playlist,
+} from "@/types";
 import {
   OAuth2Client,
   generateCodeVerifier,
@@ -163,8 +168,44 @@ export const useDiscord = defineStore({
     async getTournament(id: string): Promise<ITournament> {
       const tournamentData = await makeHmacGETRequest<ITournament>(
         `${import.meta.env.VITE_API_URL}amq/tournament/${id}`,
-        import.meta.env.VITE_API_SECRET
+        import.meta.env.VITE_API_SECRET,
+        this.user?.id
       );
+      return tournamentData;
+    },
+
+    async joinTournament(id: string, playlist: Playlist): Promise<ITournament> {
+      const data: JoinTournamentInput = {
+        discordId: this.user!.id,
+        name: this.playerData!.username,
+        playlist,
+      };
+      const tournamentData = await makeHmacPOSTRequest<
+        ITournament,
+        JoinTournamentInput
+      >(
+        `${import.meta.env.VITE_API_URL}amq/tournament/${id}/join`,
+        import.meta.env.VITE_API_SECRET,
+        data
+      );
+
+      return tournamentData;
+    },
+
+    async validatePlayer(
+      id: string,
+      player: string,
+      json: string
+    ): Promise<ITournament> {
+      const tournamentData = await makeHmacPOSTRequest<ITournament, any>(
+        `${
+          import.meta.env.VITE_API_URL
+        }amq/tournament/${id}/validate/${player}`,
+        import.meta.env.VITE_API_SECRET,
+        JSON.parse(json),
+        this.user?.id
+      );
+
       return tournamentData;
     },
   },

@@ -2,7 +2,7 @@
 import BaseModal from "@/components/BaseModal.vue";
 import SimpleButton from "@/components/SimpleButton.vue";
 import AnimeSearchModal from "@/components/amq/dashboard/AnimeSearchModal.vue";
-import SingleAnime from "@/components/amq/dashboard/SingleAnime.vue";
+import SingleAnime from "@/components/amq/SingleAnime.vue";
 import { ButtonVariants, type Playlist, type PlaylistAnime } from "@/types";
 import { ref } from "vue";
 
@@ -52,6 +52,7 @@ const addAnime = (newAnime: PlaylistAnime) => {
       <div>Anime List:</div>
       <div class="flex justify-center flex-wrap gap-4">
         <SingleAnime
+          class="cursor-pointer"
           v-for="anime in playlistData.animeList"
           :key="anime.anilistId"
           :anime="anime"

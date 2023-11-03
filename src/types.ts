@@ -96,3 +96,14 @@ export enum ButtonVariants {
   Normal = "normal",
   Small = "small",
 }
+export interface JoinTournamentInput {
+  discordId: string;
+  name: string;
+  playlist: Playlist;
+}
+export interface TournamentPlayer {
+  discordId: string | undefined;
+  name: string;
+  playlist: Playlist;
+  approved: boolean;
+}
