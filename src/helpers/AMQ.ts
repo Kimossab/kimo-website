@@ -1,3 +1,5 @@
+import type { TournamentPlayer } from "@/types";
+
 enum AnimeType {
   Movie = "movie",
   Ona = "ONA",
@@ -25,13 +27,16 @@ export interface GraphData {
 }
 
 export interface Anime {
+  anilistId: string;
   english: string;
   romaji: string;
   tags: string[];
   genre: string[];
   season: string;
   score: number;
-  type: AnimeType;
+  type: AnimeType[];
+  picture: string;
+  banner: string;
 }
 
 export enum SongType {

@@ -92,7 +92,7 @@ const sortedPlayerStats = computed(() => {
       },
     ]"
     :data-length="sortedPlayerStats.length"
-    :sort="playerStatsSort"
+    :initial-sort="playerStatsSort"
     @sort="onPlayerStatsSort"
   >
     <template

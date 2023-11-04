@@ -52,9 +52,9 @@ const addAnime = (newAnime: PlaylistAnime) => {
       <div>Anime List:</div>
       <div class="flex justify-center flex-wrap gap-4">
         <SingleAnime
-          class="cursor-pointer"
           v-for="anime in playlistData.animeList"
           :key="anime.anilistId"
+          class="cursor-pointer"
           :anime="anime"
         ></SingleAnime>
         <SimpleButton

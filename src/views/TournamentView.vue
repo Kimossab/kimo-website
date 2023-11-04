@@ -8,6 +8,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ref } from "vue";
 import { type ITournament } from "@/helpers/AMQ";
 import { useDiscord } from "@/stores/discord";
+import TournamentPhases from "@/components/amq/tournament/TournamentPhases.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -23,7 +24,9 @@ discord.load().then(() => {
 </script>
 
 <template>
-  <div class="w-full h-full p-6 tournament overflow-y-auto">
+  <div
+    class="w-full px-content-padding mx-auto h-full tournament overflow-y-auto pt-2"
+  >
     <div class="w-full flex justify-between mb-4">
       <div class="flex gap-4 items-center">
         <SimpleButton :variant="ButtonVariants.Small" @click="router.back()"
@@ -33,6 +36,13 @@ discord.load().then(() => {
       </div>
 
       <div class="flex gap-4">
+        <button
+          class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 drop-shadow-lg rounded-2xl cursor-pointer overflow-hidden no-select p-4"
+          :disabled="!discord.user"
+          @click="router.push('/amq/dashboard')"
+        >
+          Dashboard
+        </button>
         <DiscordLogin />
       </div>
     </div>
@@ -46,6 +56,11 @@ discord.load().then(() => {
           :tournament="tournament"
           @update="(t) => (tournament = t)"
         />
+      </div>
+
+      <div class="border rounded-2xl p-4">
+        <h3>Groups & Matches</h3>
+        <TournamentPhases :tournament="tournament" />
       </div>
     </div>
     <LoadSpinner v-else />
