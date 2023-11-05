@@ -8,6 +8,9 @@ on:
 env:
   GH_TOKEN: ${{ github.token }}
   VITE_API_URL: ${{ vars.VITE_API_URL }}
+  VITE_API_SECRET: ${{ vars.VITE_API_SECRET }}
+  VITE_API_ANILIST_SECRET: ${{ vars.VITE_API_ANILIST_SECRET }}
+  VITE_API_ANILIST_ID: ${{ vars.VITE_API_ANILIST_ID }}
 
 jobs:
   build:
@@ -29,6 +32,9 @@ jobs:
       - run: |
           touch .env
           echo VITE_API_URL="$VITE_API_URL" >> .env
+          echo VITE_API_SECRET="$VITE_API_SECRET" >> .env
+          echo VITE_API_ANILIST_SECRET="$VITE_API_ANILIST_SECRET" >> .env
+          echo VITE_API_ANILIST_ID="$VITE_API_ANILIST_ID" >> .env
 
       - run: |
           npm ci

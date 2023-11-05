@@ -8,17 +8,15 @@ defineProps<Props>();
 
 <template>
   <div
-    class="border w-full h-6 bg-gradient-to-r relative from-green-500 via-amber-600 to-red-500 group"
+    class="text-center border w-full h-6 bg-gradient-to-r relative from-green-500 via-amber-600 to-red-500 group"
   >
     <div
       class="absolute right-0 h-full dark:bg-neutral-700 bg-stone-300"
       :style="`width:${difficulty}%`"
     ></div>
-    <div
-      class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full -mt-2 hidden px-4 py-1 justify-center bg-slate-800 group-hover:flex after:content[''] z-10 arrow"
-    >
-      {{ difficulty }}
-    </div>
+    <span class="font-bold mix-blend-darken dark:mix-blend-lighten">{{
+      difficulty
+    }}</span>
   </div>
 </template>
 

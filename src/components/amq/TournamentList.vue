@@ -8,7 +8,7 @@ const tournamentList: { id: string; name: string }[] = (
 )?.data;
 
 const selectTournament = (id: string) => {
-  router.push({ name: "amq", params: { tournamentId: id } });
+  router.push({ name: "tournament", params: { tournamentId: id } });
 };
 </script>
 

@@ -151,3 +151,31 @@ li {
 hr {
   @apply border-neutral-700 dark:border-stone-300;
 }
+
+input {
+  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply px-2 bg-transparent;
+}
+input[type="checkbox"] {
+  display: none;
+}
+input[type="checkbox"] + span {
+  @apply flex gap-2 items-center;
+  @apply cursor-pointer;
+  @apply no-select;
+}
+input[type="checkbox"] + span::before {
+  @apply content-[''];
+  @apply block;
+  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply bg-transparent;
+  @apply h-5 w-5;
+  @apply leading-5 px-1;
+}
+input[type="checkbox"]:checked + span::before {
+  @apply content-['✓'];
+}
+textarea {
+  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply px-2 bg-transparent;
+}

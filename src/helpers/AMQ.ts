@@ -1,7 +1,15 @@
+import type { TournamentPlayer } from "@/types";
+
 enum AnimeType {
   Movie = "movie",
   Ona = "ONA",
   Tv = "TV",
+}
+
+export enum TournamentStatus {
+  Open = "open",
+  OnGoing = "on-going",
+  Finished = "finished",
 }
 
 export interface TournamentSong {
@@ -19,13 +27,16 @@ export interface GraphData {
 }
 
 export interface Anime {
+  anilistId: string;
   english: string;
   romaji: string;
   tags: string[];
   genre: string[];
   season: string;
   score: number;
-  type: AnimeType;
+  type: AnimeType[];
+  picture: string;
+  banner: string;
 }
 
 export enum SongType {
@@ -74,11 +85,17 @@ export interface Phase {
 }
 
 export interface ITournament {
-  name: string;
-  players: string[];
+  _id: string;
+  players: TournamentPlayer[];
   animes: Anime[];
   songs: Song[];
   phases: Phase[];
+  name: string;
+  hasBegun: boolean;
+  creator: string;
+  status: TournamentStatus;
+  serverId: string | null;
+  public: boolean;
 }
 
 type UniqueCount<T> = [T, number][];
@@ -152,7 +169,7 @@ const getSongData = (tournament: ITournament) => {
   for (const song of tournament.songs) {
     const songAnime = tournament.animes.find((a) => a.romaji === song.anime);
 
-    const animeC = (anime.get(song.anime) || 0) + 1;
+    const animeC = (anime.get(song.anime) ?? 0) + 1;
     anime.set(song.anime, animeC);
 
     const artistC = (artist.get(song.artist) || 0) + 1;
@@ -200,6 +217,9 @@ const sortSeasons = (uniques: UniqueCount<string>) => {
 const fillSeasonList = (
   data: UniqueCount<StatsDataFormat>
 ): UniqueCount<string> => {
+  if (!data.length) {
+    return [];
+  }
   const [season, year] = data[0][0].key.split(" ") as [Seasons, string];
   const [lSeason, lYear] = data[data.length - 1][0].key.split(" ") as [
     Seasons,

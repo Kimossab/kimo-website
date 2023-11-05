@@ -16,6 +16,7 @@ import {
   faSortUp,
   faSortDown,
   faPlus,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -42,5 +43,6 @@ library.add(
   faCirclePlay,
   faSort,
   faSortDown,
-  faSortUp
+  faSortUp,
+  faRightFromBracket
 );
