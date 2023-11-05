@@ -46,7 +46,7 @@ export const searchByQuery = async (
 ): Promise<PageResponse<MediaList> | null> => {
   const response = await axios.post<
     string,
-    AxiosResponse<PageResponse<MediaList>>
+    AxiosResponse<{ data: PageResponse<MediaList> }>
   >(
     "https://graphql.anilist.co",
     JSON.stringify({
