@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import SimpleTable from "@/components/SimpleTable.vue";
 import SimpleTab from "@/components/SimpleTab.vue";
-import { type Anime, type Group, type Song } from "@/helpers/AMQ";
+import { type Group, type ITournament } from "@/helpers/AMQ";
 import TournamentMatch from "./TournamentMatch.vue";
 
 interface Props {
-  animes: Anime[];
-  songs: Song[];
+  tournament: ITournament;
   group: Group;
 }
 const props = defineProps<Props>();
@@ -28,7 +27,9 @@ const players = props.group.players.reduce<
   (acc, p) => ({
     ...acc,
     [p]: {
-      player: p,
+      player:
+        props.tournament.players.find((player) => player.discordId === p)
+          ?.name || p,
       matches: 0,
       wins: 0,
       draws: 0,
@@ -89,7 +90,11 @@ const mapData = Object.values(players);
     "
   >
     <template v-for="match of group.matches" :key="match._id" #[match._id]>
-      <TournamentMatch :match="match" :animes="animes" :songs="songs" />
+      <TournamentMatch
+        :match="match"
+        :animes="tournament.animes"
+        :songs="tournament.songs"
+      />
     </template>
   </SimpleTab>
 </template>

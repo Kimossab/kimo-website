@@ -230,5 +230,16 @@ export const useDiscord = defineStore({
 
       return tournamentData;
     },
+
+    async createPhase(id: string, groups: string[][]): Promise<ITournament> {
+      const tournamentData = await makeHmacPOSTRequest<ITournament, any>(
+        `${import.meta.env.VITE_API_URL}amq/tournament/${id}/phase`,
+        import.meta.env.VITE_API_SECRET,
+        groups,
+        this.user?.id
+      );
+
+      return tournamentData;
+    },
   },
 });

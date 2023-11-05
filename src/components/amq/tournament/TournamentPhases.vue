@@ -24,11 +24,7 @@ const phaseList = props.tournament.phases.map((p) => ({
       :key="phase.headers.label"
       #[phase.headers.label]
     >
-      <TournamentGroups
-        :groups="phase.groups"
-        :animes="tournament.animes"
-        :songs="tournament.songs"
-      />
+      <TournamentGroups :groups="phase.groups" :tournament="tournament" />
     </template>
   </SimpleTab>
 </template>

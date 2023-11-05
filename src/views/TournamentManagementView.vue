@@ -4,14 +4,16 @@ import SimpleButton from "@/components/SimpleButton.vue";
 import PlayerValidation from "@/components/amq/tournament/PlayerValidation.vue";
 import AddPlayerModal from "@/components/amq/tournament/AddPlayerModal.vue";
 import DiscordLogin from "@/components/discord/DiscordLogin.vue";
-import type { ITournament } from "@/helpers/AMQ";
+import { TournamentStatus, type ITournament } from "@/helpers/AMQ";
 import { useDiscord } from "@/stores/discord";
 import { ButtonVariants, type Playlist, type TournamentPlayer } from "@/types";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import AnilistUser from "@/components/amq/dashboard/AnilistUser.vue";
 import { useAnilist } from "@/stores/anilist";
 import BaseModal from "@/components/BaseModal.vue";
+import NewPhaseModal from "@/components/amq/tournament/NewPhaseModal.vue";
+import SimpleTab from "@/components/SimpleTab.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -21,15 +23,25 @@ discord.load();
 
 const isEdit = !!route.params.tournament;
 
-const tournamentName = ref<string>("");
-const tournamentId = ref<string>("");
-const isPrivate = ref<boolean>(false);
+const tournamentData = ref<ITournament>({
+  _id: "",
+  animes: [],
+  creator: "",
+  hasBegun: false,
+  name: "",
+  phases: [],
+  players: [],
+  public: false,
+  serverId: "",
+  songs: [],
+  status: TournamentStatus.Open,
+});
 const isLoading = ref<boolean>(isEdit);
-const players = ref<TournamentPlayer[]>([]);
 const validating = ref<TournamentPlayer | null>(null);
 const addPlayerModal = ref<boolean>(false);
 const confirmUpdateAnilist = ref<boolean>(false);
 const confirmUpdateAnilistPlayer = ref<TournamentPlayer | null>(null);
+const newPhaseModal = ref<boolean>(false);
 
 if (isEdit) {
   discord.load().then(() =>
@@ -42,17 +54,14 @@ if (isEdit) {
 }
 
 const updateData = (tournament: ITournament) => {
-  tournamentId.value = tournament._id;
-  tournamentName.value = tournament.name;
-  isPrivate.value = !tournament.public;
-  players.value = tournament.players;
+  tournamentData.value = JSON.parse(JSON.stringify(tournament));
   isLoading.value = false;
 };
 
 const save = async () => {
   const id = await discord.createTournament(
-    tournamentName.value,
-    isPrivate.value
+    tournamentData.value!.name,
+    !tournamentData.value!.public
   );
 
   router.push({ name: "tournament-edit", params: { tournament: id } });
@@ -62,13 +71,14 @@ const update = (tournament: ITournament) => {
   updateData(tournament);
   validating.value = null;
 };
+
 const addToTournament = async (name: string, playlist: Playlist) => {
-  const tournamentData = await discord.manualJoinTournament(
-    tournamentId.value,
+  const tournamentD = await discord.manualJoinTournament(
+    tournamentData.value!._id,
     name,
     playlist
   );
-  updateData(tournamentData);
+  updateData(tournamentD);
   addPlayerModal.value = false;
 };
 
@@ -79,7 +89,7 @@ const closeConfirmAnilist = () => {
 
 const updateAnilist = async () => {
   const playlists = await anilist.getUserPlaylists();
-  const allAnimesIds = playlists.lists.reduce<
+  const allAnimesIds = playlists!.lists.reduce<
     Record<
       number,
       {
@@ -102,7 +112,7 @@ const updateAnilist = async () => {
   }, {});
 
   if (
-    playlists.lists.find(
+    playlists!.lists.find(
       (l) => l.name === confirmUpdateAnilistPlayer.value!.name
     )
   ) {
@@ -110,7 +120,7 @@ const updateAnilist = async () => {
   }
 
   await anilist.createList([
-    ...playlists.lists.filter((l) => l.isCustomList).map((l) => l.name),
+    ...playlists!.lists.filter((l) => l.isCustomList).map((l) => l.name),
     confirmUpdateAnilistPlayer.value!.name,
   ]);
 
@@ -136,6 +146,14 @@ const updateAnilist = async () => {
 
   closeConfirmAnilist();
 };
+
+const phaseTabs = computed(() => {
+  return tournamentData.value.phases.map((p) => ({
+    title: `Phase ${p.order}`,
+    label: `phase-${p.order}`,
+    groups: p.groups,
+  }));
+});
 </script>
 
 <template>
@@ -145,11 +163,22 @@ const updateAnilist = async () => {
     @cancel="addPlayerModal = false"
   />
   <PlayerValidation
-    v-if="validating"
+    v-if="validating && tournamentData"
     :player="validating"
-    :tournament-id="tournamentId"
+    :tournament-id="tournamentData!._id"
     @cancel="validating = null"
     @update="update"
+  />
+  <NewPhaseModal
+    v-if="newPhaseModal"
+    :tournament="tournamentData"
+    @update="
+      (t) => {
+        update(t);
+        newPhaseModal = false;
+      }
+    "
+    @cancel="newPhaseModal = false"
   />
   <BaseModal v-if="confirmUpdateAnilist" @close="closeConfirmAnilist">
     <template #header>Confirm Anilist Update</template>
@@ -200,24 +229,58 @@ const updateAnilist = async () => {
 
         <div class="flex-col flex">
           <label for="tournament-name">Tournament name:</label>
-          <input v-model="tournamentName" name="tournament-name" />
+          <input v-model="tournamentData.name" name="tournament-name" />
         </div>
 
         <div class="flex">
           <label>
-            <input v-model="isPrivate" type="checkbox" />
+            <input v-model="tournamentData.public" type="checkbox" />
             <span>
-              The tournament is private (people can only join by adding manually
-              or with a direct link)</span
+              The tournament is public (tournament will appear in the list of
+              tournaments)</span
             >
           </label>
         </div>
+
+        <div class="flex gap-2">
+          <span>Status:</span>
+          <span>{{ tournamentData.status }}</span>
+          <SimpleButton
+            :variant="ButtonVariants.Small"
+            :disabled="!tournamentData.name"
+            @click="newPhaseModal = true"
+          >
+            Create new phase
+          </SimpleButton>
+        </div>
+
+        <SimpleTab v-if="tournamentData.phases.length" :sections="phaseTabs">
+          <template
+            v-for="phase of phaseTabs"
+            :key="phase.label"
+            #[phase.label]
+          >
+            <div
+              v-for="(group, index) in phase.groups"
+              :key="JSON.stringify(group)"
+              class="flex gap-2"
+            >
+              <span>Group {{ index + 1 }}:</span>
+              <code v-for="player in group.players" :key="player">
+                {{
+                  tournamentData.players.find((p) => p.discordId === player)
+                    ?.name || player
+                }}
+              </code>
+            </div>
+          </template>
+        </SimpleTab>
       </div>
 
       <div class="flex justify-end">
         <SimpleButton
           :variant="ButtonVariants.Small"
-          :disabled="!tournamentName"
+          :disabled="!tournamentData.name"
           @click="save"
           >{{ isEdit ? "Save" : "Create" }}</SimpleButton
         >
@@ -228,7 +291,7 @@ const updateAnilist = async () => {
       <div class="border rounded-2xl p-4 flex flex-col">
         <h3>Players</h3>
         <div
-          v-for="player in players"
+          v-for="player in tournamentData.players"
           :key="player.discordId"
           class="w-full flex justify-between items-start gap-2 border-t border-solid py-4"
         >
@@ -258,17 +321,22 @@ const updateAnilist = async () => {
             </SimpleButton>
             <SimpleButton
               :variant="ButtonVariants.Small"
+              :disabled="player.approved"
               @click="validating = player"
             >
               Check
             </SimpleButton>
-            <SimpleButton :variant="ButtonVariants.Small">
+            <SimpleButton
+              :variant="ButtonVariants.Small"
+              :disabled="tournamentData.status !== TournamentStatus.Open"
+            >
               Remove
             </SimpleButton>
           </div>
         </div>
         <div class="flex justify-center border-t p-4">
           <SimpleButton
+            v-if="tournamentData.status === TournamentStatus.Open"
             :variant="ButtonVariants.Small"
             @click="addPlayerModal = true"
           >

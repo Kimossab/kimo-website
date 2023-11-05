@@ -72,7 +72,7 @@ export const useAnilist = defineStore({
       )?.data.data.Viewer;
     },
 
-    async getUserPlaylists(): Promise<MediaListCollection> {
+    async getUserPlaylists(): Promise<MediaListCollection | null> {
       if (!this.token) {
         return null;
       }
@@ -98,7 +98,7 @@ export const useAnilist = defineStore({
                 hasNextChunk
               }
             }`,
-            variables: { id: this.user.id },
+            variables: { id: this.user!.id },
           },
           {
             headers: {

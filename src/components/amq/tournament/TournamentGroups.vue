@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import SimpleTab from "@/components/SimpleTab.vue";
-import { type Anime, type Group, type Song } from "@/helpers/AMQ";
+import { type Group, type ITournament } from "@/helpers/AMQ";
 import TournamentGroup from "./TournamentGroup.vue";
 
 interface Props {
-  animes: Anime[];
-  songs: Song[];
   groups: Group[];
+  tournament: ITournament;
 }
 defineProps<Props>();
 </script>
@@ -21,7 +20,7 @@ defineProps<Props>();
     "
   >
     <template v-for="group of groups" :key="group._id" #[group._id]>
-      <TournamentGroup :group="group" :animes="animes" :songs="songs" />
+      <TournamentGroup :group="group" :tournament="tournament" />
     </template>
   </SimpleTab>
 </template>
