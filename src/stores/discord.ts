@@ -66,7 +66,7 @@ export const useDiscord = defineStore({
       this.setCodeVerifier(await generateCodeVerifier());
 
       window.location.href = await client.authorizationCode.getAuthorizeUri({
-        redirectUri: "http://localhost:5173/amq",
+        redirectUri: `${window.location.origin}/amq`,
         state: "some-string",
         codeVerifier: this.codeVerifier!!,
         scope: ["identify", "guilds"],
@@ -78,7 +78,7 @@ export const useDiscord = defineStore({
         await client.authorizationCode.getTokenFromCodeRedirect(
           document.location.href,
           {
-            redirectUri: "http://localhost:5173/amq",
+            redirectUri: `${window.location.origin}/amq`,
             state: "some-string",
             codeVerifier: this.codeVerifier!!,
           }
