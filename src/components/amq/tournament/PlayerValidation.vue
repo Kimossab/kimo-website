@@ -25,7 +25,7 @@ const discord = useDiscord();
 const approve = async () => {
   const tournament = await discord.validatePlayer(
     props.tournamentId,
-    props.player.discordId!,
+    props.player.discordId ?? props.player.name,
     amqJson.value
   );
 

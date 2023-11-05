@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LoadSpinner from "@/components/LoadSpinner.vue";
 import SimpleButton from "@/components/SimpleButton.vue";
+import AnilistUser from "@/components/amq/dashboard/AnilistUser.vue";
 import PlaylistList from "@/components/amq/dashboard/PlaylistList.vue";
 import TournamentDashList from "@/components/amq/dashboard/TournamentDashList.vue";
 import DiscordLogin from "@/components/discord/DiscordLogin.vue";
@@ -37,9 +38,13 @@ const save = async () => {
       <div class="border rounded-2xl p-4">
         <h3>AMQ Details</h3>
 
-        <div class="flex-col flex">
-          <label for="amq-username">Username:</label>
-          <input v-model="discord.playerData!.username" name="amq-username" />
+        <div class="flex flex-col gap-2">
+          <div class="flex-col flex">
+            <label for="amq-username">Username:</label>
+            <input v-model="discord.playerData!.username" name="amq-username" />
+          </div>
+
+          <AnilistUser />
         </div>
       </div>
 

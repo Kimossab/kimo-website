@@ -22,7 +22,6 @@ const playlistData = ref(props.playlist);
 const searchAnime = ref<boolean>(false);
 
 const addAnime = (newAnime: PlaylistAnime) => {
-  console.log(newAnime);
   if (
     !playlistData.value.animeList.find(
       (a) => a.anilistId === newAnime.anilistId

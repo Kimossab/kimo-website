@@ -5,14 +5,15 @@ import { useDiscord } from "@/stores/discord";
 const route = useRoute();
 const discord = useDiscord();
 
+discord.load();
 if (discord.codeVerifier || discord.token) {
-  await discord.load();
   if (route.query.code) {
     window.history.replaceState(null, "", window.location.pathname);
   }
 }
 
 const authenticate = () => {
+  console.log("authenticate", discord.isLoading);
   if (!discord.isLoading) {
     discord.authenticate();
   }

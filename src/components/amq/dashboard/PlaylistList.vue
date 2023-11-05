@@ -16,13 +16,15 @@ const updatedPlaylist = (playlist: Playlist) => {
       (p) => p._id === playlist._id
     );
     discord.playerData!.playlists[plIdx] = playlist;
-  } else if (selectedPlaylist.value?.name !== "") {
+  } else {
     const plIdx = discord.playerData!.playlists.findIndex(
       (p) => p.name === selectedPlaylist.value?.name
     );
-    discord.playerData!.playlists[plIdx] = playlist;
-  } else {
-    discord.playerData!.playlists.push(playlist);
+    if (plIdx != -1) {
+      discord.playerData!.playlists[plIdx] = playlist;
+    } else {
+      discord.playerData!.playlists.push(playlist);
+    }
   }
   selectedPlaylist.value = null;
 };

@@ -13,6 +13,7 @@ import AMQDashboardView from "../views/AMQDashboardView.vue";
 import AMQView from "../views/AMQView.vue";
 import TournamentView from "../views/TournamentView.vue";
 import TournamentManagementView from "../views/TournamentManagementView.vue";
+import AnilistCallback from "@/views/AnilistCallback.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -69,6 +70,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/amq/dashboard",
     name: "amqDashboard",
     component: AMQDashboardView,
+  },
+  {
+    path: "/amq/anilist",
+    name: "anilistLogin",
+    component: AnilistCallback,
   },
 ];
 

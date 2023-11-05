@@ -76,6 +76,7 @@ const playerMap = props.tournament.players.reduce<
   Record<
     string,
     {
+      name: string;
       difficulty: ReturnType<typeof difficulty>;
       songTable: ReturnType<typeof songTable>;
       animeList: ReturnType<typeof animeList>;
@@ -88,6 +89,7 @@ const playerMap = props.tournament.players.reduce<
   return {
     ...acc,
     [player]: {
+      name: p.name,
       difficulty: difficulty(musicList),
       songTable: songTable(musicList),
       animeList: animeList(player),
@@ -103,7 +105,12 @@ const playerMap = props.tournament.players.reduce<
     @cancel="showJoinModal = false"
   />
   <SimpleTab
-    :sections="Object.keys(playerMap).map((s) => ({ title: s, label: s }))"
+    :sections="
+      Object.keys(playerMap).map((s) => ({
+        title: playerMap[s].name,
+        label: s,
+      }))
+    "
   >
     <template v-for="(player, key) of playerMap" :key="key" #[key]>
       <div class="flex flex-col gap-2">

@@ -97,7 +97,7 @@ export enum ButtonVariants {
   Small = "small",
 }
 export interface JoinTournamentInput {
-  discordId: string;
+  discordId?: string;
   name: string;
   playlist: Playlist;
 }

@@ -192,6 +192,28 @@ export const useDiscord = defineStore({
       return tournamentData;
     },
 
+    async manualJoinTournament(
+      id: string,
+      name: string,
+      playlist: Playlist
+    ): Promise<ITournament> {
+      const data: JoinTournamentInput = {
+        name: name,
+        playlist,
+      };
+      const tournamentData = await makeHmacPOSTRequest<
+        ITournament,
+        JoinTournamentInput
+      >(
+        `${import.meta.env.VITE_API_URL}amq/tournament/${id}/join`,
+        import.meta.env.VITE_API_SECRET,
+        data,
+        this.user?.id
+      );
+
+      return tournamentData;
+    },
+
     async validatePlayer(
       id: string,
       player: string,

@@ -18,6 +18,9 @@ const isSearching = ref(false);
 const searchResults = ref<PlaylistAnime[]>([]);
 
 const search = async () => {
+  if (isSearching.value) {
+    return;
+  }
   isSearching.value = true;
   selected.value = null;
 
@@ -50,14 +53,21 @@ const accept = () => {
     <div class="flex flex-col gap-4">
       <div class="flex-col flex">
         <label for="anime-query">Anime name:</label>
-        <input v-model="query" name="anime-query" />
+        <div class="flex w-full gap-4">
+          <input
+            v-model="query"
+            name="anime-query"
+            class="flex-grow"
+            @keyup.enter="search"
+          />
+          <SimpleButton
+            :variant="ButtonVariants.Small"
+            :disabled="isSearching"
+            @click="search"
+            >Search</SimpleButton
+          >
+        </div>
       </div>
-      <SimpleButton
-        :variant="ButtonVariants.Small"
-        :disabled="isSearching"
-        @click="search"
-        >Search</SimpleButton
-      >
       <div>Search Results</div>
       <div class="flex justify-center flex-wrap gap-4">
         <SingleAnime
