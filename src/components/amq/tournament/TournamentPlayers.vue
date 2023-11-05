@@ -33,6 +33,7 @@ const musics = (player: string) =>
       difficulty: song.difficulty,
       type: song.type,
       typeNumber: song.typeNumber,
+      themeLink: song.themeLink,
     }));
 const animeList = (player: string) =>
   props.tournament.players.find(
@@ -50,6 +51,8 @@ const songTable = (musicList: ReturnType<typeof musics>) =>
     title: m.name,
     artist: m.artist,
     anime: `${m.anime?.romaji} (${m.anime?.english})`,
+    musicLink: m.themeLink ?? "",
+    animeLink: `https://anilist.co/anime/${m.anime.anilistId}/`,
   }));
 
 const canJoin = computed(
@@ -130,9 +133,23 @@ const playerMap = props.tournament.players.reduce<
         <SimpleTable
           id="song-list"
           :headers="[
-            { title: 'Title', key: 'title', sortable: true },
-            { title: 'Artist', key: 'artist', sortable: true },
-            { title: 'Anime', key: 'anime', sortable: true },
+            {
+              title: 'Title',
+              key: 'title',
+              sortable: true,
+              useLink: 'musicLink',
+            },
+            {
+              title: 'Artist',
+              key: 'artist',
+              sortable: true,
+            },
+            {
+              title: 'Anime',
+              key: 'anime',
+              sortable: true,
+              useLink: 'animeLink',
+            },
           ]"
           :data="player.songTable"
           :initial-sort="{ header: 'anime', direction: 'ASC' }"

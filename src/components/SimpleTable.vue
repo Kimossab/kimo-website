@@ -6,6 +6,7 @@ interface Header {
   key: keyof D;
   size?: string;
   sortable?: boolean;
+  useLink?: keyof D;
 }
 interface Sort {
   header: keyof D;
@@ -101,7 +102,14 @@ const sorted = computed(() => {
         :key="`${d[headers[0].key]}-${String(header.key)}`"
         class="text-center"
       >
-        {{ d[header.key] }}
+        <template v-if="header.useLink && d[header.useLink]">
+          <a :href="(d[header.useLink] as string)" target="_blank">{{
+            d[header.key]
+          }}</a>
+        </template>
+        <template v-else>
+          {{ d[header.key] }}
+        </template>
       </td>
     </tr>
   </table>

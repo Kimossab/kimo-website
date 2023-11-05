@@ -52,6 +52,7 @@ export interface Song {
   players: string[];
   type: SongType;
   typeNumber: number;
+  themeLink: string | undefined;
 }
 
 export interface MatchSong {
