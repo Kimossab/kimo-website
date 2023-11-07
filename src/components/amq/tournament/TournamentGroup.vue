@@ -63,7 +63,23 @@ for (const match of props.group.matches) {
   players[match.player2].c_diff += match.p2Points - match.p1Points;
 }
 
-const mapData = Object.values(players);
+const mapData = Object.values(players).sort((a, b) => {
+  let diff = 0;
+  const orderedKey: (keyof typeof a)[] = [
+    "c_diff",
+    "correct",
+    "losses",
+    "draws",
+    "wins",
+  ];
+
+  for (let index = 0; index < orderedKey.length; index++) {
+    diff +=
+      ((b[orderedKey[index]] as number) - (a[orderedKey[index]] as number)) *
+      Math.pow(10, index + 1);
+  }
+  return diff;
+});
 </script>
 
 <template>

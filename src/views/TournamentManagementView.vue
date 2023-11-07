@@ -5,12 +5,14 @@ import DiscordLogin from "@/components/discord/DiscordLogin.vue";
 import { TournamentStatus, type ITournament } from "@/helpers/AMQ";
 import { useDiscord } from "@/stores/discord";
 import { ButtonVariants } from "@/types";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import AnilistUser from "@/components/amq/dashboard/AnilistUser.vue";
 import TournamentDetails from "@/components/amq/dashboard/TournamentDetails.vue";
 import TournamentStatusDetails from "@/components/amq/dashboard/TournamentStatusDetails.vue";
 import TournamentPlayerDetails from "@/components/amq/dashboard/TournamentPlayerDetails.vue";
+import SimpleTab from "@/components/SimpleTab.vue";
+import AddMatchModal from "@/components/amq/dashboard/AddMatchModal.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -33,6 +35,17 @@ const tournamentData = ref<ITournament>({
   status: TournamentStatus.Open,
 });
 const isLoading = ref<boolean>(isEdit);
+const addMatchModal = ref<boolean>(false);
+
+const phaseList = computed(() => {
+  return tournamentData.value.phases.map((p) => ({
+    headers: {
+      title: `Phase ${p.order + 1}`,
+      label: `phase-${p.order}`,
+    },
+    groups: p.groups,
+  }));
+});
 
 if (isEdit) {
   discord.load().then(() =>
@@ -65,6 +78,12 @@ const update = (tournament: ITournament) => {
 </script>
 
 <template>
+  <AddMatchModal
+    v-if="addMatchModal"
+    :group="addMatchModal"
+    :tournament="tournamentData"
+    @close="addMatchModal = false"
+  />
   <div
     class="w-full px-content-padding mx-auto h-full tournament-create overflow-y-auto"
   >
@@ -92,12 +111,59 @@ const update = (tournament: ITournament) => {
         <TournamentDetails
           v-model:name="tournamentData.name"
           v-model:public="tournamentData.public"
+          :phases="tournamentData.phases"
         />
 
         <TournamentStatusDetails
           :tournament="tournamentData"
           @update="update"
         />
+
+        <div>
+          <SimpleTab :sections="phaseList.map((p) => p.headers)">
+            <template
+              v-for="phase of phaseList"
+              :key="phase.headers.label"
+              #[phase.headers.label]
+            >
+              <SimpleTab
+                :sections="
+                  phase.groups.map((g, index) => ({
+                    title: `Group ${index + 1}`,
+                    label: g._id,
+                  }))
+                "
+              >
+                <template
+                  v-for="group of phase.groups"
+                  :key="group._id"
+                  #[group._id]
+                >
+                  <div class="flex gap-2">
+                    <span>Players:</span>
+                    <code v-for="player in group.players" :key="player">{{
+                      player
+                    }}</code>
+                  </div>
+                  <div>Matches:</div>
+                  <ol>
+                    <li v-for="match in group.matches" :key="match._id">
+                      {{ match.player1 }} ({{ match.p1Points }}) x ({{
+                        match.p2Points
+                      }}) {{ match.player2 }}
+                    </li>
+                  </ol>
+                </template>
+              </SimpleTab>
+            </template>
+          </SimpleTab>
+        </div>
+        <SimpleButton
+          class="mt-2"
+          :variant="ButtonVariants.Small"
+          @click="addMatchModal = true"
+          >Add Match</SimpleButton
+        >
       </div>
 
       <div class="flex justify-end">

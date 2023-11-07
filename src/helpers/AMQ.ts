@@ -45,6 +45,7 @@ export enum SongType {
 }
 
 export interface Song {
+  _id: string;
   name: string;
   artist: string;
   anime: string;
@@ -56,13 +57,11 @@ export interface Song {
 }
 
 export interface MatchSong {
+  _id?: string;
   song: string;
-  artist: string;
   videoLength: number;
   startPoint: number;
   correctAnswers: string[];
-  videoUrl?: string;
-  _id: string;
 }
 
 export interface GroupMatch {
@@ -131,6 +130,11 @@ export interface PlayerStats {
   musicsFromPlaylist: number;
   averageMusicDifficulty: number;
   guessesFromOtherPlaylists: number;
+}
+
+export interface CreateMatchInput {
+  players: [{ id: string; points: number }, { id: string; points: number }];
+  songList: MatchSong[];
 }
 
 const getGraphData = <T>(

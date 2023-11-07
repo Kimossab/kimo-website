@@ -1,4 +1,4 @@
-import type { ITournament } from "@/helpers/AMQ";
+import type { CreateMatchInput, ITournament } from "@/helpers/AMQ";
 import { makeHmacGETRequest, makeHmacPOSTRequest } from "@/helpers/HmacRequest";
 import type {
   DiscordState,
@@ -236,6 +236,20 @@ export const useDiscord = defineStore({
         `${import.meta.env.VITE_API_URL}amq/tournament/${id}/phase`,
         import.meta.env.VITE_API_SECRET,
         groups,
+        this.user?.id
+      );
+
+      return tournamentData;
+    },
+
+    async createMatch(
+      id: string,
+      input: CreateMatchInput
+    ): Promise<ITournament> {
+      const tournamentData = await makeHmacPOSTRequest<ITournament, any>(
+        `${import.meta.env.VITE_API_URL}amq/tournament/${id}/match`,
+        import.meta.env.VITE_API_SECRET,
+        input,
         this.user?.id
       );
 

@@ -13,7 +13,7 @@ const animeMap = props.animes.reduce<Record<string, Anime>>(
   {}
 );
 const songMap = props.songs.reduce<Record<string, Song>>(
-  (acc, cur) => ({ ...acc, [`${cur.name}-${cur.artist}`]: cur }),
+  (acc, cur) => ({ ...acc, [cur._id]: cur }),
   {}
 );
 </script>
@@ -39,27 +39,23 @@ const songMap = props.songs.reduce<Record<string, Song>>(
     <template v-for="song in match.songList" :key="song.song">
       <div class="flex flex-col text-center">
         <div class="flex flex-col text-center">
-          <span>{{
-            animeMap[songMap[`${song.song}-${song.artist}`].anime].romaji
-          }}</span>
+          <span>{{ animeMap[songMap[`${song.song}`].anime].romaji }}</span>
           <span
             v-if="
-              animeMap[songMap[`${song.song}-${song.artist}`].anime].romaji !==
-              animeMap[songMap[`${song.song}-${song.artist}`].anime].english
+              animeMap[songMap[`${song.song}`].anime].romaji !==
+              animeMap[songMap[`${song.song}`].anime].english
             "
             class="text-xs"
           >
-            ({{
-              animeMap[songMap[`${song.song}-${song.artist}`].anime].english
-            }})
+            ({{ animeMap[songMap[`${song.song}`].anime].english }})
           </span>
         </div>
       </div>
       <div class="flex flex-col text-center">
-        {{ song.song }}
+        {{ songMap[`${song.song}`].name }}
       </div>
       <div class="flex flex-col text-center">
-        {{ song.artist }}
+        {{ songMap[`${song.song}`].artist }}
       </div>
       <div class="flex justify-center gap-2">
         <font-awesome-icon
@@ -89,11 +85,7 @@ const songMap = props.songs.reduce<Record<string, Song>>(
       </div>
       <div class="flex justify-center gap-2">
         <font-awesome-icon
-          v-if="
-            songMap[`${song.song}-${song.artist}`]?.players.includes(
-              match.player1
-            )
-          "
+          v-if="songMap[`${song.song}`]?.players.includes(match.player1)"
           icon="square-check"
           size="xl"
           class="text-green-500"
@@ -105,11 +97,7 @@ const songMap = props.songs.reduce<Record<string, Song>>(
           class="text-red-500"
         />
         <font-awesome-icon
-          v-if="
-            songMap[`${song.song}-${song.artist}`]?.players.includes(
-              match.player2
-            )
-          "
+          v-if="songMap[`${song.song}`]?.players.includes(match.player2)"
           icon="square-check"
           size="xl"
           class="text-green-500"
