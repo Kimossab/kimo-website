@@ -40,7 +40,7 @@ const SongInfoSchema = z.object({
 const ListStateSchema = z.object({
   name: z.string(),
   status: z.number(),
-  score: z.number(),
+  score: z.union([z.number(), z.null()]),
 });
 // type ListState = z.infer<typeof ListStateSchema>;
 
