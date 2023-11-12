@@ -82,6 +82,12 @@ const update = (tournament: ITournament) => {
     v-if="addMatchModal"
     :group="addMatchModal"
     :tournament="tournamentData"
+    @update="
+      (data) => {
+        update(data);
+        addMatchModal = false;
+      }
+    "
     @close="addMatchModal = false"
   />
   <div

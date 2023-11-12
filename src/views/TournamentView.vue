@@ -9,6 +9,7 @@ import { ref } from "vue";
 import { type ITournament } from "@/helpers/AMQ";
 import { useDiscord } from "@/stores/discord";
 import TournamentPhases from "@/components/amq/tournament/TournamentPhases.vue";
+import TournamentStats from "@/components/amq/tournament/TournamentStats.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -62,6 +63,11 @@ discord.load().then(() => {
       <div class="border rounded-2xl p-4">
         <h3>Groups & Matches</h3>
         <TournamentPhases :tournament="tournament" />
+      </div>
+
+      <div class="border rounded-2xl p-4">
+        <h3>Stats & Facts</h3>
+        <TournamentStats :tournament="tournament" />
       </div>
     </div>
     <LoadSpinner v-else />

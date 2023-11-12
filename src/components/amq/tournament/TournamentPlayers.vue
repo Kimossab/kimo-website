@@ -27,6 +27,7 @@ const musics = (player: string) =>
   props.tournament.songs
     .filter((song) => song.players.includes(player))
     .map((song) => ({
+      id: song._id,
       name: song.name,
       artist: song.artist,
       anime: props.tournament.animes.find((a) => a.anilistId === song.anime)!,
@@ -48,6 +49,7 @@ const difficulty = (musicList: ReturnType<typeof musics>) =>
 
 const songTable = (musicList: ReturnType<typeof musics>) =>
   musicList.map((m) => ({
+    id: m.id,
     title: m.name,
     artist: m.artist,
     anime: `${m.anime?.romaji} (${m.anime?.english})`,
@@ -153,8 +155,9 @@ const playerMap = props.tournament.players.reduce<
           ]"
           :data="player.songTable"
           :initial-sort="{ header: 'anime', direction: 'ASC' }"
-        /></div
-    ></template>
+        />
+      </div>
+    </template>
   </SimpleTab>
   <div class="flex justify-center mt-4">
     <SimpleButton

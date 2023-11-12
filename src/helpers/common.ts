@@ -1,3 +1,7 @@
+export interface TableObject extends Record<string, string | number> {
+  id: string;
+}
+
 export const chunkArray = <T>(data: T[], size: number): T[][] => {
   const R = [];
   for (let i = 0; i < data.length; i += size) {

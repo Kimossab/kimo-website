@@ -74,16 +74,21 @@ export const useDiscord = defineStore({
     },
 
     async getToken() {
-      const oauth2Token =
-        await client.authorizationCode.getTokenFromCodeRedirect(
-          document.location.href,
-          {
-            redirectUri: `${window.location.origin}/amq`,
-            state: "some-string",
-            codeVerifier: this.codeVerifier!!,
-          }
-        );
-      this.setToken(oauth2Token);
+      this.setCodeVerifier(null);
+      try {
+        const oauth2Token =
+          await client.authorizationCode.getTokenFromCodeRedirect(
+            document.location.href,
+            {
+              redirectUri: `${window.location.origin}/amq`,
+              state: "some-string",
+              codeVerifier: this.codeVerifier!!,
+            }
+          );
+        this.setToken(oauth2Token);
+      } catch (e) {
+        console.error(e);
+      }
     },
 
     async getCurrentAuthorization() {

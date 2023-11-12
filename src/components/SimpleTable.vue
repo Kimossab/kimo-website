@@ -1,4 +1,5 @@
-<script setup lang="ts" generic="D extends Record<string, string | number>">
+<script setup lang="ts" generic="D extends TableObject">
+import type { TableObject } from "@/helpers/common";
 import { computed, ref, type UnwrapRef } from "vue";
 
 interface Header {
@@ -72,7 +73,7 @@ const sorted = computed(() => {
 </script>
 
 <template>
-  <table>
+  <table class="w-full">
     <tr
       class="border-b grid"
       :style="`grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`"
@@ -93,13 +94,13 @@ const sorted = computed(() => {
     </tr>
     <tr
       v-for="d of sorted"
-      :key="String(d[headers[0].key])"
-      class="grid"
+      :key="d.id"
+      class="grid border-b !border-opacity-50 p-2"
       :style="`grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`"
     >
       <td
         v-for="header of headers"
-        :key="`${d[headers[0].key]}-${String(header.key)}`"
+        :key="`${d.id}-${String(header.key)}`"
         class="text-center"
       >
         <template v-if="header.useLink && d[header.useLink]">

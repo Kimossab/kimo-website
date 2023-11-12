@@ -35,11 +35,7 @@ const selected = ref<string | null>(null);
     </button>
   </div>
 
-  <div
-    v-for="section in sections"
-    v-show="selected === section.label"
-    :key="section.label"
-  >
-    <slot :name="section.label"></slot>
+  <div>
+    <slot :name="selected"></slot>
   </div>
 </template>

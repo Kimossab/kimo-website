@@ -1,4 +1,5 @@
 import type { TournamentPlayer } from "@/types";
+import type { TableObject } from "./common";
 
 enum AnimeType {
   Movie = "movie",
@@ -120,3 +121,83 @@ export interface CreateMatchInput {
   players: [{ id: string; points: number }, { id: string; points: number }];
   songList: MatchSong[];
 }
+export interface TournamentPlayerStats extends TableObject {
+  player: string;
+  matches: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  correct: number;
+  c_diff: number;
+}
+
+export const getPlayersMatchStats = (group: Group, tournament: ITournament) => {
+  const players = group.players.reduce<Record<string, TournamentPlayerStats>>(
+    (acc, p) => {
+      const player = tournament.players.find(
+        (player) => player.discordId === p
+      );
+
+      return {
+        ...acc,
+        [p]: {
+          id: player?.discordId || player?.name || p,
+          player: player?.name || p,
+          matches: 0,
+          wins: 0,
+          draws: 0,
+          losses: 0,
+          correct: 0,
+          c_diff: 0,
+        },
+      };
+    },
+    {}
+  );
+
+  for (const match of group.matches) {
+    players[match.player1].matches++;
+    players[match.player2].matches++;
+
+    if (match.p1Points > match.p2Points) {
+      players[match.player1].wins++;
+      players[match.player2].losses++;
+    } else if (match.p1Points < match.p2Points) {
+      players[match.player2].wins++;
+      players[match.player1].losses++;
+    } else {
+      players[match.player2].draws++;
+      players[match.player1].draws++;
+    }
+
+    players[match.player1].correct += match.p1Points;
+    players[match.player2].correct += match.p2Points;
+
+    players[match.player1].c_diff += match.p1Points - match.p2Points;
+    players[match.player2].c_diff += match.p2Points - match.p1Points;
+  }
+
+  return players;
+};
+
+export const sortedPlayerData = (
+  players: Record<string, TournamentPlayerStats>
+): TournamentPlayerStats[] => {
+  return Object.values(players).sort((a, b) => {
+    let diff = 0;
+    const orderedKey: (keyof typeof a)[] = [
+      "c_diff",
+      "correct",
+      "losses",
+      "draws",
+      "wins",
+    ];
+
+    for (let index = 0; index < orderedKey.length; index++) {
+      diff +=
+        ((b[orderedKey[index]] as number) - (a[orderedKey[index]] as number)) *
+        Math.pow(10, index + 1);
+    }
+    return diff;
+  });
+};
