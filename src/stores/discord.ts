@@ -74,7 +74,6 @@ export const useDiscord = defineStore({
     },
 
     async getToken() {
-      this.setCodeVerifier(null);
       try {
         const oauth2Token =
           await client.authorizationCode.getTokenFromCodeRedirect(
@@ -86,9 +85,11 @@ export const useDiscord = defineStore({
             }
           );
         this.setToken(oauth2Token);
+        await this.getCurrentAuthorization();
       } catch (e) {
         console.error(e);
       }
+      this.setCodeVerifier(null);
     },
 
     async getCurrentAuthorization() {

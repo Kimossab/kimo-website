@@ -30,7 +30,7 @@ const advancingPlayers = ref<number>(1);
 const shuffledPlayers = ref<TournamentPlayerStats[]>([]);
 
 const availablePlayers = computed(() => {
-  if (props.tournament.phases.length) {
+  if (!props.tournament.phases.length) {
     return props.tournament.players
       .filter((p) => p.approved)
       .map((p) => ({
