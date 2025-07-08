@@ -31,6 +31,8 @@ const toggle = () => {
 </template>
 
 <style>
+@reference "@/assets/css/base.css";
+
 .scroll-dark-mode-enter-from {
   @apply !-translate-x-1/2 !-translate-y-full;
   @apply opacity-0;

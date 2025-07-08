@@ -14,7 +14,7 @@ defineProps<Props>();
 defineEmits<Emits>();
 
 const commonStyle =
-  "bg-slate-800 bg-opacity-40 transition border border-solid border-slate-950 drop-shadow-lg cursor-pointer overflow-hidden no-select";
+  "bg-slate-800/40 transition border border-solid border-slate-950 drop-shadow-lg cursor-pointer overflow-hidden no-select";
 const hoverStyle = "hover:scale-105";
 const disabledStyle =
   "disabled:cursor-inherit disabled:hover:scale-100 disabled:cursor-not-allowed disabled:opacity-50";

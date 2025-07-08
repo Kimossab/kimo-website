@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Markdown from "vue3-markdown-it";
-import { html as about } from "@/assets/markdown/about.md";
+import about from "@/assets/markdown/about.md";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
 import { onUnmounted } from "vue";
 
@@ -39,7 +39,7 @@ const parseDetails = (source: string) => {
 
       if (xp.length === 2) {
         return `<div class="details-content flex">
-        <div class="border-r-2 border-solid border-gray-600 mr-4 pr-4 flex-shrink-0 w-40">${xp[0]}</div>
+        <div class="border-r-2 border-solid border-gray-600 mr-4 pr-4 shrink-0 w-40">${xp[0]}</div>
         <div class="flex flex-col gap-2">${xp[1]}</div>
         </div>`;
       }

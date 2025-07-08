@@ -39,7 +39,7 @@ discord.load().then(() => {
       <div class="flex gap-4">
         <button
           v-if="discord.user"
-          class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 drop-shadow-lg rounded-2xl cursor-pointer overflow-hidden no-select p-4"
+          class="bg-slate-800/40 transition hover:scale-105 border border-solid border-slate-950 drop-shadow-lg rounded-2xl cursor-pointer overflow-hidden no-select p-4"
           :disabled="!discord.user"
           @click="router.push('/amq/dashboard')"
         >

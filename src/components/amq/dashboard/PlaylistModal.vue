@@ -57,7 +57,7 @@ const addAnime = (newAnime: PlaylistAnime) => {
           :anime="anime"
         ></SingleAnime>
         <SimpleButton
-          class="w-52 h-72 relative cursor-pointer hover:scale-105 transition shadow"
+          class="w-52 h-72 relative cursor-pointer hover:scale-105 transition shadow-sm"
           :variant="ButtonVariants.Normal"
           @click="searchAnime = true"
           >Add</SimpleButton

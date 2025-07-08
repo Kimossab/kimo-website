@@ -21,6 +21,8 @@ defineProps<Props>();
 </template>
 
 <style scoped>
+@reference "@/assets/css/base.css";
+
 .arrow {
   @apply after:rotate-45 after:border-8 after:border-slate-800 after:border-r-0 after:border-t-0 after:z-0;
   @apply after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/4;

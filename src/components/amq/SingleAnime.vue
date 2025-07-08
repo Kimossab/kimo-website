@@ -12,7 +12,7 @@ defineProps<Props>();
 <template>
   <div
     :class="[
-      'relative hover:scale-105 transition shadow group',
+      'relative hover:scale-105 transition shadow-sm group',
       { 'w-24 h-36': small },
       { 'w-52 h-72': !small },
     ]"
@@ -20,7 +20,7 @@ defineProps<Props>();
     <img class="object-cover w-full h-full" :src="anime.picture" />
     <div
       :class="[
-        'absolute bottom-0 bg-opacity-50 bg-zinc-800 text-center w-full backdrop-blur-sm',
+        'absolute bottom-0 anime-zinc-bg text-center w-full backdrop-blur-xs',
         {
           'hidden group-hover:block': small,
         },
@@ -32,3 +32,11 @@ defineProps<Props>();
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference "@/assets/css/base.css";
+
+.anime-zinc-bg { 
+  @apply bg-zinc-800/50;
+}
+</style>

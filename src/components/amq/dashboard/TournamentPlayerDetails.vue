@@ -151,11 +151,11 @@ const update = (tournament: ITournament) => {
       {{ player.name }}
       <span
         v-if="!player.approved"
-        class="text-xs bg-orange-500 bg-opacity-25 p-1 rounded"
+        class="text-xs bg-orange-500/25 p-1 rounded-sm"
       >
         Waiting Approval
       </span>
-      <span v-else class="text-xs bg-green-700 bg-opacity-25 p-1 rounded">
+      <span v-else class="text-xs bg-green-700/25 p-1 rounded-sm">
         Approved
       </span>
     </span>

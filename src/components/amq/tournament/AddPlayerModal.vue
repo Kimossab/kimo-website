@@ -23,7 +23,7 @@ const amqName = ref<string>("");
 
     <div class="flex gap-2">
       <label for="anime-query">AMQ name:</label>
-      <input v-model="amqName" name="anime-query" class="flex-grow" />
+      <input v-model="amqName" name="anime-query" class="grow" />
     </div>
 
     <div v-if="amqName" class="flex flex-col">

@@ -29,8 +29,7 @@ interface MediaListCollection {
   hasNextChunk: boolean;
 }
 
-export const useAnilist = defineStore({
-  id: "anilist",
+export const useAnilist = defineStore("anilist", {
   state: (): AnilistState => {
     const token = localStorage.getItem("anilistToken");
     return {

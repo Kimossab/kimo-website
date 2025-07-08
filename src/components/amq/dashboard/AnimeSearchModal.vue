@@ -57,7 +57,7 @@ const accept = () => {
           <input
             v-model="query"
             name="anime-query"
-            class="flex-grow"
+            class="grow"
             @keyup.enter="search"
           />
           <SimpleButton

@@ -74,44 +74,46 @@ const sorted = computed(() => {
 
 <template>
   <table class="w-full">
-    <tr
-      class="border-b grid"
-      :style="`grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`"
-    >
-      <th
-        v-for="header of headers"
-        :key="String(header.key)"
-        :class="[`no-select`, { 'cursor-pointer': header.sortable }]"
-        @click="toggleSort(header.key)"
+    <tbody>
+      <tr
+        class="border-b grid"
+        :style="`grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`"
       >
-        <span>{{ header.title }}</span>
-        <font-awesome-icon
-          v-if="header.sortable"
-          class="ml-2"
-          :icon="getIcon(header.key)"
-        ></font-awesome-icon>
-      </th>
-    </tr>
-    <tr
-      v-for="d of sorted"
-      :key="d.id"
-      class="grid border-b !border-opacity-50 p-2"
-      :style="`grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`"
-    >
-      <td
-        v-for="header of headers"
-        :key="`${d.id}-${String(header.key)}`"
-        class="text-center"
+        <th
+          v-for="header of headers"
+          :key="String(header.key)"
+          :class="[`no-select`, { 'cursor-pointer': header.sortable }]"
+          @click="toggleSort(header.key)"
+        >
+          <span>{{ header.title }}</span>
+          <font-awesome-icon
+            v-if="header.sortable"
+            class="ml-2"
+            :icon="getIcon(header.key)"
+          ></font-awesome-icon>
+        </th>
+      </tr>
+      <tr
+        v-for="d of sorted"
+        :key="d.id"
+        class="grid border-b !border-neutral-700/50 p-2"
+        :style="`grid-template-columns: repeat(${headers.length}, minmax(0, 1fr));`"
       >
-        <template v-if="header.useLink && d[header.useLink]">
-          <a :href="(d[header.useLink] as string)" target="_blank">{{
-            d[header.key]
-          }}</a>
-        </template>
-        <template v-else>
-          {{ d[header.key] }}
-        </template>
-      </td>
-    </tr>
+        <td
+          v-for="header of headers"
+          :key="`${d.id}-${String(header.key)}`"
+          class="text-center"
+        >
+          <template v-if="header.useLink && d[header.useLink]">
+            <a :href="(d[header.useLink] as string)" target="_blank">{{
+              d[header.key]
+            }}</a>
+          </template>
+          <template v-else>
+            {{ d[header.key] }}
+          </template>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>

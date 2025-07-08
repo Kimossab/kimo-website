@@ -8,7 +8,7 @@ defineEmits<Emits>();
 <template>
   <Teleport to="body">
     <div
-      class="w-screen h-screen absolute top-0 left-0 bg-black bg-opacity-75 overflow-scroll"
+      class="w-screen h-screen absolute top-0 left-0 bg-black\75 overflow-scroll"
       @click="$emit('close')"
     >
       <div class="w-[90%] m-auto my-20" @click="$emit('close')">

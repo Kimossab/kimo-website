@@ -23,7 +23,7 @@ const showPages = ref(false);
   <div class="w-full p-2 relative">
     <div :class="['flex justify-center items-center w-full']">
       <button
-        class="text-2xl border border-solid border-stone-300 rounded h-8 w-8 text-center previous"
+        class="text-2xl border border-solid border-stone-300 rounded-sm h-8 w-8 text-center previous"
         @click="emit('previous')"
       >
         <font-awesome-icon icon="angle-left"></font-awesome-icon>
@@ -32,7 +32,7 @@ const showPages = ref(false);
         {{ selectedPage }}/{{ pages }}
       </button>
       <button
-        class="text-2xl border border-solid border-stone-300 rounded h-8 w-8 text-center next"
+        class="text-2xl border border-solid border-stone-300 rounded-sm h-8 w-8 text-center next"
         @click="emit('next')"
       >
         <font-awesome-icon icon="angle-right"></font-awesome-icon>
@@ -48,7 +48,7 @@ const showPages = ref(false);
         ]"
       >
         <div
-          class="flex flex-wrap w-[50rem] justify-center border border-solid border-stone-300 bg-neutral-800 rounded"
+          class="flex flex-wrap w-[50rem] justify-center border border-solid border-stone-300 bg-neutral-800 rounded-sm"
         >
           <template
             v-for="i in pages"
@@ -71,6 +71,8 @@ const showPages = ref(false);
 </template>
 
 <style>
+@reference "@/assets/css/base.css";
+
 .grow-enter-active,
 .grow-leave-active {
   width: 51rem;

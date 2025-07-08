@@ -114,7 +114,7 @@ const swipeRight = () => {
 <template>
   <div
     v-if="luna.selectedIndex !== null"
-    class="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-95 z-20 opacity-100 transition-opacity duration-500 text-stone-300 grid col-[1fr_7rem] gap-4 p-2"
+    class="fixed top-0 left-0 w-screen h-screen bg-black\95 z-20 opacity-100 transition-opacity duration-500 text-stone-300 grid col-[1fr_7rem] gap-4 p-2"
     @click="close"
   >
     <div
@@ -197,6 +197,8 @@ const swipeRight = () => {
 </template>
 
 <style>
+@reference "@/assets/css/base.css";
+
 .scroll-luna-left-enter-active,
 .scroll-luna-left-leave-active {
   @apply h-full;

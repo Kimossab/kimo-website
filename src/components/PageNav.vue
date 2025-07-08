@@ -7,7 +7,7 @@ const store = useAppStore();
   <nav :class="{ 'h-home-nav': $route.name === 'home' }">
     <router-link to="/about">
       <button
-        class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
+        class="bg-slate-800/40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
       >
         <div class="absolute top-0 left-0 w-full h-full opacity-50">
           <img
@@ -28,7 +28,7 @@ const store = useAppStore();
     </router-link>
     <router-link to="/bot">
       <button
-        class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
+        class="bg-slate-800/40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
       >
         <div class="absolute top-0 left-0 w-full h-full opacity-50">
           <img
@@ -49,7 +49,7 @@ const store = useAppStore();
     </router-link>
     <router-link to="/luna">
       <button
-        class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
+        class="bg-slate-800/40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
       >
         <div class="absolute top-0 left-0 w-full h-full opacity-50">
           <img
@@ -67,7 +67,7 @@ const store = useAppStore();
     </router-link>
     <router-link to="/misc">
       <button
-        class="bg-slate-800 bg-opacity-40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
+        class="bg-slate-800/40 transition hover:scale-105 border border-solid border-slate-950 w-full h-full drop-shadow-lg -skew-x-12 rounded-2xl cursor-pointer overflow-hidden no-select"
       >
         <div
           class="absolute top-0 left-0 w-full h-full opacity-50 flex items-center justify-center"

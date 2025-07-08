@@ -3,8 +3,7 @@ import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { defineStore } from "pinia";
 
-export const useLuna = defineStore({
-  id: "luna",
+export const useLuna = defineStore("luna", {
   state: (): LunaState => ({
     pictures: [],
     loading: false,

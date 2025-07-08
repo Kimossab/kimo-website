@@ -8,8 +8,7 @@ import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { defineStore } from "pinia";
 
-export const useManga = defineStore({
-  id: "manga",
+export const useManga = defineStore("manga", {
   state: (): MangaState => ({
     list: [],
     manga: null,

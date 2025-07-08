@@ -59,6 +59,8 @@ watch(
 </template>
 
 <style>
+@reference "@/assets/css/base.css";
+
 #app {
   @apply w-screen min-h-screen;
   @apply flex flex-col justify-between;

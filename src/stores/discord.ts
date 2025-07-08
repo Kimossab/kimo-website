@@ -21,8 +21,7 @@ const client = new OAuth2Client({
   authorizationEndpoint: "/oauth2/authorize",
 });
 
-export const useDiscord = defineStore({
-  id: "discord",
+export const useDiscord = defineStore("discord", {
   state: (): DiscordState => {
     const codeVerifier = localStorage.getItem("codeVerifier");
     const token = localStorage.getItem("token");
@@ -68,7 +67,7 @@ export const useDiscord = defineStore({
       window.location.href = await client.authorizationCode.getAuthorizeUri({
         redirectUri: `${window.location.origin}/amq`,
         state: "some-string",
-        codeVerifier: this.codeVerifier!!,
+        codeVerifier: this.codeVerifier,
         scope: ["identify", "guilds"],
       });
     },
@@ -81,7 +80,7 @@ export const useDiscord = defineStore({
             {
               redirectUri: `${window.location.origin}/amq`,
               state: "some-string",
-              codeVerifier: this.codeVerifier!!,
+              codeVerifier: this.codeVerifier,
             }
           );
         this.setToken(oauth2Token);
@@ -113,7 +112,8 @@ export const useDiscord = defineStore({
           import.meta.env.VITE_API_SECRET
         );
         this.savedPlayerData = JSON.stringify(this.playerData);
-      } catch (e) {
+      } catch (_e) {
+        console.error(_e);
         this.playerData = {
           username: "",
           discordId: this.user!.id,
@@ -226,8 +226,7 @@ export const useDiscord = defineStore({
       json: string
     ): Promise<ITournament> {
       const tournamentData = await makeHmacPOSTRequest<ITournament, any>(
-        `${
-          import.meta.env.VITE_API_URL
+        `${import.meta.env.VITE_API_URL
         }amq/tournament/${id}/validate/${player}`,
         import.meta.env.VITE_API_SECRET,
         JSON.parse(json),
