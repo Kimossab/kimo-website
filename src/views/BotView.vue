@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import Markdown from "vue3-markdown-it";
 import DetailsAnimation from "@/helpers/DetailsAnimation";
-import bot from "@/assets/markdown/bot.md";
-import technology from "@/assets/markdown/technology.md";
-import commands from "@/assets/markdown/commands.md";
-import anilist from "@/assets/markdown/commands/anilist.md";
-import birthday from "@/assets/markdown/commands/birthday.md";
-import fandom from "@/assets/markdown/commands/fandom.md";
-import sauce from "@/assets/markdown/commands/sauce.md";
-import settings from "@/assets/markdown/commands/settings.md";
-import achievements from "@/assets/markdown/commands/achievements.md";
-import vndb from "@/assets/markdown/commands/vndb.md";
-import misc from "@/assets/markdown/commands/misc.md";
-import badges from "@/assets/markdown/commands/badges.md";
-import voting from "@/assets/markdown/commands/voting.md";
+import { html as bot } from "@/assets/markdown/bot.md";
+import { html as technology } from "@/assets/markdown/technology.md";
+import { html as commands } from "@/assets/markdown/commands.md";
+import { html as anilist } from "@/assets/markdown/commands/anilist.md";
+import { html as birthday } from "@/assets/markdown/commands/birthday.md";
+import { html as fandom } from "@/assets/markdown/commands/fandom.md";
+import { html as sauce } from "@/assets/markdown/commands/sauce.md";
+import { html as settings } from "@/assets/markdown/commands/settings.md";
+import { html as achievements } from "@/assets/markdown/commands/achievements.md";
+import { html as vndb } from "@/assets/markdown/commands/vndb.md";
+import { html as misc } from "@/assets/markdown/commands/misc.md";
+import { html as badges } from "@/assets/markdown/commands/badges.md";
+import { html as voting } from "@/assets/markdown/commands/voting.md";
 import { onUnmounted } from "vue";
 
 let detailsList: DetailsAnimation[] = [];
