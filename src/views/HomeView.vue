@@ -37,34 +37,6 @@ import AboutMe from "@/components/AboutMe.vue";
 h3 {
   @apply text-center;
 }
-
-.tool {
-  @apply duration-500;
-  @apply opacity-20;
-  @apply border rounded p-2 flex items-center justify-center gap-2 h-16;
-
-  @apply hover:scale-105;
-}
-.tool.active {
-  @apply opacity-100;
-}
-.tool i {
-  @apply text-2xl
-}
-
-.tool-lang {
-  @apply border-emerald-300 shadow-lg bg-radial from-emerald-300/25 to-transparent;
-}
-.tool-frame {
-  @apply border-orange-300 shadow-lg bg-radial from-orange-300/25 to-transparent;
-}
-.tool-db {
-  @apply border-sky-300 shadow-lg bg-radial from-sky-300/25 to-transparent;
-}
-.tool-other {
-  @apply border-amber-300 shadow-lg bg-radial from-amber-300/25 to-transparent;
-}
-
 .experience {
   @apply  md:min-h-[50vh] py-6;
 }

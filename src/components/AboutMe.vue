@@ -11,6 +11,7 @@ import { html as wtx } from "@/assets/markdown/experience-wtx.md";
 import { html as xgeeks } from "@/assets/markdown/experience-xgeeks.md";
 import TimeLine from "@/components/TimeLine.vue";
 import ExperienceDetails from "./ExperienceDetails.vue";
+import ToolDetail from "./ToolDetail.vue";
 import { tools, experienceDates, experienceTools, toolExp, Experiences } from "@/helpers/experience";
 import { useTemplateRef, ref, watch } from "vue";
 
@@ -214,10 +215,8 @@ watch(toolList, (value) => {
     <!-- <div class="w-0.5 h-full bg-base-white"></div> -->
     <div class="h-fit sticky items-stretch bottom-0 hidden md:flex" :style="`top: ${toolListTop}px;`" ref="tool-list">
       <div class="grid grid-cols-3 text-sm lg:text-base lg:grid-cols-4 gap-6 content-center w-full">
-        <div v-for="tool in tools" :key="tool.name"
-          :class="[`tool tool-${tool.type}`, { 'active': toolExp[tool.tool].has(activeElement) }]">
-          {{ tool.name }} <i :class="tool.icon"></i>
-        </div>
+        <ToolDetail v-for="tool in tools" :key="tool.name" :tool="tool"
+          :is-active="toolExp[tool.tool].has(activeElement)" />
       </div>
     </div>
   </div>

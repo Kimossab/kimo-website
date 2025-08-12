@@ -44,7 +44,7 @@ watch(props, (value) => {
 </script>
 
 <template>
-  <div class="flex justify-center sticky top-0  bg-[url(@/assets/bg.png)] bg-stone-300 dark:bg-neutral-800">
+  <div class="flex justify-center sticky top-0 bg-[url(@/assets/bg.png)] bg-base-white dark:bg-base-dark">
     <div class="time-line">
       <div class="relative w-full h-full flex items-end">
         <div class="time-line-bar" ref="timeline-bar"></div>
@@ -71,7 +71,7 @@ watch(props, (value) => {
 }
 
 .time-line-bar {
-  @apply rounded-2xl h-2 bg-base-white/25 mt-auto w-full absolute;
+  @apply rounded-2xl h-2 bg-base-dark/25 dark:bg-base-white/25 mt-auto w-full absolute;
 }
 
 .time-line-check {
@@ -84,6 +84,6 @@ watch(props, (value) => {
   @apply border-l h-6;
 }
 .time-line-bar-filled {
-  @apply  h-2 mt-auto bg-base-white absolute;
+  @apply  h-2 mt-auto bg-base-dark dark:bg-base-white absolute;
 }
 </style>

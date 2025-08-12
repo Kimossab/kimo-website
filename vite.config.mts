@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     allowedHosts: ["h-server.local"]
   },
-  plugins: [vue(), vueDevTools(), tailwindcss(), mdPlugin({ mode: [Mode.HTML] })],
+  plugins: [vue(), tailwindcss(), mdPlugin({ mode: [Mode.HTML] })],
   build: {
     minify: "terser",
   },

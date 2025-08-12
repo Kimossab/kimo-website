@@ -12,7 +12,8 @@
   --spacing-content-padding: max(0px, calc((100% - 60rem) / 2));
   --spacing-home-nav: min(41rem, 50vw);
   --spacing-nav-px: calc(var(--spacing-home-nav) / (3.73205080757 * 2));
-  --color-base-white: var(--color-stone-300)
+  --color-base-white: var(--color-stone-300);
+  --color-base-dark: var(--color-neutral-800)
 }
 
 @layer base { 

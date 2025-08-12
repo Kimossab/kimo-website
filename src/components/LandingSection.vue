@@ -4,7 +4,7 @@ import IconDetail from './IconDetail.vue';
 </script>
 
 <template>
-  <div class="w-screen h-dvh grid grid-rows-[1fr_auto] gap-2 justify-center">
+  <div class="w-screen h-dvh grid grid-rows-[1fr_6rem] gap-2 justify-center">
     <div class="flex flex-col justify-center items-center gap-6">
       <div class="text-center">
         <h2>Luís Pereira</h2>
