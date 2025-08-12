@@ -352,20 +352,20 @@ watch(toolList, (value) => {
       <div ref="about-me" class="md:mt-32">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="src" :html="true" />
 
-        <div class="grid-cols-3 gap-2 text-sm content-center w-full grid md:hidden">
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
           <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.None))" :key="tool.name"
             :class="`tool tool-${tool.type} active`">
             {{ tool.name }} <i :class="tool.icon"></i>
           </div>
         </div>
       </div>
-      <h3 class="md:mt-64">My experience</h3>
+      <h3 class="mt-12 md:mt-64">My experience</h3>
 
       <div ref="tblx-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="tblx" :html="true" />
 
-        <div class="grid-cols-3 gap-2 text-sm content-center w-full grid md:hidden">
-          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.None))" :key="tool.name"
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.tblx))" :key="tool.name"
             :class="`tool tool-${tool.type} active`">
             {{ tool.name }} <i :class="tool.icon"></i>
           </div>
@@ -374,39 +374,95 @@ watch(toolList, (value) => {
 
       <div ref="wtx-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="wtx" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.wtx))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="cazoo-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="cazoo" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.cazoo))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="sms-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="sms" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.sms))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="tamanna-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="tamanna" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.tamanna))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="xgeeks-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="xgeeks" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.xgeeks))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="tomi-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="tomi" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.tomi))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="tomiIntern-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="tomiIntern" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.tomiIntern))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
 
       <div ref="education-exp" class="experience">
         <Markdown class="mb-4 mt-2 flex flex-col gap-4 " :source="education" :html="true" />
+
+        <div class="grid-cols-3 sm:grid-cols-4 gap-2 text-sm content-center w-full grid md:hidden">
+          <div v-for="tool in tools.filter(t => toolExp[t.tool].has(Experiences.education))" :key="tool.name"
+            :class="`tool tool-${tool.type} active`">
+            {{ tool.name }} <i :class="tool.icon"></i>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <div class="w-0.5 h-full bg-base-white"></div> -->
     <div class="h-fit sticky items-stretch bottom-0 hidden md:flex" :style="`top: ${toolListTop}px;`" ref="tool-list">
-      <div class="grid grid-cols-4 gap-6 content-center w-full">
+      <div class="grid grid-cols-3 text-sm lg:text-base lg:grid-cols-4 gap-6 content-center w-full">
         <div v-for="tool in tools" :key="tool.name"
           :class="[`tool tool-${tool.type}`, { 'active': toolExp[tool.tool].has(activeElement) }]">
           {{ tool.name }} <i :class="tool.icon"></i>
@@ -415,7 +471,7 @@ watch(toolList, (value) => {
     </div>
   </div>
 
-  <div>
+  <div class="mt-12">
     <h3>Personal Projects</h3>
     <div class="grid gap-6 grid-cols-1 p-6">
       <PersonalProject :image="websiteImg">
@@ -466,6 +522,6 @@ h3 {
 }
 
 .experience {
-  @apply   min-h-[50vh] py-6;
+  @apply  md:min-h-[50vh] py-6;
 }
 </style>

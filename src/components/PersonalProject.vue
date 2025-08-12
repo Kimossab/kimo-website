@@ -3,7 +3,8 @@ defineProps<{ image: string }>()
 </script>
 
 <template>
-  <div class="border !border-emerald-500/50 rounded-4xl overflow-hidden grid grid-cols-[1fr_5fr] personal-prj">
+  <div
+    class="border !border-emerald-500/50 rounded-4xl overflow-hidden grid grid-cols-[1fr_2fr] md:grid-cols-[1fr_3fr] lg:grid-cols-[1fr_5fr] personal-prj">
     <div class="h-full mask-r-from-0% bg-cover bg-center bg-no-repeat mr-6" :style="`background-image: url(${image})`">
     </div>
     <slot></slot>
