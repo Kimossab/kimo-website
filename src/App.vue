@@ -10,7 +10,7 @@ import { watch } from "vue";
 
 const store = useAppStore();
 
-const routeExceptions: RouteRecordName[] = ["manga"];
+const routeExceptions: RouteRecordName[] = ["manga", "beta"];
 
 if (
   window.matchMedia &&

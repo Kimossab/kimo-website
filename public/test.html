@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scroll Background Change</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      color: white;
+    }
+
+    #section1 {
+      background: none;
+    }
+
+    #section2 {
+      background: none;
+    }
+
+    #section3 {
+      background: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="section1">Section 1</section>
+  <section id="section2">Section 2</section>
+  <section id="section3">Section 3</section>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.6  // Section must be 60% visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          switch (entry.target.id) {
+            case "section1":
+              document.body.style.backgroundColor = "lightcoral";
+              break;
+            case "section2":
+              document.body.style.backgroundColor = "lightseagreen";
+              break;
+            case "section3":
+              document.body.style.backgroundColor = "lightskyblue";
+              break;
+          }
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+
+</body>
+
+</html>

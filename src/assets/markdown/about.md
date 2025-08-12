@@ -1,6 +1,6 @@
 # About me
 
-Hello and welcome to my website. My name is Luís Pereira, also known in the internet as Kimossab.  
+Hello, my name is Luís Pereira, also known in the internet as Kimossab.  
 I'm a {{var:age}} years old programmer from Portugal.
 
 I've been working as a full-stack engineer ever since I finished Bachelor's Degree of Informatics Engineering in [IPV](https://www.estgv.ipv.pt/estgv/).

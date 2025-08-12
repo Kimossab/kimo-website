@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "roboto";
   --spacing-content: calc(99vh - var(--spacing-24) - var(--spacing-12));
@@ -10,6 +12,7 @@
   --spacing-content-padding: max(0px, calc((100% - 60rem) / 2));
   --spacing-home-nav: min(41rem, 50vw);
   --spacing-nav-px: calc(var(--spacing-home-nav) / (3.73205080757 * 2));
+  --color-base-white: var(--color-stone-300)
 }
 
 @layer base { 
@@ -19,6 +22,7 @@
   ::backdrop, 
   ::file-selector-button {   
     border-color: var(--color-gray-200, currentColor);  
+    @apply transition-all duration-100
   }
 }
 
@@ -58,7 +62,6 @@
 *::before,
 *::after {
   @apply box-border;
-  @apply relative;
   scrollbar-width: thin;
   scrollbar-color: rgb(161 161 170 / 0.5) transparent;
 }

@@ -1,0 +1,3 @@
+#### Curricular Internship @ [TOMI WORLD](https://tomiworld.com) - 2016-02 - 2016-06
+
+Internship in a company as part of my course in the polytechnic, evaluated both by the company and polytechnic. Internship project consisted of developing a virtual visit module in WPF to use in some company’s machines. This module had to show panoramas from a point of view using a cube with panoramic images as textures. The user could interact through touches to alter the FOV and direction. The project was done in WPF using C# and XAML.
