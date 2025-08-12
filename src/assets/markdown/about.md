@@ -1,22 +1,9 @@
-# About me
+### About me
 
-Hello, my name is Luís Pereira, also known in the internet as Kimossab.  
-I'm a {{var:age}} years old programmer from Portugal.
+My name is Luís Pereira, also known as Kimossab. I'm a {{var:age}} years old software engineer from Portugal.  
 
-I've been working as a full-stack engineer ever since I finished Bachelor's Degree of Informatics Engineering in [IPV](https://www.estgv.ipv.pt/estgv/).
+I've been working as a full-stack engineer ever since I finished Bachelor's Degree of Informatics Engineering in [IPV](https://www.estgv.ipv.pt/estgv/) in 2013.  
 
-My hobbies are programming, playing video games, watching anime and reading Light Novels.  
-I really enjoy creating stuff and learning how things work through trial and error, just like my discord bot and this webpage.
+My hobbies are programming, playing video games, watching anime and reading Light Novels. I also enjoy playing around with electronics and home automation DIY projects.
 
-<details class="work-experience">
-  <summary>Work Experience</summary>
-  {{work_experience}}
-</details>
-<details class="education">
-  <summary>Education</summary>
-  {{education}}
-</details>
-<details class="education">
-  <summary>Other Experiences</summary>
-  {{other_experience}}
-</details>
+I don't shy away from working with new technologies and I love to learn new things. Even without experience in a specific language or framework I adapt quickly and my experience from other languages helps me to tackle new challenges.
