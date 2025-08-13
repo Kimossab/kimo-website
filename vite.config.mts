@@ -11,10 +11,7 @@ export default defineConfig({
   server: {
     allowedHosts: ["h-server.local"]
   },
-  plugins: [vue(), tailwindcss(), mdPlugin({ mode: [Mode.HTML] })],
-  build: {
-    minify: "terser",
-  },
+  plugins: [vue(), tailwindcss(), vueDevTools(), mdPlugin({ mode: [Mode.HTML] })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

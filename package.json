@@ -21,15 +21,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "axios": "^1.10.0",
-    "chart.js": "^4.5.0",
     "devicon": "^2.16.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.17",
-    "vue-chartjs": "^5.3.2",
     "vue-router": "^4.5.1",
-    "vue3-markdown-it": "^1.0.10",
-    "vue3-touch-events": "^5.0.13",
-    "zod": "^3.25.76"
+    "vue3-markdown-it": "^1.0.10"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
@@ -54,6 +50,7 @@
     "typescript": "^5.8.0",
     "vite": "npm:rolldown-vite@latest",
     "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-inspect": "^11.3.2",
     "vite-plugin-markdown": "^2.2.0",
     "vite-plugin-vue-devtools": "^7.7.7",
     "vitest": "^3.2.4",
