@@ -1,0 +1,7 @@
+#### Full-stack Developer @ [Cazoo](https://www.cazoo.co.uk) - 2021-08 - 2022-12
+
+- Cazoo was a company focused on the resale of used vehicles.  
+- As a xgeeks developer I joined cazoo and worked as part of the Car Care team, which was the team responsible for the extras in a purchase of car (extended warranty, insurance, service plans, etc.). Our team had a lot of different responsibilities, from the frontend to the backend. The last 4 months I switched to the Order Management team which was a team focused on backend to manage and store orders relevant data.
+- The backend was built as microservices and the frontend as micro frontend. Everything was hosted from AWS, and managed by serverless and terraform. The MFE were all in React while the host webpage was Next. The backend was lambda functions in Node with Typescript.
+- As part of these teams I was involved in all the processes of the teams, from infrastructure, which included moving from CircleCI to Github Actions, to AWS management, OpsGenie alerts, Kibana/Datadog monitoring dashboards and frontend/backend developments.
+- As the project was divided in multiple teams, each with a very specific focus, and our initiatives always impacted other teams, I've been involved alongside the rest of the team in plannings and inter team communications and contract negotiations.

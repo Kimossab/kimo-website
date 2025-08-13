@@ -1,47 +1,68 @@
 @import "@/assets/css/roboto.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer utilities {
-  .details-content {
-    @apply mt-2 p-2;
-  }
+@custom-variant dark (&:where(.dark, .dark *));
 
-  .no-select {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-  }
+@theme {
+  --font-sans: "roboto";
+  --spacing-content: calc(99vh - var(--spacing-24) - var(--spacing-12));
+  --spacing-content-inner: calc(99vh - var(--spacing-24) - var(--spacing-12) - var(--spacing-24));
+  --spacing-content-width: calc(100% - 60rem);
+  --spacing-content-padding: max(0px, calc((100% - 60rem) / 2));
+  --spacing-home-nav: min(41rem, 50vw);
+  --spacing-nav-px: calc(var(--spacing-home-nav) / (3.73205080757 * 2));
+  --color-base-white: var(--color-stone-300);
+  --color-base-dark: var(--color-neutral-800)
+}
 
-  .sample-section {
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0, 0, 0, 0.5) 10px,
-      rgba(0, 0, 0, 0.5) 20px
-    );
+@layer base { 
+  *,
+  ::after,
+  ::before, 
+  ::backdrop, 
+  ::file-selector-button {   
+    border-color: var(--color-gray-200, currentColor);  
+    @apply transition-all duration-100
   }
-  .sample-section-dark {
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 255, 255, 0.5) 10px,
-      rgba(255, 255, 255, 0.5) 20px
-    );
-  }
+}
+
+@utility details-content {
+  @apply mt-2 p-2;
+}
+
+@utility no-select {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+@utility sample-section {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.5) 10px,
+    rgba(0, 0, 0, 0.5) 20px
+  );
+}
+
+@utility sample-section-dark {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.5) 10px,
+    rgba(255, 255, 255, 0.5) 20px
+  );
 }
 
 *,
 *::before,
 *::after {
   @apply box-border;
-  @apply relative;
   scrollbar-width: thin;
   scrollbar-color: rgb(161 161 170 / 0.5) transparent;
 }
@@ -63,10 +84,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-opacity-50 bg-zinc-400;
+  @apply bg-zinc-400/50;
   @apply rounded-2xl;
   @apply border-transparent;
 }
+
+html { @apply scroll-smooth }
 
 body {
   @apply font-sans;
@@ -77,18 +100,18 @@ body {
   @apply min-h-full w-full;
   @apply p-0 m-0;
 
-  @apply bg-noise-pattern bg-stone-300 dark:bg-neutral-800;
+  @apply bg-[url(@/assets/bg.png)] bg-stone-300 dark:bg-neutral-800;
   @apply text-neutral-800 dark:text-stone-300;
 }
 
 button {
   @apply p-0;
-  @apply border-none outline-none;
+  @apply border-none outline-hidden;
   @apply text-inherit bg-none;
 }
 
 code {
-  @apply bg-opacity-25 bg-stone-300 dark:bg-neutral-700;
+  @apply bg-stone-300/25 dark:bg-neutral-700;
   @apply p-0.5;
 }
 
@@ -98,7 +121,7 @@ summary {
 
 nav {
   @apply h-24 w-full max-w-6xl;
-  @apply py-0 px-nav-p-x mx-auto my-0;
+  @apply py-0 px-nav-px mx-auto my-0;
   @apply grid grid-cols-4 grid-rows-1 gap-4 md:gap-8;
   @apply content-center;
 
@@ -115,7 +138,7 @@ header {
 footer {
   @apply w-full h-12;
   @apply text-sm md:text-base;
-  @apply bg-black bg-opacity-10;
+  @apply bg-black/10;
   @apply flex justify-center items-center gap-4;
 }
 
@@ -153,7 +176,7 @@ hr {
 }
 
 input {
-  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply border rounded-sm border-neutral-700 dark:border-stone-300;
   @apply px-2 bg-transparent;
 }
 input[type="checkbox"] {
@@ -167,7 +190,7 @@ input[type="checkbox"] + span {
 input[type="checkbox"] + span::before {
   @apply content-[''];
   @apply block;
-  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply border rounded-sm border-neutral-700 dark:border-stone-300;
   @apply bg-transparent;
   @apply h-5 w-5;
   @apply leading-5 px-1;
@@ -176,6 +199,6 @@ input[type="checkbox"]:checked + span::before {
   @apply content-['✓'];
 }
 textarea {
-  @apply border rounded border-neutral-700 dark:border-stone-300;
+  @apply border rounded-sm border-neutral-700 dark:border-stone-300;
   @apply px-2 bg-transparent;
 }
