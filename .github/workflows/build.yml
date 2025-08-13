@@ -14,13 +14,13 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 19.x, 20.x, 21.x, 22.x, 23.x, 24.x]
+        node-version: [18, 19, 20, 21, 22, 23, 24]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
@@ -31,7 +31,7 @@ jobs:
         name: Build
 
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node-v${{ matrix.node-version }}-release
           path: dist
@@ -43,16 +43,16 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
       - name: Zip artifact for deployment
         run: |
-          (cd node-v18.x-release && zip -r "$OLDPWD/node-v18.x-release.zip" .)
-          (cd node-v19.x-release && zip -r "$OLDPWD/node-v19.x-release.zip" .)
-          (cd node-v20.x-release && zip -r "$OLDPWD/node-v20.x-release.zip" .)
-          (cd node-v21.x-release && zip -r "$OLDPWD/node-v21.x-release.zip" .)
-          (cd node-v22.x-release && zip -r "$OLDPWD/node-v22.x-release.zip" .)
-          (cd node-v23.x-release && zip -r "$OLDPWD/node-v23.x-release.zip" .)
-          (cd node-v24.x-release && zip -r "$OLDPWD/node-v24.x-release.zip" .)
+          (cd node-v18-release && zip -r "$OLDPWD/node-v18-release.zip" .)
+          (cd node-v19-release && zip -r "$OLDPWD/node-v19-release.zip" .)
+          (cd node-v20-release && zip -r "$OLDPWD/node-v20-release.zip" .)
+          (cd node-v21-release && zip -r "$OLDPWD/node-v21-release.zip" .)
+          (cd node-v22-release && zip -r "$OLDPWD/node-v22-release.zip" .)
+          (cd node-v23-release && zip -r "$OLDPWD/node-v23-release.zip" .)
+          (cd node-v24-release && zip -r "$OLDPWD/node-v24-release.zip" .)
       - name: Create Release
         run: gh release create ${{github.ref_name}} --generate-notes ./*.zip
