@@ -26,7 +26,7 @@ defineProps<{
   @apply opacity-100;
 }
 .tool i {
-  @apply text-2xl
+  @apply text-2xl;
 }
 
 .tool-lang {

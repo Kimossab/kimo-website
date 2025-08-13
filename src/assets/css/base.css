@@ -23,7 +23,7 @@
   ::backdrop, 
   ::file-selector-button {   
     border-color: var(--color-gray-200, currentColor);  
-    @apply transition-all duration-100
+    @apply transition-all duration-100;
   }
 }
 
@@ -89,7 +89,7 @@
   @apply border-transparent;
 }
 
-html { @apply scroll-smooth }
+html { @apply scroll-smooth; }
 
 body {
   @apply font-sans;
